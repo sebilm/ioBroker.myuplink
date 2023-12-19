@@ -1,0 +1,67 @@
+# ioBroker.myuplink
+
+[![NPM version](https://img.shields.io/npm/v/iobroker.myuplink.svg)](https://www.npmjs.com/package/iobroker.myuplink)
+![Current version in stable repository](https://iobroker.live/badges/myuplink-stable.svg)
+[![Downloads](https://img.shields.io/npm/dm/iobroker.myuplink.svg)](https://www.npmjs.com/package/iobroker.myuplink)
+![Number of Installations](https://iobroker.live/badges/myuplink-installed.svg)
+[![Build Status](https://github.com/sebilm/ioBroker.myuplink/workflows/Test%20and%20Release/badge.svg)](https://github.com/sebilm/ioBroker.myuplink/actions/workflows/test-and-release.yml)
+
+[![NPM](https://nodei.co/npm/iobroker.myuplink.png?downloads=true)](https://nodei.co/npm/iobroker.myuplink/)
+
+## myuplink.com adapter for ioBroker
+
+This ioBroker adapter receives data from myUplink.com.
+
+## Using this adapter
+
+1. You need compatible heat pump from NIBE, AIT, Cetetherm, ClimateMaster, Contura, CTA, CTC, Enertech Global or Høiax - buy one if you don't have ;-)
+2. You need an account at myUplink: https://myuplink.com
+3. Go to myUplink Api: https://dev.myuplink.com/ and log in
+4. Click "Applications" and then "Create New Application"
+5. Fill in: Name and Description can be everything e.g. ioBroker
+6. The Callback URL is important. You can use https://sebilm.github.io/ioBroker.myuplink/myuplink.html
+7. Accept the myUplink API Services Agreement and click "Create"
+8. Then you get an Identifier and a Secret - we need them
+9. Install this adapter in ioBroker
+10. At adapter setting page fill in the Identifier and the Secret.
+11. Click the link "Click here to generate the Auth Code on myUplink."
+12. Follow the instructions. At the end you get your Auth Code.
+13. Copy this code and paste it in the adapter settings at "Auth Code".
+14. Choose your language.
+15. Click Save and Close
+
+If you (later) get a "400 bad request" error in the log, you must get a new Auth Code - so do numbers 11 until 13 and 15.
+
+## Manage/Write Support
+
+In this version changing heat pump settings is not supported.
+
+## Changelog
+
+### 0.0.1 (31.12.2023)
+
+-   Initial release
+
+## License
+
+MIT License
+
+Copyright (c) 2023 Sebastian Häßelbarth <seb@sebmail.de>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
