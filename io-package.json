@@ -1,0 +1,172 @@
+{
+    "common": {
+        "name": "myuplink",
+        "version": "0.0.1",
+        "news": {
+            "0.0.1": {
+                "en": "initial release",
+                "de": "Erstveröffentlichung",
+                "ru": "Начальная версия",
+                "pt": "lançamento inicial",
+                "nl": "Eerste uitgave",
+                "fr": "Première version",
+                "it": "Versione iniziale",
+                "es": "Versión inicial",
+                "pl": "Pierwsze wydanie",
+                "uk": "Початкова версія",
+                "zh-cn": "首次出版"
+            }
+        },
+        "title": "myUplink",
+        "titleLang": {
+            "en": "myUplink",
+            "de": "myUplink",
+            "ru": "myUplink",
+            "pt": "myUplink",
+            "nl": "myUplink",
+            "fr": "myUplink",
+            "it": "myUplink",
+            "es": "myUplink",
+            "pl": "myUplink",
+            "uk": "myUplink",
+            "zh-cn": "myUplink"
+        },
+        "desc": {
+            "en": "myUplink.com for Nibe Heat Pumps",
+            "de": "myUplink.com für Nibe-Wärmepumpen",
+            "ru": "myUplink.com для тепловых насосов Nibe",
+            "pt": "myUplink.com para bombas de calor Nibe",
+            "nl": "myUplink.com voor Nibe-warmtepompen",
+            "fr": "myUplink.com pour les pompes à chaleur Nibe",
+            "it": "myUplink.com per le pompe di calore Nibe",
+            "es": "myUplink.com para bombas de calor Nibe",
+            "pl": "myUplink.com dla pomp ciepła Nibe",
+            "uk": "myUplink.com для теплових насосів Nibe",
+            "zh-cn": "myUplink.com 适用于 Nibe 热泵"
+        },
+        "authors": ["Sebastian Haesselbarth <seb@sebmail.de>"],
+        "keywords": [
+            "myuplink",
+            "heat pump",
+            "NIBE",
+            "AIT",
+            "Cetetherm",
+            "ClimateMaster",
+            "Contura",
+            "CTA",
+            "CTC",
+            "Enertech Global"
+        ],
+        "license": "MIT",
+        "platform": "Javascript/Node.js",
+        "main": "build/main.js",
+        "icon": "myuplink.png",
+        "enabled": true,
+        "extIcon": "https://raw.githubusercontent.com/sebilm/ioBroker.myuplink/main/admin/myuplink.png",
+        "readme": "https://github.com/sebilm/ioBroker.myuplink/blob/main/README.md",
+        "loglevel": "info",
+        "mode": "daemon",
+        "type": "climate-control",
+        "compact": true,
+        "connectionType": "cloud",
+        "dataSource": "poll",
+        "adminUI": {
+            "config": "materialize"
+        },
+        "dependencies": [
+            {
+                "js-controller": ">=3.3.22"
+            }
+        ],
+        "globalDependencies": [
+            {
+                "admin": ">=5.0.0"
+            }
+        ]
+    },
+    "native": {
+        "Identifier": "",
+        "Secret": "",
+        "CallbackURL": "https://sebilm.github.io/ioBroker.myuplink/myuplink.html",
+        "AuthCode": "",
+        "Interval": 1,
+        "Language": "en",
+        "Configured": false
+    },
+    "objects": [],
+    "instanceObjects": [
+        {
+            "_id": "info",
+            "type": "channel",
+            "common": {
+                "name": "Information"
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.connection",
+            "type": "state",
+            "common": {
+                "name": "Connected to myUplink",
+                "role": "indicator.connected",
+                "type": "boolean",
+                "read": true,
+                "write": false,
+                "def": false
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.currentError",
+            "type": "state",
+            "common": {
+                "name": "Current Error",
+                "role": "text",
+                "type": "string",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.updateTime",
+            "type": "state",
+            "common": {
+                "name": "Time of the last update",
+                "role": "text",
+                "type": "string",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.lastError",
+            "type": "state",
+            "common": {
+                "name": "Last Error",
+                "role": "text",
+                "type": "string",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.lastErrorTime",
+            "type": "state",
+            "common": {
+                "name": "Time of the last error",
+                "role": "text",
+                "type": "string",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {}
+        }
+    ]
+}
