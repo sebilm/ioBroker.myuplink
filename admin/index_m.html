@@ -1,0 +1,164 @@
+<html>
+    <head>
+        <!-- Load ioBroker scripts and styles-->
+        <link rel="stylesheet" type="text/css" href="../../css/adapter.css" />
+        <link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css" />
+
+        <script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="../../socket.io/socket.io.js"></script>
+
+        <script type="text/javascript" src="../../js/translate.js"></script>
+        <script type="text/javascript" src="../../lib/js/materialize.js"></script>
+        <script type="text/javascript" src="../../js/adapter-settings.js"></script>
+
+        <!-- Load our own files -->
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <script type="text/javascript" src="words.js"></script>
+        <script type="text/javascript" src="scripts.js"></script>
+
+        <script type="text/javascript">
+            // This will be called by the admin adapter when the settings page loads
+            function load(settings, onChange) {
+                if (!settings) {
+                    return;
+                }
+                managedParameters = settings.ManagedParameters || [];
+                values2table('values', managedParameters, onChange);
+                // select elements with id=key and class=value and insert value
+                $('.value').each(function () {
+                    var $key = $(this);
+                    var id = $key.attr('id');
+                    if ($key.attr('type') === 'checkbox') {
+                        // do not call onChange direct, because onChange could expect some arguments
+                        $key.prop('checked', settings[id]).on('change', () => onChange());
+                    } else {
+                        // do not call onChange direct, because onChange could expect some arguments
+                        $key.val(settings[id])
+                            .on('change', () => onChange())
+                            .on('keyup', () => onChange());
+                    }
+                });
+                onChange(false);
+                // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
+                if (M) {
+                    M.updateTextFields();
+                }
+            }
+
+            // This will be called by the admin adapter when the user presses the save button
+            function save(callback) {
+                // select elements with class=value and build settings object
+                var obj = {};
+                $('.value').each(function () {
+                    var $this = $(this);
+                    if ($this.attr('type') === 'checkbox') {
+                        obj[$this.attr('id')] = $this.prop('checked');
+                    } else if ($this.attr('type') === 'number') {
+                        obj[$this.attr('id')] = parseFloat($this.val());
+                    } else {
+                        obj[$this.attr('id')] = $this.val();
+                    }
+                });
+                obj.ManagedParameters = table2values('values');
+                obj['Configured'] = true;
+                callback(obj);
+            }
+        </script>
+
+        <style>
+            .sub-title {
+                margin-top: 1rem !important;
+                padding: 0.5rem;
+                background: #64b5f6;
+                color: white;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="m adapter-container">
+            <div class="section">
+                <div class="row">
+                    <div class="col s12 m4 l2">
+                        <img src="myuplink.png" class="logo" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Forms are the standard way to receive user inputted data.
+             Learn more http://materializecss.com/forms.html-->
+
+            <div class="section">
+                <div class="row">
+                    <div class="col s12">
+                        <h6 class="translate sub-title">Authentication</h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12 m6 l6">
+                        <input class="value" id="Identifier" type="text" onchange="generateURL()" />
+                        <label for="Identifier">Identifier</label>
+                        <span class="translate">Get it from https://dev.myuplink.com/apps</span>
+                    </div>
+                    <div class="input-field col s12 m6 l6">
+                        <input class="value" id="Secret" type="text" />
+                        <label for="Secret">Secret</label>
+                        <span class="translate">Get it from https://dev.myuplink.com/apps</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input class="value" id="CallbackURL" type="text" onchange="generateURL()" />
+                        <label for="CallbackURL">Callback URL</label>
+                        <span class="translate">Does not need to be changed. You can use https://sebilm.github.io/ioBroker.myuplink/myuplink.html</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <p>
+                            <a class="translate" target="_blank" id="URL">Click here to generate the Auth Code on myUplink.</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input class="value" id="AuthCode" type="text" />
+                        <label for="AuthCode">Auth Code</label>
+                        <span class="translate">Paste your Auth Code here.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="row">
+                    <div class="col s12">
+                        <h6 class="translate sub-title">Settings</h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12 m4 l4">
+                        <input type="number" class="value" id="Interval" min="1" />
+                        <label for="Interval" class="translate">Refresh interval</label>
+                        <span class="translate">Time in minutes of fetching data from myUplink.</span>
+                    </div>
+                    <div class="input-field col s12 m4 l4">
+                        <select class="value" id="Language">
+                            <option value="en" class="translate">English</option>
+                            <option value="de" class="translate">German</option>
+                            <option value="sv" class="translate">Swedish</option>
+                        </select>
+                        <label for="Language" class="translate">Language</label>
+                        <span class="translate">The language for naming the data objects.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            var id = setInterval(function () {
+                clearInterval(id);
+                generateURL();
+            }, 1000);
+        </script>
+    </body>
+</html>
