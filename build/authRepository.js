@@ -31,37 +31,37 @@ const axios_1 = __importDefault(require("axios"));
 const fs = __importStar(require("fs"));
 const jsonfile_1 = __importDefault(require("jsonfile"));
 class AuthRepository {
-    constructor(options, adapter) {
-        this.adapter = adapter;
+    constructor(options, log) {
+        this.log = log;
         this.options = options;
         axios_1.default.defaults.baseURL = options.baseUrl;
         axios_1.default.defaults.headers.common['user-agent'] = options.userAgent;
         axios_1.default.defaults.timeout = options.timeout;
     }
     async getAccessToken() {
-        this.adapter.log.debug('getAccessToken() called');
+        this.log.debug('getAccessToken()');
         if (await this.hasNewAuthCode()) {
             await this.clearSesssion();
         }
-        if (!(await this.hasRefreshToken())) {
+        if (!(await this.hasAccessToken())) {
             if (this.options.authCode) {
                 const token = await this.getToken(this.options.authCode);
                 await this.setSesssion(token);
             }
             else {
-                this.adapter.log.error('You need to get and set a new Auth-Code. You can do this in the adapter setting.');
+                this.log.error('You need to get and set a new Auth-Code. You can do this in the adapter setting.');
                 return null;
             }
         }
         if (await this.isTokenExpired()) {
-            this.adapter.log.debug('Token is expired / expires soon - refreshing');
+            this.log.debug('Token is expired / expires soon - refreshing');
             const token = await this.getRefreshToken();
             await this.setSesssion(token);
         }
         return await this.getSessionAccessToken();
     }
     async getToken(authCode) {
-        this.adapter.log.debug('token()');
+        this.log.debug('getToken()');
         const data = {
             grant_type: 'authorization_code',
             client_id: this.options.clientId,
@@ -73,7 +73,7 @@ class AuthRepository {
         return await this.postTokenRequest(data);
     }
     async getRefreshToken() {
-        this.adapter.log.debug('Refresh token.');
+        this.log.debug('getRefreshToken()');
         const data = {
             grant_type: 'refresh_token',
             refresh_token: await this.getSessionRefreshToken(),
@@ -85,6 +85,7 @@ class AuthRepository {
     async postTokenRequest(body) {
         const stringBody = new URLSearchParams(body).toString();
         const url = '/oauth/token';
+        this.log.debug(`send to ${url}: ${stringBody}`);
         try {
             const { data } = await axios_1.default.post(url, stringBody, {
                 headers: {
@@ -93,6 +94,7 @@ class AuthRepository {
             });
             const expiresIn = data.expires_in ?? 1800;
             data.expires_at = Date.now() + expiresIn * 1000;
+            this.log.debug(`TokenData: ${JSON.stringify(data, null, ' ')}`);
             return data;
         }
         catch (error) {
@@ -100,7 +102,7 @@ class AuthRepository {
         }
     }
     async checkError(suburl, error) {
-        this.adapter.log.error(`error from ${suburl}`);
+        this.log.error(`error from ${suburl}`);
         if (axios_1.default.isAxiosError(error)) {
             const axiosError = error;
             if (axiosError.response != null) {
@@ -120,69 +122,70 @@ class AuthRepository {
         return error;
     }
     async readSession() {
-        this.adapter.log.debug('Read session.');
-        if (!this.options.sessionStore || !fs.existsSync(this.options.sessionStore)) {
+        this.log.debug('Read session.');
+        if (!this.options.sessionStoreFilePath || !fs.existsSync(this.options.sessionStoreFilePath)) {
             return;
         }
-        this.auth = await jsonfile_1.default.readFile(this.options.sessionStore, { throws: false });
+        this.auth = await jsonfile_1.default.readFile(this.options.sessionStoreFilePath, { throws: false });
     }
     async getSessionAuthCode() {
-        this.adapter.log.silly('Get session authCode.');
+        this.log.silly('Get session authCode.');
         if (this.auth == null) {
             await this.readSession();
         }
         return this.auth ? this.auth.authCode : null;
     }
     async getSessionAccessToken() {
-        this.adapter.log.silly('Get session access_token.');
+        this.log.silly('Get session access_token.');
         if (this.auth == null) {
             await this.readSession();
         }
         return this.auth ? this.auth.access_token : null;
     }
     async getSessionRefreshToken() {
-        this.adapter.log.silly('Get session refresh_token.');
+        this.log.silly('Get session refresh_token.');
         if (this.auth == null) {
             await this.readSession();
         }
         return this.auth ? this.auth.refresh_token : null;
     }
     async getSessionExpires() {
-        this.adapter.log.silly('Get session expires.');
+        this.log.silly('Get session expires.');
         if (this.auth == null) {
             await this.readSession();
         }
         return this.auth ? this.auth.expires_at : null;
     }
     async setSesssion(auth) {
-        this.adapter.log.debug('Set session.');
+        this.log.debug('Set session.');
         if (auth.authCode == null) {
             auth.authCode = this.options.authCode;
         }
         this.auth = auth;
-        if (!this.options.sessionStore) {
+        this.log.debug(`sessionStoreFilePath: ${this.options.sessionStoreFilePath}`);
+        if (!this.options.sessionStoreFilePath) {
             return;
         }
-        await jsonfile_1.default.writeFile(this.options.sessionStore, this.auth, { spaces: 2 });
+        await jsonfile_1.default.writeFile(this.options.sessionStoreFilePath, this.auth, { spaces: 2 });
     }
     async clearSesssion() {
-        this.adapter.log.debug('Clear session.');
+        this.log.debug('Clear session.');
         await this.setSesssion({});
     }
     async hasNewAuthCode() {
         const authCode = await this.getSessionAuthCode();
         const hasNewAuthCode = authCode != null && authCode != this.options.authCode;
-        this.adapter.log.debug('Has new auth code: ' + hasNewAuthCode);
+        this.log.debug('Has new auth code: ' + hasNewAuthCode);
         return hasNewAuthCode;
     }
     async isTokenExpired() {
         const expired = ((await this.getSessionExpires()) || 0) < Date.now() + this.options.renewBeforeExpiry;
-        this.adapter.log.debug('Is token expired: ' + expired);
+        this.log.debug('Is token expired: ' + expired);
         return expired;
     }
-    async hasRefreshToken() {
-        const hasToken = !!(await this.getSessionRefreshToken());
-        this.adapter.log.debug('Has refresh token: ' + hasToken);
+    async hasAccessToken() {
+        const hasToken = !!(await this.getSessionAccessToken());
+        this.log.debug('Has access token: ' + hasToken);
         return hasToken;
     }
 }

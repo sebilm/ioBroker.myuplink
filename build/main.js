@@ -1,41 +1,45 @@
+"use strict";
 /*
  * Created with @iobroker/create-adapter v2.5.0
  */
-
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
-import * as utils from '@iobroker/adapter-core';
-import * as fs from 'fs';
-import * as path from 'path';
-import { AuthRepository } from './authRepository';
-import { ParameterData } from './models/ParameterData';
-import { SystemDevice } from './models/SystemDevice';
-import { SystemWithDevices } from './models/SystemWithDevices';
-import { MyUplinkRepository } from './myuplinkRepository';
-
-// Helper functions:
-
-// For todays date;
-declare global {
-    interface Date {
-        today(): string;
-    }
-}
-Date.prototype.today = function (): string {
+const utils = __importStar(require("@iobroker/adapter-core"));
+const fs = __importStar(require("fs"));
+const path = __importStar(require("path"));
+const authRepository_1 = require("./authRepository");
+const myuplinkRepository_1 = require("./myuplinkRepository");
+Date.prototype.today = function () {
     return this.getFullYear() + '-' + (this.getMonth() + 1 < 10 ? '0' : '') + (this.getMonth() + 1) + '-' + (this.getDate() < 10 ? '0' : '') + this.getDate();
 };
-
-// For the time now
-declare global {
-    interface Date {
-        timeNow(): string;
-    }
-}
-Date.prototype.timeNow = function (): string {
+Date.prototype.timeNow = function () {
     return (this.getHours() < 10 ? '0' : '') + this.getHours() + ':' + (this.getMinutes() < 10 ? '0' : '') + this.getMinutes() + ':' + (this.getSeconds() < 10 ? '0' : '') + this.getSeconds();
 };
-
-async function createDeviceAsync(adapter: Myuplink, path: string, name: string): Promise<void> {
+async function createDeviceAsync(adapter, path, name) {
     await adapter.setObjectNotExistsAsync(path, {
         type: 'device',
         common: {
@@ -45,8 +49,7 @@ async function createDeviceAsync(adapter: Myuplink, path: string, name: string):
         native: {},
     });
 }
-
-async function createChannelAsync(adapter: Myuplink, path: string, name: string): Promise<void> {
+async function createChannelAsync(adapter, path, name) {
     await adapter.setObjectNotExistsAsync(path, {
         type: 'channel',
         common: {
@@ -56,8 +59,7 @@ async function createChannelAsync(adapter: Myuplink, path: string, name: string)
         native: {},
     });
 }
-
-async function createStringStateAsync(adapter: Myuplink, path: string, name: string, value: string): Promise<void> {
+async function createStringStateAsync(adapter, path, name, value) {
     await adapter.setObjectNotExistsAsync(path, {
         type: 'state',
         common: {
@@ -71,8 +73,7 @@ async function createStringStateAsync(adapter: Myuplink, path: string, name: str
     });
     await adapter.setStateAsync(path, { val: value, ack: true });
 }
-
-async function createBooleanStateAsync(adapter: Myuplink, path: string, name: string, role: string, value: boolean): Promise<void> {
+async function createBooleanStateAsync(adapter, path, name, role, value) {
     await adapter.setObjectNotExistsAsync(path, {
         type: 'state',
         common: {
@@ -86,9 +87,8 @@ async function createBooleanStateAsync(adapter: Myuplink, path: string, name: st
     });
     await adapter.setStateAsync(path, { val: value, ack: true });
 }
-
 class Myuplink extends utils.Adapter {
-    public constructor(options: Partial<utils.AdapterOptions> = {}) {
+    constructor(options = {}) {
         super({
             ...options,
             name: 'myuplink',
@@ -97,32 +97,21 @@ class Myuplink extends utils.Adapter {
         this.on('unload', this.onUnload.bind(this));
         this.refreshInterval = 0;
     }
-
-    private authRepository: AuthRepository | undefined;
-    private myUplinkRepository: MyUplinkRepository | undefined;
-    private interval: NodeJS.Timeout | undefined;
-    private refreshInterval: number;
-
     /**
      * Is called when databases are connected and adapter received configuration.
      */
-    private async onReady(): Promise<void> {
+    async onReady() {
         // Initialize your adapter here
-
         this.log.info('Starting adapter.');
-
         await this.setInfoObjects();
-
         this.refreshInterval = this.config.Interval * 60;
         if (this.refreshInterval < 60) {
             this.refreshInterval = 60;
         }
-
-        const identifier: string = this.config.Identifier.trim();
-        const secret: string = this.config.Secret.trim();
-        const callbackURL: string = this.config.CallbackURL.trim();
-        const configured: boolean = this.config.Configured;
-
+        const identifier = this.config.Identifier.trim();
+        const secret = this.config.Secret.trim();
+        const callbackURL = this.config.CallbackURL.trim();
+        const configured = this.config.Configured;
         let error = false;
         if (identifier == '' || identifier == null) {
             if (configured != false) {
@@ -147,59 +136,44 @@ class Myuplink extends utils.Adapter {
             this.setState('info.currentError', { val: 'Missing settings!', ack: true });
             return;
         }
-
-        const dataDir: string = utils.getAbsoluteDefaultDataDir();
-        let storeDir: string = path.join(dataDir, 'myuplink');
+        const dataDir = utils.getAbsoluteDefaultDataDir();
+        let storeDir = path.join(dataDir, 'myuplink');
         try {
             // create directory
             if (!fs.existsSync(storeDir)) {
                 fs.mkdirSync(storeDir);
             }
-        } catch (err) {
+        }
+        catch (err) {
             this.log.error('Could not create storage directory (' + storeDir + '): ' + err);
             storeDir = __dirname;
         }
         const storeFile = path.join(storeDir, 'session.' + this.instance + '.json');
-
-        this.authRepository = new AuthRepository(
-            {
-                clientId: identifier,
-                clientSecret: secret,
-                redirectUri: callbackURL,
-                authCode: this.config.AuthCode.trim(),
-                sessionStoreFilePath: storeFile,
-                baseUrl: 'https://api.myuplink.com',
-                scope: 'READSYSTEM WRITESYSTEM',
-                timeout: 45000,
-                userAgent: 'iobroker.myuplink',
-                renewBeforeExpiry: 5 * 60 * 1000,
-            },
-            this.log,
-        );
-
-        this.myUplinkRepository = new MyUplinkRepository(
-            {
-                baseUrl: 'https://api.myuplink.com',
-                timeout: 45000,
-                userAgent: 'iobroker.myuplink',
-                language: this.config.Language,
-            },
-            this.log,
-        );
-
-        this.interval = setInterval(
-            async () => {
-                await this.getData();
-            },
-            <number>this.refreshInterval * 1000,
-        );
-
+        this.authRepository = new authRepository_1.AuthRepository({
+            clientId: identifier,
+            clientSecret: secret,
+            redirectUri: callbackURL,
+            authCode: this.config.AuthCode.trim(),
+            sessionStoreFilePath: storeFile,
+            baseUrl: 'https://api.myuplink.com',
+            scope: 'READSYSTEM WRITESYSTEM',
+            timeout: 45000,
+            userAgent: 'iobroker.myuplink',
+            renewBeforeExpiry: 5 * 60 * 1000,
+        }, this.log);
+        this.myUplinkRepository = new myuplinkRepository_1.MyUplinkRepository({
+            baseUrl: 'https://api.myuplink.com',
+            timeout: 45000,
+            userAgent: 'iobroker.myuplink',
+            language: this.config.Language,
+        }, this.log);
+        this.interval = setInterval(async () => {
+            await this.getData();
+        }, this.refreshInterval * 1000);
         this.log.info('Adapter started.');
-
         this.getData();
     }
-
-    private async getData(): Promise<void> {
+    async getData() {
         try {
             if (this.authRepository) {
                 const accessToken = await this.authRepository.getAccessToken();
@@ -212,17 +186,15 @@ class Myuplink extends utils.Adapter {
                     const datetime = newDate.today() + ' ' + newDate.timeNow();
                     this.setState('info.updateTime', { val: datetime, ack: true });
                     this.setState('info.currentError', { val: '', ack: true });
-
-                    systems.systems?.forEach(async (value: SystemWithDevices) => {
+                    systems.systems?.forEach(async (value) => {
                         await this.setSystemWithDevices(value, accessToken);
                     });
                 }
             }
-        } catch (error) {
+        }
+        catch (error) {
             this.log.error('' + error);
-
             this.setState('info.connection', { val: false, ack: true });
-
             const newDate = new Date();
             const datetime = newDate.today() + ' ' + newDate.timeNow();
             this.setState('info.lastErrorTime', { val: datetime, ack: true });
@@ -230,8 +202,7 @@ class Myuplink extends utils.Adapter {
             this.setState('info.currentError', { val: '' + error, ack: true });
         }
     }
-
-    private async setSystemWithDevices(system: SystemWithDevices, accessToken: string): Promise<void> {
+    async setSystemWithDevices(system, accessToken) {
         if (system.systemId != undefined && system.name != undefined) {
             const systemPath = system.systemId;
             await createDeviceAsync(this, systemPath, system.name);
@@ -246,13 +217,12 @@ class Myuplink extends utils.Adapter {
             if (system.hasAlarm != undefined) {
                 await createBooleanStateAsync(this, `${systemPath}.hasAlarm`, 'Has Alarm', 'indicator.alarm', system.hasAlarm);
             }
-            system.devices?.forEach(async (dev: SystemDevice) => {
+            system.devices?.forEach(async (dev) => {
                 await this.setSystemDevice(dev, systemPath, accessToken);
             });
         }
     }
-
-    private async setSystemDevice(device: SystemDevice, systemPath: string, accessToken: string): Promise<void> {
+    async setSystemDevice(device, systemPath, accessToken) {
         if (device.id != undefined && device.product?.name != undefined) {
             const devPath = `${systemPath}.${device.id}`;
             await createChannelAsync(this, devPath, device.product.name);
@@ -267,21 +237,18 @@ class Myuplink extends utils.Adapter {
             if (device.product?.serialNumber != undefined) {
                 await createStringStateAsync(this, `${devPath}.serialNumber`, 'Serial Number', device.product.serialNumber);
             }
-
             const devicePoints = await this.myUplinkRepository?.getDevicePoints(device.id, accessToken);
-            devicePoints?.forEach(async (data: ParameterData) => {
+            devicePoints?.forEach(async (data) => {
                 await this.setParameterData(data, devPath);
             });
         }
     }
-
-    private async setParameterData(data: ParameterData, devPath: string): Promise<void> {
+    async setParameterData(data, devPath) {
         if (data.parameterId && data.parameterName) {
             const path = `${devPath}.${data.parameterId}`;
-
             const objectExists = await this.objectExists(path);
             if (!objectExists) {
-                const obj: ioBroker.SettableObject = {
+                const obj = {
                     type: 'state',
                     common: {
                         name: data.parameterName,
@@ -297,8 +264,7 @@ class Myuplink extends utils.Adapter {
             await this.setStateAsync(path, { val: data.value, ack: true });
         }
     }
-
-    private async setInfoObjects(): Promise<void> {
+    async setInfoObjects() {
         await this.setObjectNotExistsAsync('info', {
             type: 'channel',
             common: {
@@ -367,11 +333,10 @@ class Myuplink extends utils.Adapter {
             native: {},
         });
     }
-
     /**
      * Is called when adapter shuts down - callback has to be called under any circumstances!
      */
-    private onUnload(callback: () => void): void {
+    onUnload(callback) {
         try {
             if (this.interval != undefined) {
                 clearInterval(this.interval);
@@ -382,16 +347,18 @@ class Myuplink extends utils.Adapter {
             this.setState('info.connection', { val: false, ack: true });
             this.log.info('Cleaned everything up...');
             callback();
-        } catch (e) {
+        }
+        catch (e) {
             callback();
         }
     }
 }
-
 if (require.main !== module) {
     // Export the constructor in compact mode
-    module.exports = (options: Partial<utils.AdapterOptions> | undefined) => new Myuplink(options);
-} else {
+    module.exports = (options) => new Myuplink(options);
+}
+else {
     // otherwise start the instance directly
     (() => new Myuplink())();
 }
+//# sourceMappingURL=main.js.map
