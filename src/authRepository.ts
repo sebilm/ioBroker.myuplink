@@ -1,15 +1,14 @@
-import * as utils from '@iobroker/adapter-core';
 import axios, { AxiosError } from 'axios';
 import * as fs from 'fs';
 import jsonfile from 'jsonfile';
 import * as session from './models/Session';
 
-export default interface Options {
-    authCode: string;
+export default interface AuthOptions {
     clientId: string;
     clientSecret: string;
     redirectUri: string;
-    sessionStore: string;
+    authCode: string;
+    sessionStoreFilePath: string;
     baseUrl: string;
     scope: string;
     timeout: number;
@@ -19,17 +18,12 @@ export default interface Options {
 
 interface Session extends session.Session {
     expires_at?: number;
-    expires_in?: number;
     authCode?: string;
-    access_token?: string;
-    refresh_token?: string;
-    token_type?: string;
-    scope?: string;
 }
 
 export class AuthRepository {
-    constructor(options: Options, adapter: utils.AdapterInstance) {
-        this.adapter = adapter;
+    constructor(options: AuthOptions, log: ioBroker.Log) {
+        this.log = log;
         this.options = options;
 
         axios.defaults.baseURL = options.baseUrl;
@@ -37,27 +31,27 @@ export class AuthRepository {
         axios.defaults.timeout = options.timeout;
     }
 
-    private adapter: utils.AdapterInstance;
-    private options: Options;
+    private log: ioBroker.Log;
+    private options: AuthOptions;
     private auth: Session | null | undefined;
 
     async getAccessToken(): Promise<string | undefined | null> {
-        this.adapter.log.debug('getAccessToken() called');
+        this.log.debug('getAccessToken()');
 
         if (await this.hasNewAuthCode()) {
             await this.clearSesssion();
         }
-        if (!(await this.hasRefreshToken())) {
+        if (!(await this.hasAccessToken())) {
             if (this.options.authCode) {
                 const token = await this.getToken(this.options.authCode);
                 await this.setSesssion(token);
             } else {
-                this.adapter.log.error('You need to get and set a new Auth-Code. You can do this in the adapter setting.');
+                this.log.error('You need to get and set a new Auth-Code. You can do this in the adapter setting.');
                 return null;
             }
         }
         if (await this.isTokenExpired()) {
-            this.adapter.log.debug('Token is expired / expires soon - refreshing');
+            this.log.debug('Token is expired / expires soon - refreshing');
             const token = await this.getRefreshToken();
             await this.setSesssion(token);
         }
@@ -66,7 +60,7 @@ export class AuthRepository {
     }
 
     private async getToken(authCode: string): Promise<Session> {
-        this.adapter.log.debug('token()');
+        this.log.debug('getToken()');
         const data = {
             grant_type: 'authorization_code',
             client_id: this.options.clientId,
@@ -79,7 +73,7 @@ export class AuthRepository {
     }
 
     private async getRefreshToken(): Promise<Session> {
-        this.adapter.log.debug('Refresh token.');
+        this.log.debug('getRefreshToken()');
         const data = {
             grant_type: 'refresh_token',
             refresh_token: await this.getSessionRefreshToken(),
@@ -92,6 +86,7 @@ export class AuthRepository {
     private async postTokenRequest(body: any): Promise<Session> {
         const stringBody = new URLSearchParams(body).toString();
         const url = '/oauth/token';
+        this.log.debug(`send to ${url}: ${stringBody}`);
         try {
             const { data } = await axios.post<Session>(url, stringBody, {
                 headers: {
@@ -100,6 +95,7 @@ export class AuthRepository {
             });
             const expiresIn = data.expires_in ?? 1800;
             data.expires_at = Date.now() + expiresIn * 1000;
+            this.log.debug(`TokenData: ${JSON.stringify(data, null, ' ')}`);
             return data;
         } catch (error) {
             throw await this.checkError(url, error);
@@ -107,7 +103,7 @@ export class AuthRepository {
     }
 
     private async checkError(suburl: string, error: unknown): Promise<unknown> {
-        this.adapter.log.error(`error from ${suburl}`);
+        this.log.error(`error from ${suburl}`);
         if (axios.isAxiosError(error)) {
             const axiosError = error as AxiosError;
             if (axiosError.response != null) {
@@ -127,15 +123,15 @@ export class AuthRepository {
     }
 
     private async readSession(): Promise<void> {
-        this.adapter.log.debug('Read session.');
-        if (!this.options.sessionStore || !fs.existsSync(this.options.sessionStore)) {
+        this.log.debug('Read session.');
+        if (!this.options.sessionStoreFilePath || !fs.existsSync(this.options.sessionStoreFilePath)) {
             return;
         }
-        this.auth = await jsonfile.readFile(this.options.sessionStore, { throws: false });
+        this.auth = await jsonfile.readFile(this.options.sessionStoreFilePath, { throws: false });
     }
 
     private async getSessionAuthCode(): Promise<string | undefined | null> {
-        this.adapter.log.silly('Get session authCode.');
+        this.log.silly('Get session authCode.');
         if (this.auth == null) {
             await this.readSession();
         }
@@ -143,7 +139,7 @@ export class AuthRepository {
     }
 
     private async getSessionAccessToken(): Promise<string | undefined | null> {
-        this.adapter.log.silly('Get session access_token.');
+        this.log.silly('Get session access_token.');
         if (this.auth == null) {
             await this.readSession();
         }
@@ -151,7 +147,7 @@ export class AuthRepository {
     }
 
     private async getSessionRefreshToken(): Promise<string | undefined | null> {
-        this.adapter.log.silly('Get session refresh_token.');
+        this.log.silly('Get session refresh_token.');
         if (this.auth == null) {
             await this.readSession();
         }
@@ -159,7 +155,7 @@ export class AuthRepository {
     }
 
     private async getSessionExpires(): Promise<number | undefined | null> {
-        this.adapter.log.silly('Get session expires.');
+        this.log.silly('Get session expires.');
         if (this.auth == null) {
             await this.readSession();
         }
@@ -167,38 +163,39 @@ export class AuthRepository {
     }
 
     private async setSesssion(auth: Session): Promise<void> {
-        this.adapter.log.debug('Set session.');
+        this.log.debug('Set session.');
         if (auth.authCode == null) {
             auth.authCode = this.options.authCode;
         }
         this.auth = auth;
-        if (!this.options.sessionStore) {
+        this.log.debug(`sessionStoreFilePath: ${this.options.sessionStoreFilePath}`);
+        if (!this.options.sessionStoreFilePath) {
             return;
         }
-        await jsonfile.writeFile(this.options.sessionStore, this.auth, { spaces: 2 });
+        await jsonfile.writeFile(this.options.sessionStoreFilePath, this.auth, { spaces: 2 });
     }
 
     private async clearSesssion(): Promise<void> {
-        this.adapter.log.debug('Clear session.');
+        this.log.debug('Clear session.');
         await this.setSesssion({});
     }
 
     private async hasNewAuthCode(): Promise<boolean> {
         const authCode = await this.getSessionAuthCode();
         const hasNewAuthCode = authCode != null && authCode != this.options.authCode;
-        this.adapter.log.debug('Has new auth code: ' + hasNewAuthCode);
+        this.log.debug('Has new auth code: ' + hasNewAuthCode);
         return hasNewAuthCode;
     }
 
     private async isTokenExpired(): Promise<boolean> {
         const expired = ((await this.getSessionExpires()) || 0) < Date.now() + this.options.renewBeforeExpiry;
-        this.adapter.log.debug('Is token expired: ' + expired);
+        this.log.debug('Is token expired: ' + expired);
         return expired;
     }
 
-    private async hasRefreshToken(): Promise<boolean> {
-        const hasToken = !!(await this.getSessionRefreshToken());
-        this.adapter.log.debug('Has refresh token: ' + hasToken);
+    private async hasAccessToken(): Promise<boolean> {
+        const hasToken = !!(await this.getSessionAccessToken());
+        this.log.debug('Has access token: ' + hasToken);
         return hasToken;
     }
 }
