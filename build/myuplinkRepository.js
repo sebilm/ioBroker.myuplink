@@ -17,7 +17,7 @@ class MyUplinkRepository {
         return await this.getFromMyUplink('/v2/systems/me', accessToken);
     }
     async getDevicePoints(deviceId, accessToken) {
-        return await this.getFromMyUplink(`/v2/devices/${deviceId}/points`, accessToken);
+        return await this.getFromMyUplink(`/v3/devices/${deviceId}/points`, accessToken);
     }
     async getFromMyUplink(suburl, accessToken) {
         const lang = this.options.language;

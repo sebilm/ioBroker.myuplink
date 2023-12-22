@@ -27,7 +27,7 @@ export class MyUplinkRepository {
     }
 
     async getDevicePoints(deviceId: string, accessToken: string): Promise<ParameterData[]> {
-        return await this.getFromMyUplink<ParameterData[]>(`/v2/devices/${deviceId}/points`, accessToken);
+        return await this.getFromMyUplink<ParameterData[]>(`/v3/devices/${deviceId}/points`, accessToken);
     }
 
     private async getFromMyUplink<T>(suburl: string, accessToken: string): Promise<T> {

@@ -39,6 +39,9 @@ Date.prototype.today = function () {
 Date.prototype.timeNow = function () {
     return (this.getHours() < 10 ? '0' : '') + this.getHours() + ':' + (this.getMinutes() < 10 ? '0' : '') + this.getMinutes() + ':' + (this.getSeconds() < 10 ? '0' : '') + this.getSeconds();
 };
+function removeSoftHyphen(text) {
+    return text.replace(new RegExp('\u00AD', 'g'), '');
+}
 async function createDeviceAsync(adapter, path, name) {
     await adapter.setObjectNotExistsAsync(path, {
         type: 'device',
@@ -167,11 +170,11 @@ class Myuplink extends utils.Adapter {
             userAgent: 'iobroker.myuplink',
             language: this.config.Language,
         }, this.log);
+        this.log.info('Adapter started.');
+        this.getData();
         this.interval = setInterval(async () => {
             await this.getData();
         }, this.refreshInterval * 1000);
-        this.log.info('Adapter started.');
-        this.getData();
     }
     async getData() {
         try {
@@ -205,9 +208,10 @@ class Myuplink extends utils.Adapter {
     async setSystemWithDevices(system, accessToken) {
         if (system.systemId != undefined && system.name != undefined) {
             const systemPath = system.systemId;
-            await createDeviceAsync(this, systemPath, system.name);
+            const systemName = removeSoftHyphen(system.name);
+            await createDeviceAsync(this, systemPath, systemName);
             await createStringStateAsync(this, `${systemPath}.systemId`, 'System ID', system.systemId);
-            await createStringStateAsync(this, `${systemPath}.name`, 'Name', system.name);
+            await createStringStateAsync(this, `${systemPath}.name`, 'Name', systemName);
             if (system.country != undefined) {
                 await createStringStateAsync(this, `${systemPath}.country`, 'Country', system.country);
             }
@@ -225,9 +229,10 @@ class Myuplink extends utils.Adapter {
     async setSystemDevice(device, systemPath, accessToken) {
         if (device.id != undefined && device.product?.name != undefined) {
             const devPath = `${systemPath}.${device.id}`;
-            await createChannelAsync(this, devPath, device.product.name);
+            const deviceName = removeSoftHyphen(device.product.name);
+            await createChannelAsync(this, devPath, deviceName);
             await createStringStateAsync(this, `${devPath}.id`, 'Device ID', device.id);
-            await createStringStateAsync(this, `${devPath}.name`, 'Name', device.product.name);
+            await createStringStateAsync(this, `${devPath}.name`, 'Name', deviceName);
             if (device.connectionState != undefined) {
                 await createStringStateAsync(this, `${devPath}.connectionState`, 'Connection State', device.connectionState);
             }
@@ -238,6 +243,7 @@ class Myuplink extends utils.Adapter {
                 await createStringStateAsync(this, `${devPath}.serialNumber`, 'Serial Number', device.product.serialNumber);
             }
             const devicePoints = await this.myUplinkRepository?.getDevicePoints(device.id, accessToken);
+            await createStringStateAsync(this, `${devPath}.rawData`, 'Received raw JSON of parameter data', JSON.stringify(devicePoints, null, ''));
             devicePoints?.forEach(async (data) => {
                 await this.setParameterData(data, devPath);
             });
@@ -251,7 +257,7 @@ class Myuplink extends utils.Adapter {
                 const obj = {
                     type: 'state',
                     common: {
-                        name: data.parameterName,
+                        name: removeSoftHyphen(data.parameterName),
                         type: 'number',
                         role: 'value',
                         read: true,
@@ -259,6 +265,27 @@ class Myuplink extends utils.Adapter {
                     },
                     native: {},
                 };
+                if (data.parameterUnit) {
+                    obj.common.unit = data.parameterUnit;
+                }
+                if (data.minValue) {
+                    obj.common.min = data.minValue;
+                }
+                if (data.maxValue) {
+                    obj.common.max = data.maxValue;
+                }
+                if (data.stepValue) {
+                    obj.common.step = data.stepValue;
+                }
+                if (data.enumValues && data.enumValues.length > 0) {
+                    const states = {};
+                    data.enumValues.forEach((enumValue) => {
+                        if (enumValue.text && enumValue.value) {
+                            states[enumValue.value] = removeSoftHyphen(enumValue.text);
+                        }
+                    });
+                    obj.common.states = states;
+                }
                 await this.setObjectNotExistsAsync(path, obj);
             }
             await this.setStateAsync(path, { val: data.value, ack: true });
