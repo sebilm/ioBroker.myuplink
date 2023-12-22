@@ -275,7 +275,9 @@ class Myuplink extends utils.Adapter {
             }
 
             const devicePoints = await this.myUplinkRepository?.getDevicePoints(device.id, accessToken);
-            await createStringStateAsync(this, `${devPath}.rawData`, 'Received raw JSON of parameter data', JSON.stringify(devicePoints, null, ''));
+            if (this.config.AddRawData) {
+                await createStringStateAsync(this, `${devPath}.rawData`, 'Received raw JSON of parameter data', JSON.stringify(devicePoints, null, ''));
+            }
             devicePoints?.forEach(async (data: ParameterData) => {
                 await this.setParameterData(data, devPath);
             });

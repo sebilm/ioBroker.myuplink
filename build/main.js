@@ -243,7 +243,9 @@ class Myuplink extends utils.Adapter {
                 await createStringStateAsync(this, `${devPath}.serialNumber`, 'Serial Number', device.product.serialNumber);
             }
             const devicePoints = await this.myUplinkRepository?.getDevicePoints(device.id, accessToken);
-            await createStringStateAsync(this, `${devPath}.rawData`, 'Received raw JSON of parameter data', JSON.stringify(devicePoints, null, ''));
+            if (this.config.AddRawData) {
+                await createStringStateAsync(this, `${devPath}.rawData`, 'Received raw JSON of parameter data', JSON.stringify(devicePoints, null, ''));
+            }
             devicePoints?.forEach(async (data) => {
                 await this.setParameterData(data, devPath);
             });

@@ -11,6 +11,7 @@ declare global {
             Interval: number;
             Language: string;
             Secret: string;
+            AddRawData: boolean;
         }
     }
 }
