@@ -224,6 +224,8 @@ class Myuplink extends utils.Adapter {
             system.devices?.forEach(async (dev) => {
                 await this.setSystemDevice(dev, systemPath, accessToken);
             });
+            const notifications = await this.myUplinkRepository?.getActiveNotifications(system.systemId, accessToken);
+            await createStringStateAsync(this, `${systemPath}.rawActiveNotifications`, 'Received raw JSON of active notifications', JSON.stringify(notifications, null, ''));
         }
     }
     async setSystemDevice(device, systemPath, accessToken) {

@@ -19,6 +19,9 @@ class MyUplinkRepository {
     async getDevicePoints(deviceId, accessToken) {
         return await this.getFromMyUplink(`/v3/devices/${deviceId}/points`, accessToken);
     }
+    async getActiveNotifications(systemId, accessToken) {
+        return await this.getFromMyUplink(`/v2/systems/${systemId}/notifications/active?itemsPerPage=100`, accessToken);
+    }
     async getFromMyUplink(suburl, accessToken) {
         const lang = this.options.language;
         this.log.debug(`GET ${suburl} (lang: ${lang})`);

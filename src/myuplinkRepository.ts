@@ -1,4 +1,5 @@
 import axios, { AxiosError } from 'axios';
+import { AlarmsPaged } from './models/AlarmsPaged';
 import { PagedSystemResult } from './models/PagedSystemResult';
 import { ParameterData } from './models/ParameterData';
 
@@ -28,6 +29,10 @@ export class MyUplinkRepository {
 
     async getDevicePoints(deviceId: string, accessToken: string): Promise<ParameterData[]> {
         return await this.getFromMyUplink<ParameterData[]>(`/v3/devices/${deviceId}/points`, accessToken);
+    }
+
+    async getActiveNotifications(systemId: string, accessToken: string): Promise<AlarmsPaged> {
+        return await this.getFromMyUplink<AlarmsPaged>(`/v2/systems/${systemId}/notifications/active?itemsPerPage=100`, accessToken);
     }
 
     private async getFromMyUplink<T>(suburl: string, accessToken: string): Promise<T> {
