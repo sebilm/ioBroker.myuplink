@@ -110,7 +110,7 @@ class Myuplink extends utils.Adapter {
 
     private authRepository: AuthRepository | undefined;
     private myUplinkRepository: MyUplinkRepository | undefined;
-    private interval: NodeJS.Timeout | undefined;
+    private interval: ioBroker.Interval | undefined;
     private refreshInterval: number;
 
     /**
@@ -200,7 +200,7 @@ class Myuplink extends utils.Adapter {
         this.log.info('Adapter started.');
 
         this.getData();
-        this.interval = setInterval(
+        this.interval = this.setInterval(
             async () => {
                 await this.getData();
             },
@@ -431,10 +431,8 @@ class Myuplink extends utils.Adapter {
      */
     private onUnload(callback: () => void): void {
         try {
-            if (this.interval != undefined) {
-                clearInterval(this.interval);
-                this.interval = undefined;
-            }
+            this.clearInterval(this.interval);
+            this.interval = undefined;
             this.authRepository = undefined;
             this.myUplinkRepository = undefined;
             this.setState('info.connection', { val: false, ack: true });
