@@ -73,6 +73,8 @@
             }
         ]
     },
+    "encryptedNative": ["Identifier", "Secret", "AuthCode"],
+    "protectedNative": ["Identifier", "Secret", "AuthCode"],
     "native": {
         "Identifier": "",
         "Secret": "",
