@@ -55,7 +55,7 @@ class AuthRepository {
         }
         if (await this.isTokenExpired()) {
             this.log.debug('Token is expired / expires soon - refreshing');
-            const token = await this.getRefreshToken();
+            const token = await this.refreshToken();
             await this.setSesssion(token);
         }
         return await this.getSessionAccessToken();
@@ -70,9 +70,14 @@ class AuthRepository {
             redirect_uri: this.options.redirectUri,
             scope: this.options.scope,
         };
-        return await this.postTokenRequest(data);
+        const session = await this.postTokenRequest(data);
+        this.log.info(`Token received. Refresh Token: ${session.refresh_token != undefined}. Expires In: ${session.expires_in}`);
+        if (!session.refresh_token) {
+            this.log.warn('Received token without Refresh Token.');
+        }
+        return session;
     }
-    async getRefreshToken() {
+    async refreshToken() {
         this.log.debug('getRefreshToken()');
         const data = {
             grant_type: 'refresh_token',
@@ -80,7 +85,12 @@ class AuthRepository {
             client_id: this.options.clientId,
             client_secret: this.options.clientSecret,
         };
-        return await this.postTokenRequest(data);
+        const session = await this.postTokenRequest(data);
+        this.log.info(`Token refreshed. Refresh Token: ${session.refresh_token != undefined}. Expires In: ${session.expires_in}`);
+        if (!session.refresh_token) {
+            this.log.warn('Received refreshed token without Refresh Token.');
+        }
+        return session;
     }
     async postTokenRequest(body) {
         const stringBody = new URLSearchParams(body).toString();

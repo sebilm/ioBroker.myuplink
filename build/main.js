@@ -224,8 +224,17 @@ class Myuplink extends utils.Adapter {
             system.devices?.forEach(async (dev) => {
                 await this.setSystemDevice(dev, systemPath, accessToken);
             });
-            const notifications = await this.myUplinkRepository?.getActiveNotifications(system.systemId, accessToken);
-            await createStringStateAsync(this, `${systemPath}.rawActiveNotifications`, 'Received raw JSON of active notifications', JSON.stringify(notifications, null, ''));
+            if (this.config.AddActiveNotifications) {
+                const notifications = await this.myUplinkRepository?.getActiveNotifications(system.systemId, accessToken);
+                if (this.config.AddRawActiveNotifications) {
+                    await createStringStateAsync(this, `${systemPath}.rawActiveNotifications`, 'Received raw JSON of active notifications', JSON.stringify(notifications?.notifications, null, ''));
+                }
+                let notificationsDescriptions = '';
+                notifications?.notifications?.forEach((notification) => {
+                    notificationsDescriptions += `${notification.header}: ${notification.description}\n`;
+                });
+                await createStringStateAsync(this, `${systemPath}.activeNotifications`, 'Active notification descriptions', notificationsDescriptions);
+            }
         }
     }
     async setSystemDevice(device, systemPath, accessToken) {
@@ -244,13 +253,15 @@ class Myuplink extends utils.Adapter {
             if (device.product?.serialNumber != undefined) {
                 await createStringStateAsync(this, `${devPath}.serialNumber`, 'Serial Number', device.product.serialNumber);
             }
-            const devicePoints = await this.myUplinkRepository?.getDevicePoints(device.id, accessToken);
-            if (this.config.AddRawData) {
-                await createStringStateAsync(this, `${devPath}.rawData`, 'Received raw JSON of parameter data', JSON.stringify(devicePoints, null, ''));
+            if (this.config.AddData) {
+                const devicePoints = await this.myUplinkRepository?.getDevicePoints(device.id, accessToken);
+                if (this.config.AddRawData) {
+                    await createStringStateAsync(this, `${devPath}.rawData`, 'Received raw JSON of parameter data', JSON.stringify(devicePoints, null, ''));
+                }
+                devicePoints?.forEach(async (data) => {
+                    await this.setParameterData(data, devPath);
+                });
             }
-            devicePoints?.forEach(async (data) => {
-                await this.setParameterData(data, devPath);
-            });
         }
     }
     async setParameterData(data, devPath) {
