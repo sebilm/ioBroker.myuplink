@@ -45,18 +45,7 @@
             "zh-cn": "myUplink.com 适用于 Nibe 热泵"
         },
         "authors": ["Sebastian Haesselbarth <seb@sebmail.de>"],
-        "keywords": [
-            "myuplink",
-            "heat pump",
-            "NIBE",
-            "AIT",
-            "Cetetherm",
-            "ClimateMaster",
-            "Contura",
-            "CTA",
-            "CTC",
-            "Enertech Global"
-        ],
+        "keywords": ["myuplink", "heat pump", "NIBE", "AIT", "Cetetherm", "ClimateMaster", "Contura", "CTA", "CTC", "Enertech Global"],
         "license": "MIT",
         "platform": "Javascript/Node.js",
         "main": "build/main.js",
@@ -91,7 +80,11 @@
         "AuthCode": "",
         "Interval": 1,
         "Language": "en",
-        "Configured": false
+        "Configured": false,
+        "AddData": true,
+        "AddRawData": false,
+        "AddActiveNotifications": true,
+        "AddRawActiveNotifications": false
     },
     "objects": [],
     "instanceObjects": [

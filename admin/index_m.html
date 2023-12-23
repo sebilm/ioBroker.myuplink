@@ -14,7 +14,6 @@
         <!-- Load our own files -->
         <link rel="stylesheet" type="text/css" href="style.css" />
         <script type="text/javascript" src="words.js"></script>
-        <script type="text/javascript" src="scripts.js"></script>
 
         <script type="text/javascript">
             // This will be called by the admin adapter when the settings page loads
@@ -91,7 +90,7 @@
             <div class="section">
                 <div class="row">
                     <div class="col s12">
-                        <h6 class="translate sub-title">Authentication</h6>
+                        <h5 class="translate sub-title">Authentication</h5>
                     </div>
                 </div>
                 <div class="row">
@@ -132,7 +131,7 @@
             <div class="section">
                 <div class="row">
                     <div class="col s12">
-                        <h6 class="translate sub-title">Settings</h6>
+                        <h5 class="translate sub-title">Settings</h5>
                     </div>
                 </div>
                 <div class="row">
@@ -152,15 +151,51 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="input-field col s12 m12 l12">
-                        <input type="checkbox" class="value" id="AddRawData" />
-                        <label for="AddRawData" class="translate">Add object with the raw JSON data</label>
-                        <p><span class="translate">An object containing the received data as a JSON string is added to the object tree.</span></p>
+                    <div class="section">
+                        <div class="row">
+                            <div class="col s12">
+                                <h6 class="translate sub-title">Parameter data</h6>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12 m12 l6">
+                                <input type="checkbox" class="value" id="AddData" />
+                                <label for="AddData" class="translate">Retrieve parameter data</label>
+                                <p><span class="translate">Parameter data will be retrieved and added to the object tree.</span></p>
+                            </div>
+                            <div class="input-field col s12 m12 l6">
+                                <input type="checkbox" class="value" id="AddRawData" />
+                                <label for="AddRawData" class="translate">Add object with the raw JSON data</label>
+                                <p><span class="translate">An object containing the received data as a JSON string is added to the object tree.</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="section">
+                        <div class="row">
+                            <div class="col s12">
+                                <h6 class="translate sub-title">Notifications</h6>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12 m12 l6">
+                                <input type="checkbox" class="value" id="AddActiveNotifications" />
+                                <label for="AddActiveNotifications" class="translate">Retrieve active notifications</label>
+                                <p><span class="translate">Active notifications will be retrieved and added to the object tree.</span></p>
+                            </div>
+                            <div class="input-field col s12 m12 l6">
+                                <input type="checkbox" class="value" id="AddRawActiveNotifications" />
+                                <label for="AddRawActiveNotifications" class="translate">Add object with active notifications as raw JSON</label>
+                                <p><span class="translate">An object containing the received active notifications as a JSON string is added to the object tree.</span></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <script type="text/javascript" src="scripts.js"></script>
         <script>
             var id = setInterval(function () {
                 clearInterval(id);

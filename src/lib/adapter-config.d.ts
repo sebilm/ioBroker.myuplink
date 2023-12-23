@@ -11,7 +11,10 @@ declare global {
             Interval: number;
             Language: string;
             Secret: string;
+            AddData: boolean;
             AddRawData: boolean;
+            AddActiveNotifications: boolean;
+            AddRawActiveNotifications: boolean;
         }
     }
 }
