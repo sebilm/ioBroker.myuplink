@@ -41,6 +41,10 @@ function removeSoftHyphen(text: string): string {
     return text.replace(new RegExp('\u00AD', 'g'), '');
 }
 
+function replaceUnwantedLetters(text: string): string {
+    return removeSoftHyphen(text.replace(new RegExp(' ', 'g'), '_').replace(new RegExp('\\.', 'g'), '_'));
+}
+
 async function createDeviceAsync(adapter: Myuplink, path: string, name: string): Promise<void> {
     await adapter.setObjectNotExistsAsync(path, {
         type: 'device',
@@ -238,7 +242,7 @@ class Myuplink extends utils.Adapter {
 
     private async setSystemWithDevices(system: SystemWithDevices, accessToken: string): Promise<void> {
         if (system.systemId != undefined && system.name != undefined) {
-            const systemPath = system.systemId;
+            const systemPath = replaceUnwantedLetters(system.systemId);
             const systemName = removeSoftHyphen(system.name);
             await createDeviceAsync(this, systemPath, systemName);
             await createStringStateAsync(this, `${systemPath}.systemId`, 'System ID', system.systemId);
@@ -272,10 +276,10 @@ class Myuplink extends utils.Adapter {
 
     private async setSystemDevice(device: SystemDevice, systemPath: string, accessToken: string): Promise<void> {
         if (device.id != undefined && device.product?.name != undefined) {
-            const devPath = `${systemPath}.${device.id}`;
+            const devPath = `${systemPath}.${replaceUnwantedLetters(device.id)}`;
             const deviceName = removeSoftHyphen(device.product.name);
             await createChannelAsync(this, devPath, deviceName);
-            await createStringStateAsync(this, `${devPath}.id`, 'Device ID', device.id);
+            await createStringStateAsync(this, `${devPath}.deviceId`, 'Device ID', device.id);
             await createStringStateAsync(this, `${devPath}.name`, 'Name', deviceName);
             if (device.connectionState != undefined) {
                 await createStringStateAsync(this, `${devPath}.connectionState`, 'Connection State', device.connectionState);
@@ -301,8 +305,17 @@ class Myuplink extends utils.Adapter {
 
     private async setParameterData(data: ParameterData, devPath: string): Promise<void> {
         if (data.parameterId && data.parameterName) {
-            const path = `${devPath}.${data.parameterId}`;
-
+            const cathPath = data.category ? `${devPath}.${replaceUnwantedLetters(data.category)}.${replaceUnwantedLetters(data.parameterId)}` : null;
+            const noCathPath = `${devPath}.${replaceUnwantedLetters(data.parameterId)}`;
+            if (cathPath) {
+                if (this.config.GroupData) {
+                    await this.delObjectAsync(noCathPath);
+                } else {
+                    await this.delObjectAsync(cathPath);
+                }
+            }
+            // getObjectAsync
+            const path = this.config.GroupData && cathPath ? cathPath : noCathPath;
             const objectExists = await this.objectExists(path);
             if (!objectExists) {
                 const obj: ioBroker.SettableObject = {

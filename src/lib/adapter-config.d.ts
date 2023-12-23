@@ -13,6 +13,7 @@ declare global {
             Secret: string;
             AddData: boolean;
             AddRawData: boolean;
+            GroupData: boolean;
             AddActiveNotifications: boolean;
             AddRawActiveNotifications: boolean;
         }
