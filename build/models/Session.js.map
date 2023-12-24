@@ -1,1 +1,7 @@
-{"version":3,"file":"Session.js","sourceRoot":"","sources":["../../src/models/Session.ts"],"names":[],"mappings":""}
+{
+  "version": 3,
+  "sources": ["../../src/models/Session.ts"],
+  "sourcesContent": ["export interface Session {\n    token_type?: string;\n    access_token?: string;\n    refresh_token?: string;\n    scope?: string;\n    expires_in?: number;\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;AAAA;AAAA;",
+  "names": []
+}

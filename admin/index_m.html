@@ -106,28 +106,43 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="input-field col s12">
-                        <input class="value" id="CallbackURL" type="text" onchange="generateURL()" />
-                        <label for="CallbackURL">Callback URL</label>
-                        <span class="translate">Does not need to be changed. You can use https://sebilm.github.io/ioBroker.myuplink/myuplink.html</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col s12">
-                        <p>
-                            <a class="translate" target="_blank" id="URL">Click here to generate the Auth Code on myUplink.</a>
-                        </p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input class="value" id="AuthCode" type="text" />
-                        <label for="AuthCode">Auth Code</label>
-                        <span class="translate">Paste your Auth Code here.</span>
+                    <div class="section">
+                        <div class="row">
+                            <div class="col s12">
+                                <h6 class="sub-title">Authorization Code Grant Flow</h6>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input type="checkbox" class="value" id="UseAuthorizationCodeGrant" />
+                                <label for="UseAuthorizationCodeGrant" class="translate">Use Authorization Code Grant Flow</label>
+                                <p><span class="translate">These and the following options are not required in most cases.</span></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input class="value" id="CallbackURL" type="text" onchange="generateURL()" />
+                                <label for="CallbackURL">Callback URL</label>
+                                <span class="translate">Does not need to be changed. You can use https://sebilm.github.io/ioBroker.myuplink/myuplink.html</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <p>
+                                    <a class="translate" target="_blank" id="URL">Click here to generate the Auth Code on myUplink.</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input class="value" id="AuthCode" type="text" />
+                                <label for="AuthCode">Auth Code</label>
+                                <span class="translate">Paste your Auth Code here.</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
             <div class="section">
                 <div class="row">
                     <div class="col s12">

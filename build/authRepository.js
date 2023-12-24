@@ -1,203 +1,204 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
+var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+var authRepository_exports = {};
+__export(authRepository_exports, {
+  AuthRepository: () => AuthRepository
 });
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthRepository = void 0;
-const axios_1 = __importDefault(require("axios"));
-const fs = __importStar(require("fs"));
-const jsonfile_1 = __importDefault(require("jsonfile"));
+module.exports = __toCommonJS(authRepository_exports);
+var import_axios = __toESM(require("axios"));
+var fs = __toESM(require("fs"));
+var import_jsonfile = __toESM(require("jsonfile"));
 class AuthRepository {
-    constructor(options, log) {
-        this.log = log;
-        this.options = options;
-        axios_1.default.defaults.baseURL = options.baseUrl;
-        axios_1.default.defaults.headers.common['user-agent'] = options.userAgent;
-        axios_1.default.defaults.timeout = options.timeout;
+  constructor(options, log) {
+    this.log = log;
+    this.options = options;
+    import_axios.default.defaults.baseURL = options.baseUrl;
+    import_axios.default.defaults.headers.common["user-agent"] = options.userAgent;
+    import_axios.default.defaults.timeout = options.timeout;
+    if (this.options.useAuthorizationCodeGrant) {
+      this.readSessionFromFile();
+      if (this.hasNewAuthCode()) {
+        this.setEmptySession();
+      }
     }
-    async getAccessToken() {
-        this.log.debug('getAccessToken()');
-        if (await this.hasNewAuthCode()) {
-            await this.clearSesssion();
+  }
+  async getAccessToken() {
+    var _a;
+    this.log.debug("Get access token");
+    if (!this.hasAccessToken()) {
+      if (this.options.useAuthorizationCodeGrant) {
+        if (this.options.authCode) {
+          const token = await this.getAuthorizationCodeGrantToken(this.options.authCode);
+          await this.setSesssion(token);
+        } else {
+          this.log.error("You need to get and set a new Auth-Code. You can do this in the adapter setting.");
+          return void 0;
         }
-        if (!(await this.hasAccessToken())) {
-            if (this.options.authCode) {
-                const token = await this.getToken(this.options.authCode);
-                await this.setSesssion(token);
-            }
-            else {
-                this.log.error('You need to get and set a new Auth-Code. You can do this in the adapter setting.');
-                return null;
-            }
+      } else {
+        const token = await this.getClientCredentialsGrantToken();
+        await this.setSesssion(token);
+      }
+    }
+    if (this.isTokenExpired()) {
+      if (this.options.useAuthorizationCodeGrant) {
+        const token = await this.refreshToken();
+        await this.setSesssion(token);
+      } else {
+        const token = await this.getClientCredentialsGrantToken();
+        await this.setSesssion(token);
+      }
+    }
+    return (_a = this.auth) == null ? void 0 : _a.access_token;
+  }
+  async getAuthorizationCodeGrantToken(authCode) {
+    this.log.debug("Get token via Authorization Code Grant");
+    const data = {
+      grant_type: "authorization_code",
+      client_id: this.options.clientId,
+      client_secret: this.options.clientSecret,
+      code: authCode,
+      redirect_uri: this.options.redirectUri,
+      scope: this.options.scope
+    };
+    const session2 = await this.postTokenRequest(data);
+    this.log.debug(`Token received. Refresh Token: ${session2.refresh_token != void 0}. Expires In: ${session2.expires_in}`);
+    if (!session2.refresh_token) {
+      this.log.warn("Received token without Refresh Token.");
+    }
+    return session2;
+  }
+  async getClientCredentialsGrantToken() {
+    this.log.debug("Get token via Client Credentials Grant");
+    const data = {
+      grant_type: "client_credentials",
+      client_id: this.options.clientId,
+      client_secret: this.options.clientSecret,
+      scope: this.options.scope
+    };
+    const session2 = await this.postTokenRequest(data);
+    this.log.debug(`Token received. Refresh Token: ${session2.refresh_token != void 0}. Expires In: ${session2.expires_in}`);
+    return session2;
+  }
+  async refreshToken() {
+    var _a;
+    this.log.debug("Refresh token at the API");
+    const data = {
+      grant_type: "refresh_token",
+      refresh_token: (_a = this.auth) == null ? void 0 : _a.refresh_token,
+      client_id: this.options.clientId,
+      client_secret: this.options.clientSecret
+    };
+    const session2 = await this.postTokenRequest(data);
+    this.log.debug(`Token refreshed. Refresh Token: ${session2.refresh_token != void 0}. Expires In: ${session2.expires_in}`);
+    if (!session2.refresh_token) {
+      this.log.warn("Received refreshed token without Refresh Token.");
+    }
+    return session2;
+  }
+  async postTokenRequest(body) {
+    var _a;
+    const stringBody = new URLSearchParams(body).toString();
+    const url = "/oauth/token";
+    this.log.silly(`send to ${url}: ${stringBody}`);
+    try {
+      const { data } = await import_axios.default.post(url, stringBody, {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
         }
-        if (await this.isTokenExpired()) {
-            this.log.debug('Token is expired / expires soon - refreshing');
-            const token = await this.refreshToken();
-            await this.setSesssion(token);
+      });
+      const expiresIn = (_a = data.expires_in) != null ? _a : 1800;
+      data.expires_at = Date.now() + expiresIn * 1e3;
+      this.log.silly(`TokenData: ${JSON.stringify(data, null, " ")}`);
+      return data;
+    } catch (error) {
+      throw await this.checkError(url, error);
+    }
+  }
+  checkError(suburl, error) {
+    this.log.error(`error from ${suburl}`);
+    if (import_axios.default.isAxiosError(error)) {
+      const axiosError = error;
+      if (axiosError.response != null) {
+        if (axiosError.response.status == 401) {
+          this.setEmptySession();
         }
-        return await this.getSessionAccessToken();
-    }
-    async getToken(authCode) {
-        this.log.debug('getToken()');
-        const data = {
-            grant_type: 'authorization_code',
-            client_id: this.options.clientId,
-            client_secret: this.options.clientSecret,
-            code: authCode,
-            redirect_uri: this.options.redirectUri,
-            scope: this.options.scope,
-        };
-        const session = await this.postTokenRequest(data);
-        this.log.info(`Token received. Refresh Token: ${session.refresh_token != undefined}. Expires In: ${session.expires_in}`);
-        if (!session.refresh_token) {
-            this.log.warn('Received token without Refresh Token.');
+        if (axiosError.response.data != null) {
+          const responseText = JSON.stringify(axiosError.response.data, null, " ");
+          const errorMessage = `${axiosError.response.statusText}: ${responseText}`;
+          return new Error(errorMessage);
+        } else {
+          return new Error(axiosError.response.statusText);
         }
-        return session;
+      }
     }
-    async refreshToken() {
-        this.log.debug('getRefreshToken()');
-        const data = {
-            grant_type: 'refresh_token',
-            refresh_token: await this.getSessionRefreshToken(),
-            client_id: this.options.clientId,
-            client_secret: this.options.clientSecret,
-        };
-        const session = await this.postTokenRequest(data);
-        this.log.info(`Token refreshed. Refresh Token: ${session.refresh_token != undefined}. Expires In: ${session.expires_in}`);
-        if (!session.refresh_token) {
-            this.log.warn('Received refreshed token without Refresh Token.');
-        }
-        return session;
+    return error;
+  }
+  readSessionFromFile() {
+    if (!this.options.sessionStoreFilePath || !fs.existsSync(this.options.sessionStoreFilePath)) {
+      return;
     }
-    async postTokenRequest(body) {
-        const stringBody = new URLSearchParams(body).toString();
-        const url = '/oauth/token';
-        this.log.debug(`send to ${url}: ${stringBody}`);
-        try {
-            const { data } = await axios_1.default.post(url, stringBody, {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-            });
-            const expiresIn = data.expires_in ?? 1800;
-            data.expires_at = Date.now() + expiresIn * 1000;
-            this.log.debug(`TokenData: ${JSON.stringify(data, null, ' ')}`);
-            return data;
-        }
-        catch (error) {
-            throw await this.checkError(url, error);
-        }
+    this.log.debug(`Read session from file '${this.options.sessionStoreFilePath}'`);
+    this.auth = import_jsonfile.default.readFileSync(this.options.sessionStoreFilePath, { throws: false });
+  }
+  async setSesssion(auth) {
+    this.log.debug("Set session");
+    if (auth.authCode == null) {
+      auth.authCode = this.options.authCode;
     }
-    async checkError(suburl, error) {
-        this.log.error(`error from ${suburl}`);
-        if (axios_1.default.isAxiosError(error)) {
-            const axiosError = error;
-            if (axiosError.response != null) {
-                if (axiosError.response.status == 401) {
-                    await this.clearSesssion();
-                }
-                if (axiosError.response.data != null) {
-                    const responseText = JSON.stringify(axiosError.response.data, null, ' ');
-                    const errorMessage = `${axiosError.response.statusText}: ${responseText}`;
-                    return new Error(errorMessage);
-                }
-                else {
-                    return new Error(axiosError.response.statusText);
-                }
-            }
-        }
-        return error;
+    this.auth = auth;
+    if (!this.options.sessionStoreFilePath || !this.options.useAuthorizationCodeGrant) {
+      return;
     }
-    async readSession() {
-        this.log.debug('Read session.');
-        if (!this.options.sessionStoreFilePath || !fs.existsSync(this.options.sessionStoreFilePath)) {
-            return;
-        }
-        this.auth = await jsonfile_1.default.readFile(this.options.sessionStoreFilePath, { throws: false });
-    }
-    async getSessionAuthCode() {
-        this.log.silly('Get session authCode.');
-        if (this.auth == null) {
-            await this.readSession();
-        }
-        return this.auth ? this.auth.authCode : null;
-    }
-    async getSessionAccessToken() {
-        this.log.silly('Get session access_token.');
-        if (this.auth == null) {
-            await this.readSession();
-        }
-        return this.auth ? this.auth.access_token : null;
-    }
-    async getSessionRefreshToken() {
-        this.log.silly('Get session refresh_token.');
-        if (this.auth == null) {
-            await this.readSession();
-        }
-        return this.auth ? this.auth.refresh_token : null;
-    }
-    async getSessionExpires() {
-        this.log.silly('Get session expires.');
-        if (this.auth == null) {
-            await this.readSession();
-        }
-        return this.auth ? this.auth.expires_at : null;
-    }
-    async setSesssion(auth) {
-        this.log.debug('Set session.');
-        if (auth.authCode == null) {
-            auth.authCode = this.options.authCode;
-        }
-        this.auth = auth;
-        this.log.debug(`sessionStoreFilePath: ${this.options.sessionStoreFilePath}`);
-        if (!this.options.sessionStoreFilePath) {
-            return;
-        }
-        await jsonfile_1.default.writeFile(this.options.sessionStoreFilePath, this.auth, { spaces: 2 });
-    }
-    async clearSesssion() {
-        this.log.debug('Clear session.');
-        await this.setSesssion({});
-    }
-    async hasNewAuthCode() {
-        const authCode = await this.getSessionAuthCode();
-        const hasNewAuthCode = authCode != null && authCode != this.options.authCode;
-        this.log.debug('Has new auth code: ' + hasNewAuthCode);
-        return hasNewAuthCode;
-    }
-    async isTokenExpired() {
-        const expired = ((await this.getSessionExpires()) || 0) < Date.now() + this.options.renewBeforeExpiry;
-        this.log.debug('Is token expired: ' + expired);
-        return expired;
-    }
-    async hasAccessToken() {
-        const hasToken = !!(await this.getSessionAccessToken());
-        this.log.debug('Has access token: ' + hasToken);
-        return hasToken;
-    }
+    this.log.debug(`Write session to file '${this.options.sessionStoreFilePath}'`);
+    await import_jsonfile.default.writeFile(this.options.sessionStoreFilePath, this.auth, { spaces: 2 });
+  }
+  hasNewAuthCode() {
+    var _a;
+    const hasNewAuthCode = ((_a = this.auth) == null ? void 0 : _a.authCode) != this.options.authCode;
+    this.log.debug(`Has new auth code: ${hasNewAuthCode}`);
+    return hasNewAuthCode;
+  }
+  setEmptySession() {
+    this.log.debug("Set empty session.");
+    this.auth = { authCode: this.options.authCode };
+  }
+  isTokenExpired() {
+    var _a;
+    const expired = (((_a = this.auth) == null ? void 0 : _a.expires_at) || 0) < Date.now() + this.options.renewBeforeExpiry;
+    this.log.debug("Is token expired: " + expired);
+    return expired;
+  }
+  hasAccessToken() {
+    var _a;
+    const hasAccessToken = !!((_a = this.auth) == null ? void 0 : _a.access_token);
+    this.log.debug("Has access token: " + hasAccessToken);
+    return hasAccessToken;
+  }
 }
-exports.AuthRepository = AuthRepository;
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  AuthRepository
+});
 //# sourceMappingURL=authRepository.js.map

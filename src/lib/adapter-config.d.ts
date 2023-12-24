@@ -4,13 +4,14 @@
 declare global {
     namespace ioBroker {
         interface AdapterConfig {
-            AuthCode: string;
-            CallbackURL: string;
             Configured: boolean;
             Identifier: string;
+            Secret: string;
+            UseAuthorizationCodeGrant: boolean;
+            AuthCode: string;
+            CallbackURL: string;
             Interval: number;
             Language: string;
-            Secret: string;
             AddData: boolean;
             AddRawData: boolean;
             GroupData: boolean;

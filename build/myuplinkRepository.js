@@ -1,60 +1,84 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.MyUplinkRepository = void 0;
-const axios_1 = __importDefault(require("axios"));
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+var myuplinkRepository_exports = {};
+__export(myuplinkRepository_exports, {
+  MyUplinkRepository: () => MyUplinkRepository
+});
+module.exports = __toCommonJS(myuplinkRepository_exports);
+var import_axios = __toESM(require("axios"));
 class MyUplinkRepository {
-    constructor(options, log) {
-        this.log = log;
-        this.options = options;
-        axios_1.default.defaults.baseURL = options.baseUrl;
-        axios_1.default.defaults.headers.common['user-agent'] = options.userAgent;
-        axios_1.default.defaults.timeout = options.timeout;
-    }
-    async getSystemsAndDevices(accessToken) {
-        return await this.getFromMyUplink('/v2/systems/me', accessToken);
-    }
-    async getDevicePoints(deviceId, accessToken) {
-        return await this.getFromMyUplink(`/v3/devices/${deviceId}/points`, accessToken);
-    }
-    async getActiveNotifications(systemId, accessToken) {
-        return await this.getFromMyUplink(`/v2/systems/${systemId}/notifications/active?itemsPerPage=100`, accessToken);
-    }
-    async getFromMyUplink(suburl, accessToken) {
-        const lang = this.options.language;
-        this.log.debug(`GET ${suburl} (lang: ${lang})`);
-        try {
-            const { data } = await axios_1.default.get(suburl, {
-                headers: {
-                    Authorization: 'Bearer ' + accessToken,
-                    'Accept-Language': lang,
-                },
-            });
-            return data;
+  constructor(options, log) {
+    this.log = log;
+    this.options = options;
+    import_axios.default.defaults.baseURL = options.baseUrl;
+    import_axios.default.defaults.headers.common["user-agent"] = options.userAgent;
+    import_axios.default.defaults.timeout = options.timeout;
+  }
+  async getSystemsAndDevices(accessToken) {
+    return await this.getFromMyUplink("/v2/systems/me", accessToken);
+  }
+  async getDevicePoints(deviceId, accessToken) {
+    return await this.getFromMyUplink(`/v3/devices/${deviceId}/points`, accessToken);
+  }
+  async getActiveNotifications(systemId, accessToken) {
+    return await this.getFromMyUplink(`/v2/systems/${systemId}/notifications/active?itemsPerPage=100`, accessToken);
+  }
+  async getFromMyUplink(suburl, accessToken) {
+    const lang = this.options.language;
+    this.log.debug(`GET ${suburl} (lang: ${lang})`);
+    try {
+      const { data } = await import_axios.default.get(suburl, {
+        headers: {
+          Authorization: "Bearer " + accessToken,
+          "Accept-Language": lang
         }
-        catch (error) {
-            throw this.checkError(suburl, error);
-        }
+      });
+      return data;
+    } catch (error) {
+      throw this.checkError(suburl, error);
     }
-    checkError(suburl, error) {
-        this.log.error(`error from ${suburl}`);
-        if (axios_1.default.isAxiosError(error)) {
-            const axiosError = error;
-            if (axiosError.response != null) {
-                if (axiosError.response.data != null) {
-                    const responseText = JSON.stringify(axiosError.response.data, null, ' ');
-                    const errorMessage = `${axiosError.response.statusText}: ${responseText}`;
-                    return new Error(errorMessage);
-                }
-                else {
-                    return new Error(axiosError.response.statusText);
-                }
-            }
+  }
+  checkError(suburl, error) {
+    this.log.error(`error from ${suburl}`);
+    if (import_axios.default.isAxiosError(error)) {
+      const axiosError = error;
+      if (axiosError.response != null) {
+        if (axiosError.response.data != null) {
+          const responseText = JSON.stringify(axiosError.response.data, null, " ");
+          const errorMessage = `${axiosError.response.statusText}: ${responseText}`;
+          return new Error(errorMessage);
+        } else {
+          return new Error(axiosError.response.statusText);
         }
-        return error;
+      }
     }
+    return error;
+  }
 }
-exports.MyUplinkRepository = MyUplinkRepository;
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  MyUplinkRepository
+});
 //# sourceMappingURL=myuplinkRepository.js.map

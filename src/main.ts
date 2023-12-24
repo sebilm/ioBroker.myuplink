@@ -175,6 +175,7 @@ class Myuplink extends utils.Adapter {
             {
                 clientId: identifier,
                 clientSecret: secret,
+                useAuthorizationCodeGrant: this.config.UseAuthorizationCodeGrant,
                 redirectUri: callbackURL,
                 authCode: this.config.AuthCode.trim(),
                 sessionStoreFilePath: storeFile,

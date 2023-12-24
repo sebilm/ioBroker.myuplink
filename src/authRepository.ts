@@ -6,6 +6,7 @@ import * as session from './models/Session';
 export default interface AuthOptions {
     clientId: string;
     clientSecret: string;
+    useAuthorizationCodeGrant: boolean;
     redirectUri: string;
     authCode: string;
     sessionStoreFilePath: string;
@@ -30,9 +31,11 @@ export class AuthRepository {
         axios.defaults.headers.common['user-agent'] = options.userAgent;
         axios.defaults.timeout = options.timeout;
 
-        this.readSessionFromFile();
-        if (this.hasNewAuthCode()) {
-            this.setEmptySession();
+        if (this.options.useAuthorizationCodeGrant) {
+            this.readSessionFromFile();
+            if (this.hasNewAuthCode()) {
+                this.setEmptySession();
+            }
         }
     }
 
@@ -44,24 +47,34 @@ export class AuthRepository {
         this.log.debug('Get access token');
 
         if (!this.hasAccessToken()) {
-            if (this.options.authCode) {
-                const token = await this.getToken(this.options.authCode);
-                await this.setSesssion(token);
+            if (this.options.useAuthorizationCodeGrant) {
+                if (this.options.authCode) {
+                    const token = await this.getAuthorizationCodeGrantToken(this.options.authCode);
+                    await this.setSesssion(token);
+                } else {
+                    this.log.error('You need to get and set a new Auth-Code. You can do this in the adapter setting.');
+                    return undefined;
+                }
             } else {
-                this.log.error('You need to get and set a new Auth-Code. You can do this in the adapter setting.');
-                return undefined;
+                const token = await this.getClientCredentialsGrantToken();
+                await this.setSesssion(token);
             }
         }
         if (this.isTokenExpired()) {
-            const token = await this.refreshToken();
-            await this.setSesssion(token);
+            if (this.options.useAuthorizationCodeGrant) {
+                const token = await this.refreshToken();
+                await this.setSesssion(token);
+            } else {
+                const token = await this.getClientCredentialsGrantToken();
+                await this.setSesssion(token);
+            }
         }
 
         return this.auth?.access_token;
     }
 
-    private async getToken(authCode: string): Promise<Session> {
-        this.log.debug('Get token from the API');
+    private async getAuthorizationCodeGrantToken(authCode: string): Promise<Session> {
+        this.log.debug('Get token via Authorization Code Grant');
         const data = {
             grant_type: 'authorization_code',
             client_id: this.options.clientId,
@@ -75,6 +88,19 @@ export class AuthRepository {
         if (!session.refresh_token) {
             this.log.warn('Received token without Refresh Token.');
         }
+        return session;
+    }
+
+    private async getClientCredentialsGrantToken(): Promise<Session> {
+        this.log.debug('Get token via Client Credentials Grant');
+        const data = {
+            grant_type: 'client_credentials',
+            client_id: this.options.clientId,
+            client_secret: this.options.clientSecret,
+            scope: this.options.scope,
+        };
+        const session = await this.postTokenRequest(data);
+        this.log.debug(`Token received. Refresh Token: ${session.refresh_token != undefined}. Expires In: ${session.expires_in}`);
         return session;
     }
 
@@ -106,7 +132,7 @@ export class AuthRepository {
             });
             const expiresIn = data.expires_in ?? 1800;
             data.expires_at = Date.now() + expiresIn * 1000;
-            this.log.debug(`TokenData: ${JSON.stringify(data, null, ' ')}`);
+            this.log.silly(`TokenData: ${JSON.stringify(data, null, ' ')}`);
             return data;
         } catch (error) {
             throw await this.checkError(url, error);
@@ -147,7 +173,7 @@ export class AuthRepository {
             auth.authCode = this.options.authCode;
         }
         this.auth = auth;
-        if (!this.options.sessionStoreFilePath) {
+        if (!this.options.sessionStoreFilePath || !this.options.useAuthorizationCodeGrant) {
             return;
         }
         this.log.debug(`Write session to file '${this.options.sessionStoreFilePath}'`);
