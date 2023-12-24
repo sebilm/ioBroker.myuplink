@@ -110,7 +110,7 @@ class Myuplink extends utils.Adapter {
 
     private authRepository: AuthRepository | undefined;
     private myUplinkRepository: MyUplinkRepository | undefined;
-    private interval: ioBroker.Interval | undefined;
+    private timeout: ioBroker.Timeout | undefined;
     private refreshInterval: number;
 
     /**
@@ -200,12 +200,6 @@ class Myuplink extends utils.Adapter {
         this.log.info('Adapter started.');
 
         this.getData();
-        this.interval = this.setInterval(
-            async () => {
-                await this.getData();
-            },
-            <number>this.refreshInterval * 1000,
-        );
     }
 
     private async getData(): Promise<void> {
@@ -238,6 +232,13 @@ class Myuplink extends utils.Adapter {
             this.setState('info.lastError', { val: '' + error, ack: true });
             this.setState('info.currentError', { val: '' + error, ack: true });
         }
+
+        this.timeout = this.setTimeout(
+            async () => {
+                await this.getData();
+            },
+            <number>this.refreshInterval * 1000,
+        );
     }
 
     private async setSystemWithDevices(system: SystemWithDevices, accessToken: string): Promise<void> {
@@ -431,8 +432,8 @@ class Myuplink extends utils.Adapter {
      */
     private onUnload(callback: () => void): void {
         try {
-            this.clearInterval(this.interval);
-            this.interval = undefined;
+            this.clearTimeout(this.timeout);
+            this.timeout = undefined;
             this.authRepository = undefined;
             this.myUplinkRepository = undefined;
             this.setState('info.connection', { val: false, ack: true });
