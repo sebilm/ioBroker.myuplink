@@ -12,6 +12,7 @@ systemDictionary = {
         it: 'Autenticazione',
         es: 'Autenticación',
         pl: 'Uwierzytelnianie',
+        uk: 'Аутентифікація',
         'zh-cn': '认证',
     },
     'Get it from https://dev.myuplink.com/apps': {
@@ -24,6 +25,7 @@ systemDictionary = {
         it: 'Richiedetelo a https://dev.myuplink.com/apps',
         es: 'Consíguelo en https://dev.myuplink.com/apps',
         pl: 'Pobierz ze strony https://dev.myuplink.com/apps',
+        uk: 'Отримайте її за посиланням https://dev.myuplink.com/apps',
         'zh-cn': '从 https://dev.myuplink.com/apps 获取',
     },
     'Does not need to be changed. You can use https://sebilm.github.io/ioBroker.myuplink/myuplink.html': {
@@ -36,6 +38,7 @@ systemDictionary = {
         it: 'Non è necessario modificarlo. È possibile utilizzare https://sebilm.github.io/ioBroker.myuplink/myuplink.html',
         es: 'No es necesario cambiarlo. Puede utilizar https://sebilm.github.io/ioBroker.myuplink/myuplink.html',
         pl: 'Nie trzeba go zmieniać. Można użyć https://sebilm.github.io/ioBroker.myuplink/myuplink.html',
+        uk: 'Не потребує змін. Можна використовувати https://sebilm.github.io/ioBroker.myuplink/myuplink.html.',
         'zh-cn': '无需更改。您可以使用 https://sebilm.github.io/ioBroker.myuplink/myuplink.html',
     },
     'Click here to generate the Auth Code on myUplink.': {
@@ -48,6 +51,7 @@ systemDictionary = {
         it: 'Fare clic qui per generare il codice di autorizzazione su myUplink.',
         es: 'Haga clic aquí para generar el Auth Code en myUplink.',
         pl: 'Kliknij tutaj, aby wygenerować Auth Code na myUplink.',
+        uk: 'Натисніть тут, щоб згенерувати код авторизації на myUplink.',
         'zh-cn': '单击此处在 myUplink 上生成 Auth Code 。',
     },
     'Paste your Auth Code here.': {
@@ -60,6 +64,7 @@ systemDictionary = {
         it: 'Incollare qui il codice di autorizzazione.',
         es: 'Pegue aquí su Auth Code.',
         pl: 'Wklej tutaj swój Auth Code.',
+        uk: 'Вставте код доступу сюди.',
         'zh-cn': '在此处粘贴您的 Auth Code.',
     },
     Settings: {
@@ -72,6 +77,7 @@ systemDictionary = {
         it: 'Impostazioni',
         es: 'Ajustes',
         pl: 'Ustawienia',
+        uk: 'Налаштування',
         'zh-cn': '设置',
     },
     'Refresh interval': {
@@ -84,6 +90,7 @@ systemDictionary = {
         it: 'Intervallo di aggiornamento',
         es: 'Intervalo de actualización',
         pl: 'Interwał odświeżania',
+        uk: 'Інтервал оновлення',
         'zh-cn': '刷新间隔',
     },
     'Time in minutes of fetching data from myUplink.': {
@@ -96,6 +103,7 @@ systemDictionary = {
         it: 'Tempo in minuti di recupero dei dati da myUplink.',
         es: 'Tiempo en minutos de obtención de datos de myUplink.',
         pl: 'Czas w minutach pobierania danych z myUplink.',
+        uk: 'Час у хвилинах для отримання даних з myUplink.',
         'zh-cn': '从 myUplink 获取数据的时间（分钟）。',
     },
     Language: {
@@ -108,6 +116,7 @@ systemDictionary = {
         it: 'Lingua',
         es: 'Idioma',
         pl: 'Język',
+        uk: 'Мова',
         'zh-cn': '语言',
     },
     English: {
@@ -120,6 +129,7 @@ systemDictionary = {
         it: 'Inglese',
         es: 'Inglés',
         pl: 'Angielski',
+        uk: 'Англійська мова',
         'zh-cn': '英语',
     },
     German: {
@@ -132,6 +142,7 @@ systemDictionary = {
         it: 'Tedesco',
         es: 'Alemán',
         pl: 'Niemiecki',
+        uk: 'Німецька',
         'zh-cn': '德国',
     },
     Swedish: {
@@ -144,6 +155,7 @@ systemDictionary = {
         it: 'Svedese',
         es: 'Sueco',
         pl: 'Szwedzki',
+        uk: 'Шведська',
         'zh-cn': '瑞典语',
     },
     'The language for naming the data objects.': {
@@ -156,6 +168,7 @@ systemDictionary = {
         it: 'Il linguaggio per la denominazione degli oggetti di dati.',
         es: 'El lenguaje para nombrar los objetos de datos.',
         pl: 'Język nazewnictwa obiektów danych.',
+        uk: "Мова для іменування об'єктів даних.",
         'zh-cn': '命名数据对象的语言。',
     },
     'Parameter data': {
@@ -168,6 +181,7 @@ systemDictionary = {
         it: 'Dati dei parametri',
         es: 'Datos de los parámetros',
         pl: 'Dane parametrów',
+        uk: 'Дані параметрів',
         'zh-cn': '参数数据',
     },
     'Retrieve parameter data': {
@@ -180,6 +194,7 @@ systemDictionary = {
         it: 'Recuperare i dati dei parametri',
         es: 'Recuperar datos de parámetros',
         pl: 'Pobieranie danych parametrów',
+        uk: 'Отримати дані параметрів',
         'zh-cn': '读取参数数据',
     },
     'Parameter data will be retrieved and added to the object tree.': {
@@ -192,6 +207,7 @@ systemDictionary = {
         it: "I dati dei parametri verranno recuperati e aggiunti all'albero degli oggetti.",
         es: 'Los datos de los parámetros se recuperarán y se añadirán al árbol de objetos.',
         pl: 'Dane parametrów zostaną pobrane i dodane do drzewa obiektów.',
+        uk: "Дані параметрів отримуються і додаються до дерева об'єктів.",
         'zh-cn': '参数数据将被检索并添加到对象树中。',
     },
     'Add object with the raw JSON data': {
@@ -204,6 +220,7 @@ systemDictionary = {
         it: 'Aggiungere un oggetto con i dati JSON grezzi',
         es: 'Añadir objeto con los datos JSON sin procesar',
         pl: 'Dodaj obiekt z nieprzetworzonymi danymi JSON',
+        uk: "Додавання об'єкта з необробленими даними JSON",
         'zh-cn': '添加包含原始 JSON 数据的对象',
     },
     'An object containing the received data as a JSON string is added to the object tree.': {
@@ -216,6 +233,7 @@ systemDictionary = {
         it: "Un oggetto contenente i dati ricevuti come stringa JSON viene aggiunto all'albero degli oggetti.",
         es: 'Se añade al árbol de objetos un objeto que contiene los datos recibidos como cadena JSON.',
         pl: 'Obiekt zawierający otrzymane dane jako ciąg JSON jest dodawany do drzewa obiektów.',
+        uk: "Об'єкт, що містить отримані дані у вигляді JSON-рядка, додається до дерева об'єктів.",
         'zh-cn': '一个包含接收到的 JSON 字符串数据的对象会被添加到对象树中。',
     },
     Notifications: {
@@ -228,6 +246,7 @@ systemDictionary = {
         it: 'Notifiche',
         es: 'Notificaciones',
         pl: 'Powiadomienia',
+        uk: 'Сповіщення',
         'zh-cn': '通知',
     },
     'Retrieve active notifications': {
@@ -240,6 +259,7 @@ systemDictionary = {
         it: 'Recuperare le notifiche attive',
         es: 'Recuperar notificaciones activas',
         pl: 'Pobieranie aktywnych powiadomień',
+        uk: 'Aktive Benachrichtigungen abrufen',
         'zh-cn': '检索活动通知',
     },
     'Active notifications will be retrieved and added to the object tree.': {
@@ -252,6 +272,7 @@ systemDictionary = {
         it: "Le notifiche attive verranno recuperate e aggiunte all'albero degli oggetti.",
         es: 'Las notificaciones activas se recuperarán y se añadirán al árbol de objetos.',
         pl: 'Aktywne powiadomienia zostaną pobrane i dodane do drzewa obiektów.',
+        uk: "Активні сповіщення витягуються і додаються до дерева об'єктів.",
         'zh-cn': '活动通知将被检索并添加到对象树中。',
     },
     'Add object with active notifications as raw JSON': {
@@ -264,6 +285,7 @@ systemDictionary = {
         it: "Aggiungere l'oggetto con le notifiche attive come JSON grezzo",
         es: 'Añadir objeto con notificaciones activas como JSON sin procesar',
         pl: 'Dodaj obiekt z aktywnymi powiadomieniami jako nieprzetworzony JSON',
+        uk: "Додавання об'єкта з активними сповіщеннями у вигляді сирого JSON",
         'zh-cn': '以原始 JSON 格式添加包含活动通知的对象',
     },
     'An object containing the received active notifications as a JSON string is added to the object tree.': {
@@ -276,6 +298,7 @@ systemDictionary = {
         it: "Un oggetto contenente le notifiche attive ricevute come stringa JSON viene aggiunto all'albero degli oggetti.",
         es: 'Se añade al árbol de objetos un objeto que contiene las notificaciones activas recibidas en forma de cadena JSON.',
         pl: 'Obiekt zawierający otrzymane aktywne powiadomienia jako ciąg JSON jest dodawany do drzewa obiektów.',
+        uk: "Об'єкт, що містить активні сповіщення, отримані у вигляді JSON-рядка, додається до дерева об'єктів.",
         'zh-cn': '对象树中会添加一个对象，该对象以 JSON 字符串形式包含已收到的活动通知。',
     },
     'Group parameter data by received category': {
@@ -288,6 +311,7 @@ systemDictionary = {
         it: 'Raggruppare i dati dei parametri per categoria di ricezione',
         es: 'Agrupar datos de parámetros por categoría recibida',
         pl: 'Grupowanie danych parametrów według odebranej kategorii',
+        uk: 'Згрупуйте дані параметрів за отриманою категорією',
         'zh-cn': '按接收类别分组参数数据',
     },
     'The parameter data is grouped by the categories received.': {
