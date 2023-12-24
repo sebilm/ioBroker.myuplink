@@ -29,38 +29,39 @@ export class AuthRepository {
         axios.defaults.baseURL = options.baseUrl;
         axios.defaults.headers.common['user-agent'] = options.userAgent;
         axios.defaults.timeout = options.timeout;
+
+        this.readSessionFromFile();
+        if (this.hasNewAuthCode()) {
+            this.setEmptySession();
+        }
     }
 
     private log: ioBroker.Log;
     private options: AuthOptions;
-    private auth: Session | null | undefined;
+    private auth: Session | undefined;
 
-    async getAccessToken(): Promise<string | undefined | null> {
-        this.log.debug('getAccessToken()');
+    async getAccessToken(): Promise<string | undefined> {
+        this.log.debug('Get access token');
 
-        if (await this.hasNewAuthCode()) {
-            await this.clearSesssion();
-        }
-        if (!(await this.hasAccessToken())) {
+        if (!this.hasAccessToken()) {
             if (this.options.authCode) {
                 const token = await this.getToken(this.options.authCode);
                 await this.setSesssion(token);
             } else {
                 this.log.error('You need to get and set a new Auth-Code. You can do this in the adapter setting.');
-                return null;
+                return undefined;
             }
         }
-        if (await this.isTokenExpired()) {
-            this.log.debug('Token is expired / expires soon - refreshing');
+        if (this.isTokenExpired()) {
             const token = await this.refreshToken();
             await this.setSesssion(token);
         }
 
-        return await this.getSessionAccessToken();
+        return this.auth?.access_token;
     }
 
     private async getToken(authCode: string): Promise<Session> {
-        this.log.debug('getToken()');
+        this.log.debug('Get token from the API');
         const data = {
             grant_type: 'authorization_code',
             client_id: this.options.clientId,
@@ -70,7 +71,7 @@ export class AuthRepository {
             scope: this.options.scope,
         };
         const session = await this.postTokenRequest(data);
-        this.log.info(`Token received. Refresh Token: ${session.refresh_token != undefined}. Expires In: ${session.expires_in}`);
+        this.log.debug(`Token received. Refresh Token: ${session.refresh_token != undefined}. Expires In: ${session.expires_in}`);
         if (!session.refresh_token) {
             this.log.warn('Received token without Refresh Token.');
         }
@@ -78,15 +79,15 @@ export class AuthRepository {
     }
 
     private async refreshToken(): Promise<Session> {
-        this.log.debug('getRefreshToken()');
+        this.log.debug('Refresh token at the API');
         const data = {
             grant_type: 'refresh_token',
-            refresh_token: await this.getSessionRefreshToken(),
+            refresh_token: this.auth?.refresh_token,
             client_id: this.options.clientId,
             client_secret: this.options.clientSecret,
         };
         const session = await this.postTokenRequest(data);
-        this.log.info(`Token refreshed. Refresh Token: ${session.refresh_token != undefined}. Expires In: ${session.expires_in}`);
+        this.log.debug(`Token refreshed. Refresh Token: ${session.refresh_token != undefined}. Expires In: ${session.expires_in}`);
         if (!session.refresh_token) {
             this.log.warn('Received refreshed token without Refresh Token.');
         }
@@ -96,7 +97,7 @@ export class AuthRepository {
     private async postTokenRequest(body: any): Promise<Session> {
         const stringBody = new URLSearchParams(body).toString();
         const url = '/oauth/token';
-        this.log.debug(`send to ${url}: ${stringBody}`);
+        this.log.silly(`send to ${url}: ${stringBody}`);
         try {
             const { data } = await axios.post<Session>(url, stringBody, {
                 headers: {
@@ -112,13 +113,13 @@ export class AuthRepository {
         }
     }
 
-    private async checkError(suburl: string, error: unknown): Promise<unknown> {
+    private checkError(suburl: string, error: unknown): Error | unknown {
         this.log.error(`error from ${suburl}`);
         if (axios.isAxiosError(error)) {
             const axiosError = error as AxiosError;
             if (axiosError.response != null) {
                 if (axiosError.response.status == 401) {
-                    await this.clearSesssion();
+                    this.setEmptySession();
                 }
                 if (axiosError.response.data != null) {
                     const responseText = JSON.stringify(axiosError.response.data, null, ' ');
@@ -132,80 +133,47 @@ export class AuthRepository {
         return error;
     }
 
-    private async readSession(): Promise<void> {
-        this.log.debug('Read session.');
+    private readSessionFromFile(): void {
         if (!this.options.sessionStoreFilePath || !fs.existsSync(this.options.sessionStoreFilePath)) {
             return;
         }
-        this.auth = await jsonfile.readFile(this.options.sessionStoreFilePath, { throws: false });
-    }
-
-    private async getSessionAuthCode(): Promise<string | undefined | null> {
-        this.log.silly('Get session authCode.');
-        if (this.auth == null) {
-            await this.readSession();
-        }
-        return this.auth ? this.auth.authCode : null;
-    }
-
-    private async getSessionAccessToken(): Promise<string | undefined | null> {
-        this.log.silly('Get session access_token.');
-        if (this.auth == null) {
-            await this.readSession();
-        }
-        return this.auth ? this.auth.access_token : null;
-    }
-
-    private async getSessionRefreshToken(): Promise<string | undefined | null> {
-        this.log.silly('Get session refresh_token.');
-        if (this.auth == null) {
-            await this.readSession();
-        }
-        return this.auth ? this.auth.refresh_token : null;
-    }
-
-    private async getSessionExpires(): Promise<number | undefined | null> {
-        this.log.silly('Get session expires.');
-        if (this.auth == null) {
-            await this.readSession();
-        }
-        return this.auth ? this.auth.expires_at : null;
+        this.log.debug(`Read session from file '${this.options.sessionStoreFilePath}'`);
+        this.auth = jsonfile.readFileSync(this.options.sessionStoreFilePath, { throws: false });
     }
 
     private async setSesssion(auth: Session): Promise<void> {
-        this.log.debug('Set session.');
+        this.log.debug('Set session');
         if (auth.authCode == null) {
             auth.authCode = this.options.authCode;
         }
         this.auth = auth;
-        this.log.debug(`sessionStoreFilePath: ${this.options.sessionStoreFilePath}`);
         if (!this.options.sessionStoreFilePath) {
             return;
         }
+        this.log.debug(`Write session to file '${this.options.sessionStoreFilePath}'`);
         await jsonfile.writeFile(this.options.sessionStoreFilePath, this.auth, { spaces: 2 });
     }
 
-    private async clearSesssion(): Promise<void> {
-        this.log.debug('Clear session.');
-        await this.setSesssion({});
-    }
-
-    private async hasNewAuthCode(): Promise<boolean> {
-        const authCode = await this.getSessionAuthCode();
-        const hasNewAuthCode = authCode != null && authCode != this.options.authCode;
-        this.log.debug('Has new auth code: ' + hasNewAuthCode);
+    private hasNewAuthCode(): boolean {
+        const hasNewAuthCode = this.auth?.authCode != this.options.authCode;
+        this.log.debug(`Has new auth code: ${hasNewAuthCode}`);
         return hasNewAuthCode;
     }
 
-    private async isTokenExpired(): Promise<boolean> {
-        const expired = ((await this.getSessionExpires()) || 0) < Date.now() + this.options.renewBeforeExpiry;
+    private setEmptySession(): void {
+        this.log.debug('Set empty session.');
+        this.auth = { authCode: this.options.authCode } as Session;
+    }
+
+    private isTokenExpired(): boolean {
+        const expired = (this.auth?.expires_at || 0) < Date.now() + this.options.renewBeforeExpiry;
         this.log.debug('Is token expired: ' + expired);
         return expired;
     }
 
-    private async hasAccessToken(): Promise<boolean> {
-        const hasToken = !!(await this.getSessionAccessToken());
-        this.log.debug('Has access token: ' + hasToken);
-        return hasToken;
+    private hasAccessToken(): boolean {
+        const hasAccessToken = !!this.auth?.access_token;
+        this.log.debug('Has access token: ' + hasAccessToken);
+        return hasAccessToken;
     }
 }
