@@ -53,7 +53,7 @@ class AuthRepository {
           const token = await this.getAuthorizationCodeGrantToken(this.options.authCode);
           await this.setSesssion(token);
         } else {
-          this.log.error("You need to get and set a new Auth-Code. You can do this in the adapter setting.");
+          this.log.error("You need to get and set a new Auth Code. You can do this in the adapter setting.");
           return void 0;
         }
       } else {
@@ -73,7 +73,7 @@ class AuthRepository {
     return (_a = this.auth) == null ? void 0 : _a.access_token;
   }
   async getAuthorizationCodeGrantToken(authCode) {
-    this.log.debug("Get token via Authorization Code Grant");
+    this.log.debug("Get token via Authorization Code Grant Flow");
     const data = {
       grant_type: "authorization_code",
       client_id: this.options.clientId,
@@ -83,14 +83,14 @@ class AuthRepository {
       scope: this.options.scope
     };
     const session2 = await this.postTokenRequest(data);
-    this.log.debug(`Token received. Refresh Token: ${session2.refresh_token != void 0}. Expires In: ${session2.expires_in}`);
+    this.log.debug(`Token received. Refresh Token received: ${session2.refresh_token != void 0}. Access Token expires in: ${session2.expires_in}`);
     if (!session2.refresh_token) {
-      this.log.warn("Received token without Refresh Token.");
+      this.log.warn("Receive Access Token without Refresh Token.");
     }
     return session2;
   }
   async getClientCredentialsGrantToken() {
-    this.log.debug("Get token via Client Credentials Grant");
+    this.log.debug("Get token via Client Credentials Grant Flow");
     const data = {
       grant_type: "client_credentials",
       client_id: this.options.clientId,
@@ -98,22 +98,25 @@ class AuthRepository {
       scope: this.options.scope
     };
     const session2 = await this.postTokenRequest(data);
-    this.log.debug(`Token received. Refresh Token: ${session2.refresh_token != void 0}. Expires In: ${session2.expires_in}`);
+    this.log.debug(`Token received. Refresh Token received: ${session2.refresh_token != void 0}. Access Token expires in: ${session2.expires_in}`);
     return session2;
   }
   async refreshToken() {
-    var _a;
-    this.log.debug("Refresh token at the API");
+    var _a, _b;
+    if (!((_a = this.auth) == null ? void 0 : _a.refresh_token)) {
+      throw new Error("Cannot refresh the token because no refresh token is available.");
+    }
+    this.log.debug("Get token via Refresh Token Grant Flow");
     const data = {
       grant_type: "refresh_token",
-      refresh_token: (_a = this.auth) == null ? void 0 : _a.refresh_token,
+      refresh_token: (_b = this.auth) == null ? void 0 : _b.refresh_token,
       client_id: this.options.clientId,
       client_secret: this.options.clientSecret
     };
     const session2 = await this.postTokenRequest(data);
-    this.log.debug(`Token refreshed. Refresh Token: ${session2.refresh_token != void 0}. Expires In: ${session2.expires_in}`);
+    this.log.debug(`Token received. Refresh Token received: ${session2.refresh_token != void 0}. Access Token expires in: ${session2.expires_in}`);
     if (!session2.refresh_token) {
-      this.log.warn("Received refreshed token without Refresh Token.");
+      this.log.warn("Receive Access Token without Refresh Token.");
     }
     return session2;
   }
@@ -121,7 +124,6 @@ class AuthRepository {
     var _a;
     const stringBody = new URLSearchParams(body).toString();
     const url = "/oauth/token";
-    this.log.silly(`send to ${url}: ${stringBody}`);
     try {
       const { data } = await import_axios.default.post(url, stringBody, {
         headers: {
@@ -133,7 +135,7 @@ class AuthRepository {
       this.log.silly(`TokenData: ${JSON.stringify(data, null, " ")}`);
       return data;
     } catch (error) {
-      throw await this.checkError(url, error);
+      throw this.checkError(url, error);
     }
   }
   checkError(suburl, error) {

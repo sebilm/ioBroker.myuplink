@@ -173,8 +173,6 @@ class Myuplink extends utils.Adapter {
         const accessToken = await this.authRepository.getAccessToken();
         if (accessToken && this.myUplinkRepository) {
           const systems = await this.myUplinkRepository.getSystemsAndDevices(accessToken);
-          this.log.debug("Data received.");
-          this.log.debug(JSON.stringify(systems, null, " "));
           this.setState("info.connection", { val: true, expire: this.refreshInterval + 30, ack: true });
           const newDate = new Date();
           const datetime = newDate.today() + " " + newDate.timeNow();

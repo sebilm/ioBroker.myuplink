@@ -45,6 +45,7 @@ export class MyUplinkRepository {
                     'Accept-Language': lang,
                 },
             });
+            this.log.silly(JSON.stringify(data, null, ' '));
             return data;
         } catch (error) {
             throw this.checkError(suburl, error);

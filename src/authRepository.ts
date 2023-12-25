@@ -52,7 +52,7 @@ export class AuthRepository {
                     const token = await this.getAuthorizationCodeGrantToken(this.options.authCode);
                     await this.setSesssion(token);
                 } else {
-                    this.log.error('You need to get and set a new Auth-Code. You can do this in the adapter setting.');
+                    this.log.error('You need to get and set a new Auth Code. You can do this in the adapter setting.');
                     return undefined;
                 }
             } else {
@@ -74,7 +74,7 @@ export class AuthRepository {
     }
 
     private async getAuthorizationCodeGrantToken(authCode: string): Promise<Session> {
-        this.log.debug('Get token via Authorization Code Grant');
+        this.log.debug('Get token via Authorization Code Grant Flow');
         const data = {
             grant_type: 'authorization_code',
             client_id: this.options.clientId,
@@ -84,15 +84,15 @@ export class AuthRepository {
             scope: this.options.scope,
         };
         const session = await this.postTokenRequest(data);
-        this.log.debug(`Token received. Refresh Token: ${session.refresh_token != undefined}. Expires In: ${session.expires_in}`);
+        this.log.debug(`Token received. Refresh Token received: ${session.refresh_token != undefined}. Access Token expires in: ${session.expires_in}`);
         if (!session.refresh_token) {
-            this.log.warn('Received token without Refresh Token.');
+            this.log.warn('Receive Access Token without Refresh Token.');
         }
         return session;
     }
 
     private async getClientCredentialsGrantToken(): Promise<Session> {
-        this.log.debug('Get token via Client Credentials Grant');
+        this.log.debug('Get token via Client Credentials Grant Flow');
         const data = {
             grant_type: 'client_credentials',
             client_id: this.options.clientId,
@@ -100,12 +100,16 @@ export class AuthRepository {
             scope: this.options.scope,
         };
         const session = await this.postTokenRequest(data);
-        this.log.debug(`Token received. Refresh Token: ${session.refresh_token != undefined}. Expires In: ${session.expires_in}`);
+        this.log.debug(`Token received. Refresh Token received: ${session.refresh_token != undefined}. Access Token expires in: ${session.expires_in}`);
         return session;
     }
 
     private async refreshToken(): Promise<Session> {
-        this.log.debug('Refresh token at the API');
+        if (!this.auth?.refresh_token) {
+            throw new Error('Cannot refresh the token because no refresh token is available.');
+        }
+
+        this.log.debug('Get token via Refresh Token Grant Flow');
         const data = {
             grant_type: 'refresh_token',
             refresh_token: this.auth?.refresh_token,
@@ -113,9 +117,9 @@ export class AuthRepository {
             client_secret: this.options.clientSecret,
         };
         const session = await this.postTokenRequest(data);
-        this.log.debug(`Token refreshed. Refresh Token: ${session.refresh_token != undefined}. Expires In: ${session.expires_in}`);
+        this.log.debug(`Token received. Refresh Token received: ${session.refresh_token != undefined}. Access Token expires in: ${session.expires_in}`);
         if (!session.refresh_token) {
-            this.log.warn('Received refreshed token without Refresh Token.');
+            this.log.warn('Receive Access Token without Refresh Token.');
         }
         return session;
     }
@@ -123,7 +127,6 @@ export class AuthRepository {
     private async postTokenRequest(body: any): Promise<Session> {
         const stringBody = new URLSearchParams(body).toString();
         const url = '/oauth/token';
-        this.log.silly(`send to ${url}: ${stringBody}`);
         try {
             const { data } = await axios.post<Session>(url, stringBody, {
                 headers: {
@@ -135,7 +138,7 @@ export class AuthRepository {
             this.log.silly(`TokenData: ${JSON.stringify(data, null, ' ')}`);
             return data;
         } catch (error) {
-            throw await this.checkError(url, error);
+            throw this.checkError(url, error);
         }
     }
 
