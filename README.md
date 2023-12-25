@@ -39,7 +39,7 @@ In this version changing heat pump settings is not supported.
 
 ## Changelog
 
-### **WORK IN PROGRESS**
+### 0.1.0 (2023-12-25)
 
 -   Initial release
 

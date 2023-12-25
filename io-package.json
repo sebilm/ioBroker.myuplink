@@ -1,13 +1,13 @@
 {
     "common": {
         "name": "myuplink",
-        "version": "0.0.1",
+        "version": "0.1.0",
         "news": {
-            "0.0.1": {
-                "en": "initial release",
+            "0.1.0": {
+                "en": "Initial release",
                 "de": "Erstveröffentlichung",
                 "ru": "Начальная версия",
-                "pt": "lançamento inicial",
+                "pt": "Lançamento inicial",
                 "nl": "Eerste uitgave",
                 "fr": "Première version",
                 "it": "Versione iniziale",
