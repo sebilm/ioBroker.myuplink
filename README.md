@@ -19,18 +19,19 @@ This ioBroker adapter receives data from myUplink.com.
 3. Go to myUplink Api: https://dev.myuplink.com/ and log in
 4. Click "Applications" and then "Create New Application"
 5. Fill in: Name and Description can be everything e.g. ioBroker
-6. The Callback URL is important. You can use https://sebilm.github.io/ioBroker.myuplink/myuplink.html
+6. The Callback URL is important for Authorization Code Grant Flow. You can use https://sebilm.github.io/ioBroker.myuplink/myuplink.html
 7. Accept the myUplink API Services Agreement and click "Create"
 8. Then you get an Identifier and a Secret - we need them
 9. Install this adapter in ioBroker
 10. At adapter setting page fill in the Identifier and the Secret.
-11. Click the link "Click here to generate the Auth Code on myUplink."
-12. Follow the instructions. At the end you get your Auth Code.
-13. Copy this code and paste it in the adapter settings at "Auth Code".
-14. Choose your language.
-15. Click Save and Close
+11. Only for Authorization Code Grant Flow: Aktivate "Use Authorization Code Grant Flow" (not required in most cases)
+12. Only for Authorization Code Grant Flow: Click the link "Click here to generate the Auth Code on myUplink."
+13. Only for Authorization Code Grant Flow: Follow the instructions. At the end you get your Auth Code.
+14. Only for Authorization Code Grant Flow: Copy this code and paste it in the adapter settings at "Auth Code".
+15. Choose your language.
+16. Click Save and Close
 
-If you (later) get a "400 bad request" error in the log, you must get a new Auth Code - so do numbers 11 until 13 and 15.
+Only for Authorization Code Grant Flow: If you (later) get a "400 bad request" error in the log, you must get a new Auth Code - so do numbers 11 until 14 and 16.
 
 ## Manage/Write Support
 
