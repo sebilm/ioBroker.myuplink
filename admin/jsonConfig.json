@@ -1,0 +1,144 @@
+{
+    "i18n": true,
+    "type": "panel",
+    "items": {
+        "authenticationHeader": {
+            "text": "Authentication",
+            "type": "header",
+            "size": 1
+        },
+        "Identifier": {
+            "label": "Identifier",
+            "help": "Get it from https://dev.myuplink.com/apps",
+            "type": "text",
+            "trim": true,
+            "sm": 12,
+            "md": 6,
+            "lg": 6
+        },
+        "Secret": {
+            "label": "Secret",
+            "help": "Get it from https://dev.myuplink.com/apps",
+            "type": "text",
+            "trim": true,
+            "sm": 12,
+            "md": 6,
+            "lg": 6
+        },
+        "acgHeader": {
+            "text": "Authorization Code Grant Flow",
+            "type": "header",
+            "size": 2
+        },
+        "UseAuthorizationCodeGrant": {
+            "label": "Use Authorization Code Grant Flow",
+            "help": "These and the following options are not required in most cases.",
+            "type": "checkbox",
+            "sm": 12
+        },
+        "CallbackURL": {
+            "label": "Callback URL",
+            "help": "Does not need to be changed. You can use https://sebilm.github.io/ioBroker.myuplink/myuplink.html",
+            "type": "text",
+            "sm": 12
+        },
+        "_link": {
+            "type": "staticLink",
+            "label": "Click here to generate the Auth Code on myUplink.",
+            "href": "https://api.myuplink.com/oauth/authorize?response_type=code&client_id=${data.Identifier}&scope=READSYSTEM%20WRITESYSTEM&redirect_uri=${data.CallbackURL}&state=init"
+        },
+        "AuthCode": {
+            "label": "Auth Code",
+            "help": "Paste your Auth Code here.",
+            "type": "text",
+            "trim": true,
+            "sm": 12
+        },
+        "settingsHeader": {
+            "text": "Settings",
+            "type": "header",
+            "size": 1
+        },
+        "Interval": {
+            "label": "Refresh interval",
+            "help": "Time in minutes of fetching data from myUplink.",
+            "type": "number",
+            "min": 1,
+            "sm": 12,
+            "md": 6,
+            "lg": 4
+        },
+        "Language": {
+            "label": "Language",
+            "help": "The language for naming the data objects.",
+            "type": "select",
+            "options": [
+                {
+                    "label": "English",
+                    "value": "en"
+                },
+                {
+                    "label": "German",
+                    "value": "de"
+                },
+                {
+                    "label": "Swedish",
+                    "value": "sv"
+                }
+            ],
+            "sm": 12,
+            "md": 6,
+            "lg": 4
+        },
+        "parameterDataHeader": {
+            "text": "Parameter data",
+            "type": "header",
+            "size": 2
+        },
+        "AddData": {
+            "label": "Retrieve parameter data",
+            "help": "Parameter data will be retrieved and added to the object tree.",
+            "type": "checkbox",
+            "sm": 12,
+            "md": 12,
+            "lg": 6
+        },
+        "AddRawData": {
+            "label": "Add object with the raw JSON data",
+            "help": "An object containing the received data as a JSON string is added to the object tree.",
+            "type": "checkbox",
+            "sm": 12,
+            "md": 12,
+            "lg": 6
+        },
+        "GroupData": {
+            "label": "Group parameter data by received category",
+            "help": "The parameter data is grouped by the categories received.",
+            "type": "checkbox",
+            "sm": 12,
+            "md": 12,
+            "lg": 6
+        },
+        "notificationsHeader": {
+            "text": "Notifications",
+            "type": "header",
+            "size": 2
+        },
+        "AddActiveNotifications": {
+            "label": "Retrieve active notifications",
+            "help": "Active notifications will be retrieved and added to the object tree.",
+            "type": "checkbox",
+            "sm": 12,
+            "md": 12,
+            "lg": 6
+        },
+        "AddRawActiveNotifications": {
+            "label": "Add object with active notifications as raw JSON",
+            "help": "An object containing the received active notifications as a JSON string is added to the object tree.",
+            "type": "checkbox",
+            "sm": 12,
+            "md": 12,
+            "lg": 6
+        }
+    }
+}

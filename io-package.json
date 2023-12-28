@@ -43,8 +43,21 @@
             "uk": "myUplink.com для теплових насосів Nibe",
             "zh-cn": "myUplink.com 适用于 Nibe 热泵"
         },
-        "authors": ["Sebastian Haesselbarth <seb@sebmail.de>"],
-        "keywords": ["myuplink", "heat pump", "NIBE", "AIT", "Cetetherm", "ClimateMaster", "Contura", "CTA", "CTC", "Enertech Global"],
+        "authors": [
+            "Sebastian Haesselbarth <seb@sebmail.de>"
+        ],
+        "keywords": [
+            "myuplink",
+            "heat pump",
+            "NIBE",
+            "AIT",
+            "Cetetherm",
+            "ClimateMaster",
+            "Contura",
+            "CTA",
+            "CTC",
+            "Enertech Global"
+        ],
         "license": "MIT",
         "platform": "Javascript/Node.js",
         "main": "build/main.js",
@@ -59,7 +72,7 @@
         "connectionType": "cloud",
         "dataSource": "poll",
         "adminUI": {
-            "config": "materialize"
+            "config": "json"
         },
         "dependencies": [
             {
@@ -68,12 +81,20 @@
         ],
         "globalDependencies": [
             {
-                "admin": ">=5.0.0"
+                "admin": ">=5.1.13"
             }
         ]
     },
-    "encryptedNative": ["Identifier", "Secret", "AuthCode"],
-    "protectedNative": ["Identifier", "Secret", "AuthCode"],
+    "encryptedNative": [
+        "Identifier",
+        "Secret",
+        "AuthCode"
+    ],
+    "protectedNative": [
+        "Identifier",
+        "Secret",
+        "AuthCode"
+    ],
     "native": {
         "Identifier": "",
         "Secret": "",
