@@ -39,7 +39,7 @@ In this version changing heat pump settings is not supported.
 
 ## Changelog
 
-### **WORK IN PROGRESS**
+### 0.2.0 (2023-12-28)
 
 -   Settings page have been changed from materialize to jsonConfig
 -   Dependencies have been updated

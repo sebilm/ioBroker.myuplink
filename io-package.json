@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "myuplink",
-        "version": "0.1.0",
+        "version": "0.2.0",
         "news": {
+            "0.2.0": {
+                "en": "Settings page have been changed from materialize to jsonConfig\nDependencies have been updated",
+                "de": "Einstellungsseite wurden von materialize zu jsonConfig geändert\nAbhängigkeiten wurden aktualisiert",
+                "ru": "Страница настроек была изменена с материализации на jsonConfig\nВ зависимости были обновлены",
+                "pt": "A página de configurações foi alterada de materializar para jsonConfig\nAs dependências foram atualizadas",
+                "nl": "Pagina's van JsonConfig\nAfhankelijkheid",
+                "fr": "Les paramètres de la page ont été changés de matérialisation à jsonConfig\nLes dépendances ont été mises à jour",
+                "it": "La pagina delle impostazioni è stata modificata da materialize a jsonConfig\nLe dipendenze sono state aggiornate",
+                "es": "Página de configuración se han cambiado de materializar a jsonConfig\nSe han actualizado las dependencias",
+                "pl": "Strona domowa została zmieniona na jsonConfigg\nZależności zostały zaktualizowane",
+                "uk": "Настроювання сторінки були змінені з матеріалів, які використовують jsonConfig\nОновлено залежність",
+                "zh-cn": "定页从物质上改为 json Configg\n已更新了属地"
+            },
             "0.1.0": {
                 "en": "Initial release",
                 "de": "Erstveröffentlichung",
@@ -43,21 +56,8 @@
             "uk": "myUplink.com для теплових насосів Nibe",
             "zh-cn": "myUplink.com 适用于 Nibe 热泵"
         },
-        "authors": [
-            "Sebastian Haesselbarth <seb@sebmail.de>"
-        ],
-        "keywords": [
-            "myuplink",
-            "heat pump",
-            "NIBE",
-            "AIT",
-            "Cetetherm",
-            "ClimateMaster",
-            "Contura",
-            "CTA",
-            "CTC",
-            "Enertech Global"
-        ],
+        "authors": ["Sebastian Haesselbarth <seb@sebmail.de>"],
+        "keywords": ["myuplink", "heat pump", "NIBE", "AIT", "Cetetherm", "ClimateMaster", "Contura", "CTA", "CTC", "Enertech Global"],
         "license": "MIT",
         "platform": "Javascript/Node.js",
         "main": "build/main.js",
@@ -85,16 +85,8 @@
             }
         ]
     },
-    "encryptedNative": [
-        "Identifier",
-        "Secret",
-        "AuthCode"
-    ],
-    "protectedNative": [
-        "Identifier",
-        "Secret",
-        "AuthCode"
-    ],
+    "encryptedNative": ["Identifier", "Secret", "AuthCode"],
+    "protectedNative": ["Identifier", "Secret", "AuthCode"],
     "native": {
         "Identifier": "",
         "Secret": "",
