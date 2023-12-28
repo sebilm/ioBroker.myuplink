@@ -38,8 +38,7 @@ Only for Authorization Code Grant Flow: If you (later) get a "400 bad request" e
 In this version changing heat pump settings is not supported.
 
 ## Changelog
-
-### **WORK IN PROGRESS**
+### 0.2.1 (2023-12-28)
 
 -   All responsive sizes have been added to jsonConfig
 -   More error logging have been added

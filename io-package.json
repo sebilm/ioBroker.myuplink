@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "myuplink",
-        "version": "0.2.0",
+        "version": "0.2.1",
         "news": {
+            "0.2.1": {
+                "en": "All responsive sizes have been added to jsonConfig\nMore error logging have been added",
+                "de": "Alle responsive Größen wurden zur jsonConfig hinzugefügt\nMehr Fehlerprotokollierung wurden hinzugefügt",
+                "ru": "Все адаптивные размеры были добавлены в jsonConfig\nДобавлена ошибка входа",
+                "pt": "Todos os tamanhos responsivos foram adicionados ao jsonConfig\nMais registro de erro foram adicionados",
+                "nl": "Alle verantwoordelijke maten zijn toegevoegd aan JsonConfig\nEr zijn meer fouten ingedeeld",
+                "fr": "Toutes les tailles sensibles ont été ajoutées à jsonConfig\nPlus d'enregistrement d'erreurs ont été ajoutés",
+                "it": "Tutte le dimensioni reattive sono state aggiunte a jsonConfig\nSono stati aggiunti altri errori di registrazione",
+                "es": "Todos los tamaños sensibles se han añadido a jsonConfig\nSe ha añadido más registro de errores",
+                "pl": "Wszystkie reagujące rozmiary zostały dodane do jsonConfig\nDodano więcej błędów logowania",
+                "uk": "Всі чуйні розміри додано в jsonConfig\nДодано більш детальну інформацію",
+                "zh-cn": "所有反应规模都被增加到 json Configg\n增加的错误伐木"
+            },
             "0.2.0": {
                 "en": "Settings page have been changed from materialize to jsonConfig\nDependencies have been updated",
                 "de": "Einstellungsseite wurden von materialize zu jsonConfig geändert\nAbhängigkeiten wurden aktualisiert",
