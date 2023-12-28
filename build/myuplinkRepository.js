@@ -36,14 +36,14 @@ class MyUplinkRepository {
     import_axios.default.defaults.headers.common["user-agent"] = options.userAgent;
     import_axios.default.defaults.timeout = options.timeout;
   }
-  async getSystemsAndDevices(accessToken) {
-    return await this.getFromMyUplink("/v2/systems/me", accessToken);
+  getSystemsAndDevices(accessToken) {
+    return this.getFromMyUplink("/v2/systems/me", accessToken);
   }
-  async getDevicePoints(deviceId, accessToken) {
-    return await this.getFromMyUplink(`/v3/devices/${deviceId}/points`, accessToken);
+  getDevicePoints(deviceId, accessToken) {
+    return this.getFromMyUplink(`/v3/devices/${deviceId}/points`, accessToken);
   }
-  async getActiveNotifications(systemId, accessToken) {
-    return await this.getFromMyUplink(`/v2/systems/${systemId}/notifications/active?itemsPerPage=100`, accessToken);
+  getActiveNotifications(systemId, accessToken) {
+    return this.getFromMyUplink(`/v2/systems/${systemId}/notifications/active?itemsPerPage=100`, accessToken);
   }
   async getFromMyUplink(suburl, accessToken) {
     const lang = this.options.language;
@@ -63,6 +63,7 @@ class MyUplinkRepository {
   }
   checkError(suburl, error) {
     this.log.error(`error from ${suburl}`);
+    this.log.error(JSON.stringify(error, null, " "));
     if (import_axios.default.isAxiosError(error)) {
       const axiosError = error;
       if (axiosError.response != null) {

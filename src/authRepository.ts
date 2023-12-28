@@ -144,6 +144,7 @@ export class AuthRepository {
 
     private checkError(suburl: string, error: unknown): Error | unknown {
         this.log.error(`error from ${suburl}`);
+        this.log.error(JSON.stringify(error, null, ' '));
         if (axios.isAxiosError(error)) {
             const axiosError = error as AxiosError;
             if (axiosError.response != null) {

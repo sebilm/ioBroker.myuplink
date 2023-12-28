@@ -140,6 +140,7 @@ class AuthRepository {
   }
   checkError(suburl, error) {
     this.log.error(`error from ${suburl}`);
+    this.log.error(JSON.stringify(error, null, " "));
     if (import_axios.default.isAxiosError(error)) {
       const axiosError = error;
       if (axiosError.response != null) {

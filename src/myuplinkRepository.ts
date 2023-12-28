@@ -23,16 +23,16 @@ export class MyUplinkRepository {
     private log: ioBroker.Log;
     private options: MyUplinkOptions;
 
-    async getSystemsAndDevices(accessToken: string): Promise<PagedSystemResult> {
-        return await this.getFromMyUplink<PagedSystemResult>('/v2/systems/me', accessToken);
+    getSystemsAndDevices(accessToken: string): Promise<PagedSystemResult> {
+        return this.getFromMyUplink<PagedSystemResult>('/v2/systems/me', accessToken);
     }
 
-    async getDevicePoints(deviceId: string, accessToken: string): Promise<ParameterData[]> {
-        return await this.getFromMyUplink<ParameterData[]>(`/v3/devices/${deviceId}/points`, accessToken);
+    getDevicePoints(deviceId: string, accessToken: string): Promise<ParameterData[]> {
+        return this.getFromMyUplink<ParameterData[]>(`/v3/devices/${deviceId}/points`, accessToken);
     }
 
-    async getActiveNotifications(systemId: string, accessToken: string): Promise<AlarmsPaged> {
-        return await this.getFromMyUplink<AlarmsPaged>(`/v2/systems/${systemId}/notifications/active?itemsPerPage=100`, accessToken);
+    getActiveNotifications(systemId: string, accessToken: string): Promise<AlarmsPaged> {
+        return this.getFromMyUplink<AlarmsPaged>(`/v2/systems/${systemId}/notifications/active?itemsPerPage=100`, accessToken);
     }
 
     private async getFromMyUplink<T>(suburl: string, accessToken: string): Promise<T> {
@@ -54,6 +54,7 @@ export class MyUplinkRepository {
 
     private checkError(suburl: string, error: unknown): unknown {
         this.log.error(`error from ${suburl}`);
+        this.log.error(JSON.stringify(error, null, ' '));
         if (axios.isAxiosError(error)) {
             const axiosError = error as AxiosError;
             if (axiosError.response != null) {

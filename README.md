@@ -41,7 +41,8 @@ In this version changing heat pump settings is not supported.
 
 ### **WORK IN PROGRESS**
 
--   All responsive sizes were added to jsonConfig
+-   All responsive sizes have been added to jsonConfig
+-   More error logging have been added
 
 ### 0.2.0 (2023-12-28)
 
