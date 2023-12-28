@@ -39,6 +39,10 @@ In this version changing heat pump settings is not supported.
 
 ## Changelog
 
+### **WORK IN PROGRESS**
+
+-   All responsive sizes were added to jsonConfig
+
 ### 0.2.0 (2023-12-28)
 
 -   Settings page have been changed from materialize to jsonConfig

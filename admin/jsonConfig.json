@@ -12,6 +12,7 @@
             "help": "Get it from https://dev.myuplink.com/apps",
             "type": "text",
             "trim": true,
+            "xs": 12,
             "sm": 12,
             "md": 6,
             "lg": 6
@@ -21,6 +22,7 @@
             "help": "Get it from https://dev.myuplink.com/apps",
             "type": "text",
             "trim": true,
+            "xs": 12,
             "sm": 12,
             "md": 6,
             "lg": 6
@@ -34,13 +36,19 @@
             "label": "Use Authorization Code Grant Flow",
             "help": "These and the following options are not required in most cases.",
             "type": "checkbox",
-            "sm": 12
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12
         },
         "CallbackURL": {
             "label": "Callback URL",
             "help": "Does not need to be changed. You can use https://sebilm.github.io/ioBroker.myuplink/myuplink.html",
             "type": "text",
-            "sm": 12
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12
         },
         "_link": {
             "type": "staticLink",
@@ -52,7 +60,10 @@
             "help": "Paste your Auth Code here.",
             "type": "text",
             "trim": true,
-            "sm": 12
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12
         },
         "settingsHeader": {
             "text": "Settings",
@@ -64,6 +75,8 @@
             "help": "Time in minutes of fetching data from myUplink.",
             "type": "number",
             "min": 1,
+            "default": 1,
+            "xs": 12,
             "sm": 12,
             "md": 6,
             "lg": 4
@@ -86,6 +99,7 @@
                     "value": "sv"
                 }
             ],
+            "xs": 12,
             "sm": 12,
             "md": 6,
             "lg": 4
@@ -99,6 +113,7 @@
             "label": "Retrieve parameter data",
             "help": "Parameter data will be retrieved and added to the object tree.",
             "type": "checkbox",
+            "xs": 12,
             "sm": 12,
             "md": 12,
             "lg": 6
@@ -107,6 +122,7 @@
             "label": "Add object with the raw JSON data",
             "help": "An object containing the received data as a JSON string is added to the object tree.",
             "type": "checkbox",
+            "xs": 12,
             "sm": 12,
             "md": 12,
             "lg": 6
@@ -115,6 +131,7 @@
             "label": "Group parameter data by received category",
             "help": "The parameter data is grouped by the categories received.",
             "type": "checkbox",
+            "xs": 12,
             "sm": 12,
             "md": 12,
             "lg": 6
@@ -128,6 +145,7 @@
             "label": "Retrieve active notifications",
             "help": "Active notifications will be retrieved and added to the object tree.",
             "type": "checkbox",
+            "xs": 12,
             "sm": 12,
             "md": 12,
             "lg": 6
@@ -136,6 +154,7 @@
             "label": "Add object with active notifications as raw JSON",
             "help": "An object containing the received active notifications as a JSON string is added to the object tree.",
             "type": "checkbox",
+            "xs": 12,
             "sm": 12,
             "md": 12,
             "lg": 6
