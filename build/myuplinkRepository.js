@@ -28,6 +28,9 @@ __export(myuplinkRepository_exports, {
 });
 module.exports = __toCommonJS(myuplinkRepository_exports);
 var import_axios = __toESM(require("axios"));
+function setProperty(obj, propertyName, value) {
+  obj[propertyName] = value;
+}
 class MyUplinkRepository {
   constructor(options, log) {
     this.log = log;
@@ -36,29 +39,54 @@ class MyUplinkRepository {
     import_axios.default.defaults.headers.common["user-agent"] = options.userAgent;
     import_axios.default.defaults.timeout = options.timeout;
   }
-  getSystemsAndDevices(accessToken) {
-    return this.getFromMyUplink("/v2/systems/me", accessToken);
+  getSystemsAndDevicesAsync(accessToken) {
+    return this.getFromMyUplinkAsync("/v2/systems/me", accessToken);
   }
-  getDevicePoints(deviceId, accessToken) {
-    return this.getFromMyUplink(`/v3/devices/${deviceId}/points`, accessToken);
+  async getDevicePointsAsync(deviceId, accessToken, parameters = void 0) {
+    let url = `/v3/devices/${deviceId}/points`;
+    if (parameters) {
+      url = `${url}&parameters=${parameters}`;
+    }
+    return await this.getFromMyUplinkAsync(url, accessToken);
   }
-  getActiveNotifications(systemId, accessToken) {
-    return this.getFromMyUplink(`/v2/systems/${systemId}/notifications/active?itemsPerPage=100`, accessToken);
+  async setDevicePointsAsync(deviceId, accessToken, parameterId, value) {
+    const body = {};
+    setProperty(body, parameterId, value);
+    await this.patchToMyUplinkAsync(`/v2/devices/${deviceId}/points`, body, accessToken);
   }
-  async getFromMyUplink(suburl, accessToken) {
+  getActiveNotificationsAsync(systemId, accessToken) {
+    return this.getFromMyUplinkAsync(`/v2/systems/${systemId}/notifications/active?itemsPerPage=100`, accessToken);
+  }
+  async getFromMyUplinkAsync(url, accessToken) {
     const lang = this.options.language;
-    this.log.debug(`GET ${suburl} (lang: ${lang})`);
+    this.log.debug(`GET ${url} (lang: ${lang})`);
     try {
-      const { data } = await import_axios.default.get(suburl, {
+      const { data } = await import_axios.default.get(url, {
         headers: {
-          Authorization: "Bearer " + accessToken,
+          Authorization: `Bearer ${accessToken}`,
           "Accept-Language": lang
         }
       });
       this.log.silly(JSON.stringify(data, null, " "));
       return data;
     } catch (error) {
-      throw this.checkError(suburl, error);
+      throw this.checkError(url, error);
+    }
+  }
+  async patchToMyUplinkAsync(url, body, accessToken) {
+    const lang = this.options.language;
+    this.log.debug(`PATCH ${url} (lang: ${lang})`);
+    this.log.silly(`PATCH body: ${JSON.stringify(body, null, " ")}`);
+    try {
+      const { data } = await import_axios.default.patch(url, body, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Accept-Language": lang
+        }
+      });
+      this.log.debug(JSON.stringify(data, null, " "));
+    } catch (error) {
+      throw this.checkError(url, error);
     }
   }
   checkError(suburl, error) {

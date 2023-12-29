@@ -89,6 +89,7 @@ class Myuplink extends utils.Adapter {
       name: "myuplink"
     });
     this.on("ready", this.onReady.bind(this));
+    this.on("stateChange", this.onStateChange.bind(this));
     this.on("unload", this.onUnload.bind(this));
     this.refreshInterval = 0;
   }
@@ -163,6 +164,7 @@ class Myuplink extends utils.Adapter {
       },
       this.log
     );
+    await this.subscribeStatesAsync("*");
     this.log.info("Adapter started.");
     this.getData();
   }
@@ -172,7 +174,7 @@ class Myuplink extends utils.Adapter {
       if (this.authRepository) {
         const accessToken = await this.authRepository.getAccessToken();
         if (accessToken && this.myUplinkRepository) {
-          const systems = await this.myUplinkRepository.getSystemsAndDevices(accessToken);
+          const systems = await this.myUplinkRepository.getSystemsAndDevicesAsync(accessToken);
           this.setState("info.connection", { val: true, expire: this.refreshInterval + 30, ack: true });
           const newDate = new Date();
           const datetime = newDate.today() + " " + newDate.timeNow();
@@ -220,7 +222,7 @@ class Myuplink extends utils.Adapter {
         await this.setSystemDevice(dev, systemPath, accessToken);
       });
       if (this.config.AddActiveNotifications) {
-        const notifications = await ((_b = this.myUplinkRepository) == null ? void 0 : _b.getActiveNotifications(system.systemId, accessToken));
+        const notifications = await ((_b = this.myUplinkRepository) == null ? void 0 : _b.getActiveNotificationsAsync(system.systemId, accessToken));
         if (this.config.AddRawActiveNotifications) {
           await createStringStateAsync(this, `${systemPath}.rawActiveNotifications`, "Received raw JSON of active notifications", JSON.stringify(notifications == null ? void 0 : notifications.notifications, null, ""));
         }
@@ -251,17 +253,17 @@ class Myuplink extends utils.Adapter {
         await createStringStateAsync(this, `${devPath}.serialNumber`, "Serial Number", device.product.serialNumber);
       }
       if (this.config.AddData) {
-        const devicePoints = await ((_c = this.myUplinkRepository) == null ? void 0 : _c.getDevicePoints(device.id, accessToken));
+        const devicePoints = await ((_c = this.myUplinkRepository) == null ? void 0 : _c.getDevicePointsAsync(device.id, accessToken));
         if (this.config.AddRawData) {
           await createStringStateAsync(this, `${devPath}.rawData`, "Received raw JSON of parameter data", JSON.stringify(devicePoints, null, ""));
         }
         devicePoints == null ? void 0 : devicePoints.forEach(async (data) => {
-          await this.setParameterData(data, devPath);
+          await this.setParameterData(data, devPath, device.id);
         });
       }
     }
   }
-  async setParameterData(data, devPath) {
+  async setParameterData(data, devPath, deviceId) {
     var _a;
     if (data.parameterId && data.parameterName) {
       const cathPath = data.category ? `${devPath}.${replaceUnwantedLetters(data.category)}.${replaceUnwantedLetters(data.parameterId)}` : null;
@@ -285,7 +287,11 @@ class Myuplink extends utils.Adapter {
             read: true,
             write: (_a = data.writable) != null ? _a : false
           },
-          native: {}
+          native: {
+            parameterId: data.parameterId,
+            writable: data.writable,
+            deviceId
+          }
         };
         if (data.parameterUnit) {
           obj.common.unit = data.parameterUnit;
@@ -381,6 +387,34 @@ class Myuplink extends utils.Adapter {
       },
       native: {}
     });
+  }
+  async onStateChange(id, state) {
+    if (state != null && state.ack === false && state.q == 0 && state.val != null && this.authRepository != null && this.myUplinkRepository != null) {
+      this.log.debug(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
+      const obj = await this.getObjectAsync(id);
+      if (obj != null && obj.native != null && obj.native.writable == true && obj.native.parameterId != null && obj.native.parameterId != "" && obj.native.deviceId != null && obj.native.deviceId != "") {
+        try {
+          const accessToken = await this.authRepository.getAccessToken();
+          if (accessToken) {
+            const deviceId = obj.native.deviceId;
+            const parameterId = obj.native.parameterId.toString();
+            const value = state.val.toString();
+            await this.myUplinkRepository.setDevicePointsAsync(deviceId, accessToken, parameterId, value);
+            const devicePoints = await this.myUplinkRepository.getDevicePointsAsync(deviceId, accessToken, parameterId);
+            devicePoints == null ? void 0 : devicePoints.forEach(async (data) => {
+              if (data.parameterId == parameterId) {
+                await this.setStateAsync(id, { val: data.value, ack: true });
+              }
+            });
+          }
+        } catch (error) {
+          const errorString = `${error}`;
+          this.log.error(errorString);
+          const quality = 68;
+          await this.setStateAsync(id, { val: state.val, q: quality, c: errorString, ack: false });
+        }
+      }
+    }
   }
   onUnload(callback) {
     try {

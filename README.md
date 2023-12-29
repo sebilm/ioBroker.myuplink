@@ -24,23 +24,14 @@ This ioBroker adapter receives data from myUplink.com.
 8. Then you get an Identifier and a Secret - we need them
 9. Install this adapter in ioBroker
 10. At adapter setting page fill in the Identifier and the Secret.
-11. Only for Authorization Code Grant Flow: Aktivate "Use Authorization Code Grant Flow" (not required in most cases)
-12. Only for Authorization Code Grant Flow: Click the link "Click here to generate the Auth Code on myUplink."
-13. Only for Authorization Code Grant Flow: Follow the instructions. At the end you get your Auth Code.
-14. Only for Authorization Code Grant Flow: Copy this code and paste it in the adapter settings at "Auth Code".
-15. Choose your language.
-16. Click Save and Close
-
-Only for Authorization Code Grant Flow: If you (later) get a "400 bad request" error in the log, you must get a new Auth Code - so do numbers 11 until 14 and 16.
-
-## Manage/Write Support
-
-In this version changing heat pump settings is not supported.
+11. Choose your language and all other settings.
+12. Click Save and Close
 
 ## Changelog
 
 ### **WORK IN PROGRESS**
 
+-   Support for setting parameter values has been added (must be paid for at myuplink.com) #4
 -   Authorization Code Grant Flow settings have been moved to new Extended tab
 -   Password control will be used for Secret and Auth Code
 

@@ -3,6 +3,10 @@ import { AlarmsPaged } from './models/AlarmsPaged';
 import { PagedSystemResult } from './models/PagedSystemResult';
 import { ParameterData } from './models/ParameterData';
 
+function setProperty<K extends keyof any>(obj: any, propertyName: K, value: any): void {
+    obj[propertyName] = value;
+}
+
 export default interface MyUplinkOptions {
     baseUrl: string;
     timeout: number;
@@ -23,32 +27,59 @@ export class MyUplinkRepository {
     private log: ioBroker.Log;
     private options: MyUplinkOptions;
 
-    getSystemsAndDevices(accessToken: string): Promise<PagedSystemResult> {
-        return this.getFromMyUplink<PagedSystemResult>('/v2/systems/me', accessToken);
+    getSystemsAndDevicesAsync(accessToken: string): Promise<PagedSystemResult> {
+        return this.getFromMyUplinkAsync<PagedSystemResult>('/v2/systems/me', accessToken);
     }
 
-    getDevicePoints(deviceId: string, accessToken: string): Promise<ParameterData[]> {
-        return this.getFromMyUplink<ParameterData[]>(`/v3/devices/${deviceId}/points`, accessToken);
+    async getDevicePointsAsync(deviceId: string, accessToken: string, parameters: string | undefined = undefined): Promise<ParameterData[]> {
+        let url = `/v3/devices/${deviceId}/points`;
+        if (parameters) {
+            url = `${url}&parameters=${parameters}`;
+        }
+        return await this.getFromMyUplinkAsync<ParameterData[]>(url, accessToken);
     }
 
-    getActiveNotifications(systemId: string, accessToken: string): Promise<AlarmsPaged> {
-        return this.getFromMyUplink<AlarmsPaged>(`/v2/systems/${systemId}/notifications/active?itemsPerPage=100`, accessToken);
+    async setDevicePointsAsync(deviceId: string, accessToken: string, parameterId: string, value: string): Promise<void> {
+        const body = {};
+        setProperty(body, parameterId, value);
+        await this.patchToMyUplinkAsync(`/v2/devices/${deviceId}/points`, body, accessToken);
     }
 
-    private async getFromMyUplink<T>(suburl: string, accessToken: string): Promise<T> {
+    getActiveNotificationsAsync(systemId: string, accessToken: string): Promise<AlarmsPaged> {
+        return this.getFromMyUplinkAsync<AlarmsPaged>(`/v2/systems/${systemId}/notifications/active?itemsPerPage=100`, accessToken);
+    }
+
+    private async getFromMyUplinkAsync<T>(url: string, accessToken: string): Promise<T> {
         const lang = this.options.language;
-        this.log.debug(`GET ${suburl} (lang: ${lang})`);
+        this.log.debug(`GET ${url} (lang: ${lang})`);
         try {
-            const { data } = await axios.get<T>(suburl, {
+            const { data } = await axios.get<T>(url, {
                 headers: {
-                    Authorization: 'Bearer ' + accessToken,
+                    Authorization: `Bearer ${accessToken}`,
                     'Accept-Language': lang,
                 },
             });
             this.log.silly(JSON.stringify(data, null, ' '));
             return data;
         } catch (error) {
-            throw this.checkError(suburl, error);
+            throw this.checkError(url, error);
+        }
+    }
+
+    private async patchToMyUplinkAsync(url: string, body: any, accessToken: string): Promise<void> {
+        const lang = this.options.language;
+        this.log.debug(`PATCH ${url} (lang: ${lang})`);
+        this.log.silly(`PATCH body: ${JSON.stringify(body, null, ' ')}`);
+        try {
+            const { data } = await axios.patch(url, body, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                    'Accept-Language': lang,
+                },
+            });
+            this.log.debug(JSON.stringify(data, null, ' '));
+        } catch (error) {
+            throw this.checkError(url, error);
         }
     }
 
