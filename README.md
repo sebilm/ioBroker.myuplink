@@ -29,7 +29,7 @@ This ioBroker adapter receives data from myUplink.com.
 
 ## Changelog
 
-### **WORK IN PROGRESS**
+### 0.3.0 (2023-12-29)
 
 -   Support for setting parameter values has been added (must be paid for at myuplink.com) #4
 -   Authorization Code Grant Flow settings have been moved to new Extended tab
