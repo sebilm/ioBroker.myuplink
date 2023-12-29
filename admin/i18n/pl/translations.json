@@ -26,5 +26,7 @@
     "Retrieve active notifications": "Pobierz aktywne powiadomienia",
     "Active notifications will be retrieved and added to the object tree.": "Aktywne powiadomienia zostaną pobrane i dodane do drzewa obiektów.",
     "Add object with active notifications as raw JSON": "Dodaj obiekt z aktywnymi powiadomieniami jako surowy JSON",
-    "An object containing the received active notifications as a JSON string is added to the object tree.": "Do drzewa obiektów dodawany jest obiekt zawierający odebrane aktywne powiadomienia w postaci ciągu JSON."
+    "An object containing the received active notifications as a JSON string is added to the object tree.": "Do drzewa obiektów dodawany jest obiekt zawierający odebrane aktywne powiadomienia w postaci ciągu JSON.",
+    "General": "Ogólny",
+    "Extended": "Rozszerzony"
 }

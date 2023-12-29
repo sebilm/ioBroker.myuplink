@@ -1,5 +1,7 @@
 {
     "myuplink adapter settings": "Adapter settings for myuplink",
+    "General": "General",
+    "Extended": "Extended",
     "Authentication": "Authentication",
     "Get it from https://dev.myuplink.com/apps": "Get it from https://dev.myuplink.com/apps",
     "Use Authorization Code Grant Flow": "Use Authorization Code Grant Flow",

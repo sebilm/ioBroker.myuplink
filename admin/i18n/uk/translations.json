@@ -26,5 +26,7 @@
     "Retrieve active notifications": "Отримати активні сповіщення",
     "Active notifications will be retrieved and added to the object tree.": "Активні сповіщення буде отримано та додано до дерева об’єктів.",
     "Add object with active notifications as raw JSON": "Додайте об’єкт із активними сповіщеннями як необроблений JSON",
-    "An object containing the received active notifications as a JSON string is added to the object tree.": "До дерева об’єктів додається об’єкт, що містить отримані активні сповіщення у вигляді рядка JSON."
+    "An object containing the received active notifications as a JSON string is added to the object tree.": "До дерева об’єктів додається об’єкт, що містить отримані активні сповіщення у вигляді рядка JSON.",
+    "General": "Загальний",
+    "Extended": "Розширений"
 }
