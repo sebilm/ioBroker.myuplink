@@ -24,8 +24,8 @@
                 "Secret": {
                     "label": "Secret",
                     "help": "Get it from https://dev.myuplink.com/apps",
-                    "type": "text",
-                    "trim": true,
+                    "type": "password",
+                    "visible": true,
                     "xs": 12,
                     "sm": 12,
                     "md": 6,
@@ -165,8 +165,8 @@
                 "AuthCode": {
                     "label": "Auth Code",
                     "help": "Paste your Auth Code here.",
-                    "type": "text",
-                    "trim": true,
+                    "type": "password",
+                    "visible": true,
                     "xs": 12,
                     "sm": 12,
                     "md": 12,
