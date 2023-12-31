@@ -29,7 +29,7 @@ This ioBroker adapter receives data from myUplink.com.
 
 ## Changelog
 
-### **WORK IN PROGRESS**
+### 0.4.0 (2023-12-31)
 
 -   New options for renaming IDs have been added #5
 -   Options are deactivated if checkboxes are not checked

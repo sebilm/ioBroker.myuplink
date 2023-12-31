@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "myuplink",
-        "version": "0.3.0",
+        "version": "0.4.0",
         "news": {
+            "0.4.0": {
+                "en": "New options for renaming IDs have been added #5\nOptions are deactivated if checkboxes are not checked",
+                "de": "Neue Optionen zur Umbenennung von IDs wurden hinzugefügt #5\nOptionen werden deaktiviert, wenn Checkboxen nicht ausgewählt sind",
+                "ru": "Добавлены новые варианты переименования ID #5\nОпции деактивируются, если чекбоксы не проверены",
+                "pt": "Novas opções para renomear IDs foram adicionadas #5\nAs opções são desativadas se as caixas de seleção não forem verificadas",
+                "nl": "Nieuwe opties voor hernaming ID's zijn toegevoegd #5\nOpties worden gedeactiveerd als er geen cheques worden gecontroleerd",
+                "fr": "De nouvelles options pour renommer les ID ont été ajoutées #5\nLes options sont désactivées si les cases à cocher ne sont pas cochées",
+                "it": "Sono state aggiunte nuove opzioni per rinominare ID #5\nLe opzioni vengono disattivate se le caselle di controllo non vengono controllate",
+                "es": "Se han añadido nuevas opciones para renombrar IDs #5\nLas opciones se desactivan si no se revisan las casillas de verificación",
+                "pl": "Nowe opcje dotyczące renamingu zostały dodane do #5\nOpcje są dezaktywowane, jeśli nie sprawdza się skrzynki",
+                "uk": "Додано нові параметри для перейменування ID #5\nВаріанти деактивуються, якщо прапорці не перевіряють",
+                "zh-cn": "重新命名国际发展部的新办法已增加第5号。\n如果检查箱没有检查,则选择。"
+            },
             "0.3.0": {
                 "en": "Support for setting parameter values has been added (must be paid for at myuplink.com) #4\nAuthorization Code Grant Flow settings have been moved to new Extended tab\nPassword control will be used for Secret and Auth Code",
                 "de": "Unterstützung für die Einstellung von Parameterwerten wurde hinzugefügt (muss bei myuplink.com bezahlt werden) #4\nAutorisierung Code Grant Flow-Einstellungen wurden auf neue erweiterte Registerkarte verschoben\nPasswort-Kontrolle wird für Secret und Auth Code verwendet",
