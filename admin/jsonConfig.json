@@ -130,6 +130,147 @@
                 }
             }
         },
+        "renameIdsTab": {
+            "type": "panel",
+            "label": "Rename IDs",
+            "items": {
+                "renameIdsHeader": {
+                    "text": "Rename IDs",
+                    "type": "header",
+                    "size": 1
+                },
+                "_helpText1": {
+                    "text": "Object IDs in the object tree are specified by the myuplink API. However, these can be renamed with these options by specifying the ID of the API (original ID) and a new ID. If objects with the original ID already exist in the object tree, they must be deleted manually - these objects will not be updated!",
+                    "type": "staticText"
+                },
+                "systemsHeader": {
+                    "text": "Systems",
+                    "type": "header",
+                    "size": 2
+                },
+                "RenameSystemIds": {
+                    "type": "table",
+                    "import": true,
+                    "export": true,
+                    "uniqueColumns": ["OriginalId", "NewId"],
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12,
+                    "items": [
+                        {
+                            "title": "Original ID",
+                            "attr": "OriginalId",
+                            "type": "text",
+                            "width": "70%"
+                        },
+                        {
+                            "title": "New ID",
+                            "attr": "NewId",
+                            "type": "text",
+                            "width": "30%"
+                        }
+                    ]
+                },
+                "devicesHeader": {
+                    "text": "Devices",
+                    "type": "header",
+                    "size": 2
+                },
+                "RenameDeviceIds": {
+                    "type": "table",
+                    "import": true,
+                    "export": true,
+                    "uniqueColumns": ["OriginalId", "NewId"],
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12,
+                    "items": [
+                        {
+                            "title": "Original ID",
+                            "attr": "OriginalId",
+                            "type": "text",
+                            "width": "70%"
+                        },
+                        {
+                            "title": "New ID",
+                            "attr": "NewId",
+                            "type": "text",
+                            "width": "30%"
+                        }
+                    ]
+                },
+                "categoriesHeader": {
+                    "text": "Categories",
+                    "type": "header",
+                    "size": 2
+                },
+                "RenameCategories": {
+                    "type": "table",
+                    "import": true,
+                    "export": true,
+                    "uniqueColumns": ["OriginalId", "NewId"],
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12,
+                    "items": [
+                        {
+                            "title": "Original ID",
+                            "attr": "OriginalId",
+                            "type": "text",
+                            "width": "60%"
+                        },
+                        {
+                            "title": "New ID",
+                            "attr": "NewId",
+                            "type": "text",
+                            "width": "40%"
+                        }
+                    ]
+                },
+                "dataHeader": {
+                    "text": "Parameter Data IDs",
+                    "type": "header",
+                    "size": 2
+                },
+                "_helpText2": {
+                    "text": "A Patameter data ID can also be assigned to a category here. A folder is created for this category. The category sent by the API is then ignored.",
+                    "type": "staticText"
+                },
+                "RenameDataIds": {
+                    "type": "table",
+                    "import": true,
+                    "export": true,
+                    "uniqueColumns": ["OriginalId", "NewId"],
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12,
+                    "items": [
+                        {
+                            "title": "Original ID",
+                            "attr": "OriginalId",
+                            "type": "text",
+                            "width": "30%"
+                        },
+                        {
+                            "title": "New ID",
+                            "attr": "NewId",
+                            "type": "text",
+                            "width": "30%"
+                        },
+                        {
+                            "title": "Category",
+                            "attr": "Category",
+                            "type": "text",
+                            "width": "40%"
+                        }
+                    ]
+                }
+            }
+        },
         "extendedTab": {
             "type": "panel",
             "label": "Extended",
@@ -137,7 +278,7 @@
                 "acgHeader": {
                     "text": "Authorization Code Grant Flow",
                     "type": "header",
-                    "size": 2
+                    "size": 1
                 },
                 "_helpText": {
                     "text": "These and the following options are not required in most cases.",

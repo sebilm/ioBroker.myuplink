@@ -28,5 +28,14 @@
     "Add object with active notifications as raw JSON": "Добавить объект с активными уведомлениями в виде необработанного JSON.",
     "An object containing the received active notifications as a JSON string is added to the object tree.": "В дерево объектов добавляется объект, содержащий полученные активные уведомления в виде строки JSON.",
     "General": "Общий",
-    "Extended": "Расширенный"
+    "Extended": "Расширенный",
+    "Rename IDs": "Переименование идентификаторов",
+    "Object IDs in the object tree are specified by the myuplink API. However, these can be renamed with these options by specifying the ID of the API (original ID) and a new ID. If objects with the original ID already exist in the object tree, they must be deleted manually - these objects will not be updated!": "Идентификаторы объектов в дереве объектов задаются API myuplink. Однако их можно переименовать с помощью этих параметров, указав идентификатор API (исходный идентификатор) и новый идентификатор. Если в дереве объектов уже существуют объекты с исходным идентификатором, их необходимо удалить вручную — эти объекты не будут обновляться!",
+    "Systems": "Системы",
+    "Original ID": "Исходный идентификатор",
+    "New ID": "Новый идентификатор",
+    "Devices": "Устройства",
+    "Categories": "Категории",
+    "Parameter Data IDs": "Идентификаторы данных параметров",
+    "A Patameter data ID can also be assigned to a category here. A folder is created for this category. The category sent by the API is then ignored.": "Здесь также можно присвоить категории идентификатор данных Patameter. Для этой категории создается папка. Категория, отправленная API, затем игнорируется."
 }

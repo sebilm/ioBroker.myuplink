@@ -28,5 +28,14 @@
     "Add object with active notifications as raw JSON": "将具有活动通知的对象添加为原始 JSON",
     "An object containing the received active notifications as a JSON string is added to the object tree.": "包含收到的活动通知（JSON 字符串）的对象将添加到对象树中。",
     "General": "一般的",
-    "Extended": "扩展"
+    "Extended": "扩展",
+    "Rename IDs": "重命名 ID",
+    "Object IDs in the object tree are specified by the myuplink API. However, these can be renamed with these options by specifying the ID of the API (original ID) and a new ID. If objects with the original ID already exist in the object tree, they must be deleted manually - these objects will not be updated!": "对象树中的对象 ID 由 myuplink API 指定。但是，可以通过指定 API 的 ID（原始 ID）和新 ID，使用这些选项重命名它们。如果具有原始 ID 的对象已存在于对象树中，则必须手动删除它们 - 这些对象将不会被更新！",
+    "Systems": "系统",
+    "Original ID": "身份证原件",
+    "New ID": "新身份证",
+    "Devices": "设备",
+    "Categories": "类别",
+    "Parameter Data IDs": "参数数据 ID",
+    "A Patameter data ID can also be assigned to a category here. A folder is created for this category. The category sent by the API is then ignored.": "也可以在此处将参数数据 ID 分配给类别。为此类别创建一个文件夹。然后，API 发送的类别将被忽略。"
 }

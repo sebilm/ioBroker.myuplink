@@ -28,5 +28,14 @@
     "Add object with active notifications as raw JSON": "Agregar objeto con notificaciones activas como JSON sin formato",
     "An object containing the received active notifications as a JSON string is added to the object tree.": "Se agrega al árbol de objetos un objeto que contiene las notificaciones activas recibidas como una cadena JSON.",
     "General": "General",
-    "Extended": "Extendido"
+    "Extended": "Extendido",
+    "Rename IDs": "Cambiar el nombre de las identificaciones",
+    "Object IDs in the object tree are specified by the myuplink API. However, these can be renamed with these options by specifying the ID of the API (original ID) and a new ID. If objects with the original ID already exist in the object tree, they must be deleted manually - these objects will not be updated!": "Los ID de objeto en el árbol de objetos los especifica la API myuplink. Sin embargo, se puede cambiar el nombre de estos con estas opciones especificando el ID de la API (ID original) y un nuevo ID. Si ya existen objetos con el ID original en el árbol de objetos, deben eliminarse manualmente; ¡estos objetos no se actualizarán!",
+    "Systems": "Sistemas",
+    "Original ID": "Identificación original",
+    "New ID": "Nueva identificación",
+    "Devices": "Dispositivos",
+    "Categories": "Categorías",
+    "Parameter Data IDs": "ID de datos de parámetros",
+    "A Patameter data ID can also be assigned to a category here. A folder is created for this category. The category sent by the API is then ignored.": "Aquí también se puede asignar un ID de datos de Patameter a una categoría. Se crea una carpeta para esta categoría. Luego se ignora la categoría enviada por la API."
 }

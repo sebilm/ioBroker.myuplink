@@ -17,6 +17,16 @@ declare global {
             GroupData: boolean;
             AddActiveNotifications: boolean;
             AddRawActiveNotifications: boolean;
+            RenameSystemIds: RenameData[];
+            RenameDeviceIds: RenameData[];
+            RenameCategories: RenameData[];
+            RenameDataIds: RenameData[];
+        }
+
+        interface RenameData {
+            OriginalId: string;
+            NewId: string;
+            Category: string | undefined;
         }
     }
 }
