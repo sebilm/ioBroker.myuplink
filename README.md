@@ -29,6 +29,10 @@ This ioBroker adapter receives data from myUplink.com.
 
 ## Changelog
 
+### **WORK IN PROGRESS**
+
+-   Options are deactivated if checkboxes are not checked
+
 ### 0.3.0 (2023-12-29)
 
 -   Support for setting parameter values has been added (must be paid for at myuplink.com) #4
