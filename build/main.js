@@ -28,12 +28,6 @@ Date.prototype.today = function() {
 Date.prototype.timeNow = function() {
   return (this.getHours() < 10 ? "0" : "") + this.getHours() + ":" + (this.getMinutes() < 10 ? "0" : "") + this.getMinutes() + ":" + (this.getSeconds() < 10 ? "0" : "") + this.getSeconds();
 };
-function removeSoftHyphen(text) {
-  return text.replace(new RegExp("\xAD", "g"), "");
-}
-function replaceUnwantedLetters(text) {
-  return removeSoftHyphen(text.replace(new RegExp(" ", "g"), "_").replace(new RegExp("\\.", "g"), "_"));
-}
 class Myuplink extends utils.Adapter {
   constructor(options = {}) {
     super({
@@ -57,19 +51,19 @@ class Myuplink extends utils.Adapter {
     (_a = this.config.RenameSystemIds) == null ? void 0 : _a.forEach((renameData) => {
       if (renameData.OriginalId && renameData.NewId) {
         this.log.debug(`Map System ID: ${renameData.OriginalId} -> ${renameData.NewId}`);
-        this.systemIds.set(renameData.OriginalId, replaceUnwantedLetters(renameData.NewId));
+        this.systemIds.set(renameData.OriginalId, this.replaceForbiddenCharacters(renameData.NewId));
       }
     });
     (_b = this.config.RenameDeviceIds) == null ? void 0 : _b.forEach((renameData) => {
       if (renameData.OriginalId && renameData.NewId) {
         this.log.debug(`Map Device ID: ${renameData.OriginalId} -> ${renameData.NewId}`);
-        this.deviceIds.set(renameData.OriginalId, replaceUnwantedLetters(renameData.NewId));
+        this.deviceIds.set(renameData.OriginalId, this.replaceForbiddenCharacters(renameData.NewId));
       }
     });
     (_c = this.config.RenameCategories) == null ? void 0 : _c.forEach((renameData) => {
       if (renameData.OriginalId && renameData.NewId) {
         this.log.debug(`Map Category: ${renameData.OriginalId} -> ${renameData.NewId}`);
-        this.categories.set(renameData.OriginalId, replaceUnwantedLetters(renameData.NewId));
+        this.categories.set(renameData.OriginalId, this.replaceForbiddenCharacters(renameData.NewId));
       }
     });
     (_d = this.config.RenameDataIds) == null ? void 0 : _d.forEach((renameData) => {
@@ -77,7 +71,7 @@ class Myuplink extends utils.Adapter {
         this.log.debug(`Map Data ID: ${renameData.OriginalId} -> ${renameData.NewId}`);
         this.parameterIds.set(renameData.OriginalId, renameData.NewId);
         if (renameData.Category) {
-          this.parameterIdToCategory.set(renameData.OriginalId, replaceUnwantedLetters(renameData.Category));
+          this.parameterIdToCategory.set(renameData.OriginalId, this.replaceForbiddenCharacters(renameData.Category));
         }
       }
     });
@@ -189,10 +183,10 @@ class Myuplink extends utils.Adapter {
   async setSystemWithDevices(system, accessToken) {
     var _a, _b, _c;
     if (system.systemId != void 0 && system.name != void 0) {
-      const systemId = replaceUnwantedLetters(system.systemId);
+      const systemId = this.replaceForbiddenCharacters(system.systemId);
       const newSystemId = this.systemIds.get(systemId);
       const systemPath = newSystemId != null ? newSystemId : systemId;
-      const systemName = removeSoftHyphen(system.name);
+      const systemName = this.removeSoftHyphen(system.name);
       await this.myCreateDeviceAsync(systemPath, systemName);
       await this.myCreateStringStateAsync(`${systemPath}.systemId`, "System ID", system.systemId);
       await this.myCreateStringStateAsync(`${systemPath}.name`, "Name", systemName);
@@ -225,11 +219,11 @@ class Myuplink extends utils.Adapter {
   async setSystemDevice(device, systemPath, accessToken) {
     var _a, _b, _c;
     if (device.id != void 0 && ((_a = device.product) == null ? void 0 : _a.name) != void 0) {
-      const deviceId = replaceUnwantedLetters(device.id);
+      const deviceId = this.replaceForbiddenCharacters(device.id);
       const newDeviceId = this.deviceIds.get(deviceId);
       const deviceSubPath = newDeviceId != null ? newDeviceId : deviceId;
       const devicePath = `${systemPath}.${deviceSubPath}`;
-      const deviceName = removeSoftHyphen(device.product.name);
+      const deviceName = this.removeSoftHyphen(device.product.name);
       await this.myCreateChannelAsync(devicePath, deviceName);
       await this.myCreateStringStateAsync(`${devicePath}.deviceId`, "Device ID", device.id);
       await this.myCreateStringStateAsync(`${devicePath}.name`, "Name", deviceName);
@@ -256,7 +250,7 @@ class Myuplink extends utils.Adapter {
   async setParameterData(data, devicePath, deviceId) {
     var _a;
     if (data.parameterId && data.parameterName) {
-      const parameterId = replaceUnwantedLetters(data.parameterId);
+      const parameterId = this.replaceForbiddenCharacters(data.parameterId);
       const newParameterId = this.parameterIds.get(parameterId);
       const parameterSubPath = newParameterId != null ? newParameterId : parameterId;
       let path2 = `${devicePath}.${parameterSubPath}`;
@@ -264,7 +258,7 @@ class Myuplink extends utils.Adapter {
       if (newCategory) {
         path2 = `${devicePath}.${newCategory}.${parameterSubPath}`;
       } else if (data.category) {
-        const categoryId = replaceUnwantedLetters(data.category);
+        const categoryId = this.replaceForbiddenCharacters(data.category);
         const newCategoryId = this.categories.get(categoryId);
         const categorySubPath = newCategoryId != null ? newCategoryId : categoryId;
         const catPath = `${devicePath}.${categorySubPath}`;
@@ -283,7 +277,7 @@ class Myuplink extends utils.Adapter {
         const obj = {
           type: "state",
           common: {
-            name: removeSoftHyphen(data.parameterName),
+            name: this.removeSoftHyphen(data.parameterName),
             type: "number",
             role: "value",
             read: true,
@@ -311,7 +305,7 @@ class Myuplink extends utils.Adapter {
           const states = {};
           data.enumValues.forEach((enumValue) => {
             if (enumValue.text && enumValue.value) {
-              states[enumValue.value] = removeSoftHyphen(enumValue.text);
+              states[enumValue.value] = this.removeSoftHyphen(enumValue.text);
             }
           });
           obj.common.states = states;
@@ -447,6 +441,12 @@ class Myuplink extends utils.Adapter {
       native: {}
     });
     await this.setStateAsync(path2, { val: value, ack: true });
+  }
+  removeSoftHyphen(text) {
+    return text.replace(new RegExp("\xAD", "g"), "");
+  }
+  replaceForbiddenCharacters(text) {
+    return this.removeSoftHyphen(text).replace(new RegExp("\\.", "g"), "_").replace(this.FORBIDDEN_CHARS, "_");
   }
   async onStateChange(id, state) {
     if (state != null && state.ack === false && state.q == this.constants.STATE_QUALITY.GOOD && state.val != null && this.authRepository != null && this.myUplinkRepository != null) {

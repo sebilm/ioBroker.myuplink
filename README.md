@@ -32,6 +32,7 @@ This ioBroker adapter receives data from myUplink.com.
 ### **WORK IN PROGRESS**
 
 -   The logging of token data (in log level silly) has been removed
+-   In object IDs, all characters that are not officially supported are now replaced by an underscore
 
 ### 0.4.0 (2023-12-31)
 
