@@ -224,7 +224,7 @@ class Myuplink extends utils.Adapter {
             const systemName = this.removeSoftHyphen(system.name);
             await this.myCreateDeviceAsync(systemPath, systemName);
             await this.myCreateStringStateAsync(`${systemPath}.systemId`, 'System ID', system.systemId);
-            await this.myCreateStringStateAsync(`${systemPath}.name`, 'Name', systemName);
+            await this.myCreateStringStateAsync(`${systemPath}.name`, 'Name', systemName, 'info.name');
             if (system.country != undefined) {
                 await this.myCreateStringStateAsync(`${systemPath}.country`, 'Country', system.country);
             }
@@ -261,15 +261,15 @@ class Myuplink extends utils.Adapter {
             const deviceName = this.removeSoftHyphen(device.product.name);
             await this.myCreateChannelAsync(devicePath, deviceName);
             await this.myCreateStringStateAsync(`${devicePath}.deviceId`, 'Device ID', device.id);
-            await this.myCreateStringStateAsync(`${devicePath}.name`, 'Name', deviceName);
+            await this.myCreateStringStateAsync(`${devicePath}.name`, 'Name', deviceName, 'info.name');
             if (device.connectionState != undefined) {
-                await this.myCreateStringStateAsync(`${devicePath}.connectionState`, 'Connection State', device.connectionState);
+                await this.myCreateStringStateAsync(`${devicePath}.connectionState`, 'Connection State', device.connectionState, 'info.status');
             }
             if (device.currentFwVersion != undefined) {
-                await this.myCreateStringStateAsync(`${devicePath}.currentFwVersion`, 'Current Firmware Version', device.currentFwVersion);
+                await this.myCreateStringStateAsync(`${devicePath}.currentFwVersion`, 'Current Firmware Version', device.currentFwVersion, 'info.firmware');
             }
             if (device.product?.serialNumber != undefined) {
-                await this.myCreateStringStateAsync(`${devicePath}.serialNumber`, 'Serial Number', device.product.serialNumber);
+                await this.myCreateStringStateAsync(`${devicePath}.serialNumber`, 'Serial Number', device.product.serialNumber, 'info.serial');
             }
 
             if (this.config.AddData) {
@@ -327,6 +327,35 @@ class Myuplink extends utils.Adapter {
                 };
                 if (data.parameterUnit) {
                     obj.common.unit = data.parameterUnit;
+                    switch (data.parameterUnit) {
+                        case 'kWh':
+                        case 'Ws':
+                            obj.common.role = 'value.energy';
+                            break;
+                        case 'W':
+                        case 'kW':
+                            obj.common.role = 'value.power';
+                            break;
+                        case '°C':
+                            obj.common.role = 'value.temperature';
+                            break;
+                        case 'Hz':
+                            obj.common.role = 'value.frequency';
+                            break;
+                        case 'A':
+                            obj.common.role = 'value.current';
+                            break;
+                        case 'V':
+                            obj.common.role = 'value.voltage';
+                            break;
+                        case '%RH':
+                            obj.common.role = 'value.humidity';
+                            obj.common.unit = '%';
+                            break;
+                        case 'bar':
+                            obj.common.role = 'value.pressure';
+                            break;
+                    }
                 }
                 if (data.minValue) {
                     obj.common.min = data.minValue;
@@ -427,7 +456,6 @@ class Myuplink extends utils.Adapter {
             type: 'device',
             common: {
                 name: name,
-                role: 'text',
             },
             native: {},
         });
@@ -438,7 +466,6 @@ class Myuplink extends utils.Adapter {
             type: 'channel',
             common: {
                 name: name,
-                role: 'text',
             },
             native: {},
         });
@@ -449,19 +476,18 @@ class Myuplink extends utils.Adapter {
             type: 'folder',
             common: {
                 name: name,
-                role: 'text',
             },
             native: {},
         });
     }
 
-    private async myCreateStringStateAsync(path: string, name: string, value: string): Promise<void> {
+    private async myCreateStringStateAsync(path: string, name: string, value: string, role: string = 'text'): Promise<void> {
         await this.setObjectNotExistsAsync(path, {
             type: 'state',
             common: {
                 name: name,
                 type: 'string',
-                role: 'text',
+                role: role,
                 read: true,
                 write: false,
             },

@@ -189,7 +189,7 @@ class Myuplink extends utils.Adapter {
       const systemName = this.removeSoftHyphen(system.name);
       await this.myCreateDeviceAsync(systemPath, systemName);
       await this.myCreateStringStateAsync(`${systemPath}.systemId`, "System ID", system.systemId);
-      await this.myCreateStringStateAsync(`${systemPath}.name`, "Name", systemName);
+      await this.myCreateStringStateAsync(`${systemPath}.name`, "Name", systemName, "info.name");
       if (system.country != void 0) {
         await this.myCreateStringStateAsync(`${systemPath}.country`, "Country", system.country);
       }
@@ -226,15 +226,15 @@ class Myuplink extends utils.Adapter {
       const deviceName = this.removeSoftHyphen(device.product.name);
       await this.myCreateChannelAsync(devicePath, deviceName);
       await this.myCreateStringStateAsync(`${devicePath}.deviceId`, "Device ID", device.id);
-      await this.myCreateStringStateAsync(`${devicePath}.name`, "Name", deviceName);
+      await this.myCreateStringStateAsync(`${devicePath}.name`, "Name", deviceName, "info.name");
       if (device.connectionState != void 0) {
-        await this.myCreateStringStateAsync(`${devicePath}.connectionState`, "Connection State", device.connectionState);
+        await this.myCreateStringStateAsync(`${devicePath}.connectionState`, "Connection State", device.connectionState, "info.status");
       }
       if (device.currentFwVersion != void 0) {
-        await this.myCreateStringStateAsync(`${devicePath}.currentFwVersion`, "Current Firmware Version", device.currentFwVersion);
+        await this.myCreateStringStateAsync(`${devicePath}.currentFwVersion`, "Current Firmware Version", device.currentFwVersion, "info.firmware");
       }
       if (((_b = device.product) == null ? void 0 : _b.serialNumber) != void 0) {
-        await this.myCreateStringStateAsync(`${devicePath}.serialNumber`, "Serial Number", device.product.serialNumber);
+        await this.myCreateStringStateAsync(`${devicePath}.serialNumber`, "Serial Number", device.product.serialNumber, "info.serial");
       }
       if (this.config.AddData) {
         const devicePoints = await ((_c = this.myUplinkRepository) == null ? void 0 : _c.getDevicePointsAsync(device.id, accessToken));
@@ -291,6 +291,35 @@ class Myuplink extends utils.Adapter {
         };
         if (data.parameterUnit) {
           obj.common.unit = data.parameterUnit;
+          switch (data.parameterUnit) {
+            case "kWh":
+            case "Ws":
+              obj.common.role = "value.energy";
+              break;
+            case "W":
+            case "kW":
+              obj.common.role = "value.power";
+              break;
+            case "\xB0C":
+              obj.common.role = "value.temperature";
+              break;
+            case "Hz":
+              obj.common.role = "value.frequency";
+              break;
+            case "A":
+              obj.common.role = "value.current";
+              break;
+            case "V":
+              obj.common.role = "value.voltage";
+              break;
+            case "%RH":
+              obj.common.role = "value.humidity";
+              obj.common.unit = "%";
+              break;
+            case "bar":
+              obj.common.role = "value.pressure";
+              break;
+          }
         }
         if (data.minValue) {
           obj.common.min = data.minValue;
@@ -388,8 +417,7 @@ class Myuplink extends utils.Adapter {
     await this.setObjectNotExistsAsync(path2, {
       type: "device",
       common: {
-        name,
-        role: "text"
+        name
       },
       native: {}
     });
@@ -398,8 +426,7 @@ class Myuplink extends utils.Adapter {
     await this.setObjectNotExistsAsync(path2, {
       type: "channel",
       common: {
-        name,
-        role: "text"
+        name
       },
       native: {}
     });
@@ -408,19 +435,18 @@ class Myuplink extends utils.Adapter {
     await this.setObjectNotExistsAsync(path2, {
       type: "folder",
       common: {
-        name,
-        role: "text"
+        name
       },
       native: {}
     });
   }
-  async myCreateStringStateAsync(path2, name, value) {
+  async myCreateStringStateAsync(path2, name, value, role = "text") {
     await this.setObjectNotExistsAsync(path2, {
       type: "state",
       common: {
         name,
         type: "string",
-        role: "text",
+        role,
         read: true,
         write: false
       },
