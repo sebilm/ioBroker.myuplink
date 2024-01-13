@@ -29,6 +29,10 @@ This ioBroker adapter receives data from myUplink.com.
 
 ## Changelog
 
+### **WORK IN PROGRESS**
+
+-   The logging of token data (in log level silly) has been removed
+
 ### 0.4.0 (2023-12-31)
 
 -   New options for renaming IDs have been added #5

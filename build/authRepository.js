@@ -132,7 +132,6 @@ class AuthRepository {
       });
       const expiresIn = (_a = data.expires_in) != null ? _a : 1800;
       data.expires_at = Date.now() + expiresIn * 1e3;
-      this.log.silly(`TokenData: ${JSON.stringify(data, null, " ")}`);
       return data;
     } catch (error) {
       throw this.checkError(url, error);
