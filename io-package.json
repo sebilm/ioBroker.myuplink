@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "myuplink",
-        "version": "0.4.0",
+        "version": "0.4.1",
         "news": {
+            "0.4.1": {
+                "en": "In object IDs, all characters that are not officially supported are now replaced by an underscore\nThe roles of the data objects have been improved\nThe logging of token data (in log level silly) has been removed\nDependencies have been updated",
+                "de": "In Objekt-IDs werden nun alle nicht offiziell unterstützten Zeichen durch einen Unterstrich ersetzt\nDie Rollen der Datenobjekte wurden verbessert\nDie Protokollierung von Tokendaten (in Log-Level Silly) wurde entfernt\nAbhängigkeiten wurden aktualisiert",
+                "ru": "В ID объектов все символы, которые официально не поддерживаются, теперь заменяются подчеркиванием\nУлучшена роль объектов данных\nЗапись токенов (в уровне журнала глупо) была удалена\nЗависимость обновлена",
+                "pt": "Em IDs de objeto, todos os caracteres que não são oficialmente suportados são agora substituídos por um underscore\nOs papéis dos objetos de dados foram melhorados\nO registro de dados token (no nível de log bobo) foi removido\nAs dependências foram atualizadas",
+                "nl": "In object ID's worden alle tekens die niet officieel ondersteund worden nu vervangen door een underscore\nDe rollen van de data objecten zijn verbeterd\nHet loggen van tokengegevens (in logniveau dwaas) is verwijderd\nAfhankelijkheden zijn bijgewerkt",
+                "fr": "Dans les ID d'objet, tous les caractères qui ne sont pas pris en charge officiellement sont maintenant remplacés par un soulignement\nLes rôles des objets de données ont été améliorés\nL'enregistrement des données de jeton (au niveau de log sot) a été supprimé\nLes dépendances ont été actualisées",
+                "it": "In ID oggetti, tutti i caratteri che non sono supportati ufficialmente sono ora sostituiti da un underscore\nI ruoli degli oggetti di dati sono stati migliorati\nLa registrazione dei dati di token (in silly livello di log) è stata rimossa\nLe dipendenze sono state aggiornate",
+                "es": "En ID de objeto, todos los caracteres que no están oficialmente soportados ahora son reemplazados por un subrayado\nSe han mejorado las funciones de los objetos de datos\nSe ha eliminado el registro de datos de ficha (en nivel de registro tonto)\nSe han actualizado las dependencias",
+                "pl": "W identyfikatorach obiektów wszystkie znaki, które nie są oficjalnie obsługiwane, są teraz zastąpione przez podkreślenie\nRole obiektów danych zostały poprawione\nLogowanie danych tokena (w log poziom głupi) zostało usunięte\nZaktualizowano zależności",
+                "uk": "У ідентифікаторах об'єкта всі символи, які не офіційно підтримуються, тепер замінені на низ\nУдосконалено роль об’єктів даних\nЗняття даних про токени (в рівні колоди silly) було вилучено\nЗалежність було оновлено",
+                "zh-cn": "在对象ID中,所有未正式支持的字符现在都替换为下划线\n改进了数据对象的作用\n已删除对令牌数据的记录( 注册级别为傻话)\n依赖关系已更新"
+            },
             "0.4.0": {
                 "en": "New options for renaming IDs have been added #5\nOptions are deactivated if checkboxes are not checked",
                 "de": "Neue Optionen zur Umbenennung von IDs wurden hinzugefügt #5\nOptionen werden deaktiviert, wenn Checkboxen nicht ausgewählt sind",
