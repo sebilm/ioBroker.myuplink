@@ -29,7 +29,7 @@ This ioBroker adapter receives data from myUplink.com.
 
 ## Changelog
 
-### **WORK IN PROGRESS**
+### 0.5.0 (2024-01-14)
 
 -   Parameter IDs and categories have been added for a few heat pumps
 
