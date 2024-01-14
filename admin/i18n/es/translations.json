@@ -37,5 +37,6 @@
     "Devices": "Dispositivos",
     "Categories": "Categorías",
     "Parameter Data IDs": "ID de datos de parámetros",
-    "A Patameter data ID can also be assigned to a category here. A folder is created for this category. The category sent by the API is then ignored.": "Aquí también se puede asignar un ID de datos de Patameter a una categoría. Se crea una carpeta para esta categoría. Luego se ignora la categoría enviada por la API."
+    "A Parameter data ID can also be assigned to a category here. A folder is created for this category. The category sent by the API is then ignored.": "Aquí también se puede asignar un ID de datos de parámetro a una categoría. Se crea una carpeta para esta categoría. Luego se ignora la categoría enviada por la API.",
+    "Identifiers and categories for a few heat pumps can be downloaded here and imported into the table.": "Los identificadores y categorías de algunas bombas de calor se pueden descargar aquí e importar a la tabla."
 }

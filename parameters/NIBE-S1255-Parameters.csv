@@ -1,0 +1,11 @@
+OriginalId;NewId;Category
+4;CurrentOutdoorTemperature;Outdoor
+54;AverageOutdoorTemperature;Outdoor
+8;SupplyLineTemperature;HeaterCircuit
+10;ReturnLineTemperature;HeaterCircuit
+11;HotWaterTopTemperature;HotWater
+12;HotWaterChargingTemperature;HotWater
+13;BrineInTemperature;BrineCircuit
+14;BrineOutTemperature;BrineCircuit
+781;DegreeMinutes;Calculation
+1708;CalculatedSupplyTemperature;Calculation

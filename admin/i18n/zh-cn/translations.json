@@ -37,5 +37,6 @@
     "Devices": "设备",
     "Categories": "类别",
     "Parameter Data IDs": "参数数据 ID",
-    "A Patameter data ID can also be assigned to a category here. A folder is created for this category. The category sent by the API is then ignored.": "也可以在此处将参数数据 ID 分配给类别。为此类别创建一个文件夹。然后，API 发送的类别将被忽略。"
+    "A Parameter data ID can also be assigned to a category here. A folder is created for this category. The category sent by the API is then ignored.": "参数数据 ID 也可以在此处分配给类别。为此类别创建一个文件夹。然后，API 发送的类别将被忽略。",
+    "Identifiers and categories for a few heat pumps can be downloaded here and imported into the table.": "一些热泵的标识符和类别可以在此处下载并导入到表中。"
 }

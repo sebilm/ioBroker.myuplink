@@ -29,6 +29,10 @@ This ioBroker adapter receives data from myUplink.com.
 
 ## Changelog
 
+### **WORK IN PROGRESS**
+
+-   Parameter IDs and categories have been added for a few heat pumps
+
 ### 0.4.1 (2024-01-13)
 
 -   In object IDs, all characters that are not officially supported are now replaced by an underscore

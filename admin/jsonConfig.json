@@ -141,7 +141,11 @@
                 },
                 "_helpText1": {
                     "text": "Object IDs in the object tree are specified by the myuplink API. However, these can be renamed with these options by specifying the ID of the API (original ID) and a new ID. If objects with the original ID already exist in the object tree, they must be deleted manually - these objects will not be updated!",
-                    "type": "staticText"
+                    "type": "staticText",
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12
                 },
                 "systemsHeader": {
                     "text": "Systems",
@@ -236,8 +240,21 @@
                     "size": 2
                 },
                 "_helpText2": {
-                    "text": "A Patameter data ID can also be assigned to a category here. A folder is created for this category. The category sent by the API is then ignored.",
-                    "type": "staticText"
+                    "text": "A Parameter data ID can also be assigned to a category here. A folder is created for this category. The category sent by the API is then ignored.",
+                    "type": "staticText",
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12
+                },
+                "_downloadLink": {
+                    "label": "Identifiers and categories for a few heat pumps can be downloaded here and imported into the table.",
+                    "type": "staticLink",
+                    "href": "https://github.com/sebilm/ioBroker.myuplink/tree/main/parameters",
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12
                 },
                 "RenameDataIds": {
                     "type": "table",
@@ -282,7 +299,11 @@
                 },
                 "_helpText": {
                     "text": "These and the following options are not required in most cases.",
-                    "type": "staticText"
+                    "type": "staticText",
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12
                 },
                 "UseAuthorizationCodeGrant": {
                     "label": "Use Authorization Code Grant Flow",
@@ -308,7 +329,11 @@
                     "variant": "contained",
                     "label": "Click here to generate the Auth Code on myUplink.",
                     "href": "https://api.myuplink.com/oauth/authorize?response_type=code&client_id=${data.Identifier}&scope=READSYSTEM%20WRITESYSTEM&redirect_uri=${data.CallbackURL}&state=init",
-                    "disabled": "data.UseAuthorizationCodeGrant == false"
+                    "disabled": "data.UseAuthorizationCodeGrant == false",
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12
                 },
                 "AuthCode": {
                     "label": "Auth Code",

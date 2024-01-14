@@ -37,5 +37,6 @@
     "Devices": "Apparaten",
     "Categories": "Categorieën",
     "Parameter Data IDs": "Parametergegevens-ID's",
-    "A Patameter data ID can also be assigned to a category here. A folder is created for this category. The category sent by the API is then ignored.": "Hier kunt u ook een Patameter-gegevens-ID aan een categorie toewijzen. Voor deze categorie wordt een map aangemaakt. De door de API verzonden categorie wordt vervolgens genegeerd."
+    "A Parameter data ID can also be assigned to a category here. A folder is created for this category. The category sent by the API is then ignored.": "Hier kan ook een parametergegevens-ID aan een categorie worden toegewezen. Voor deze categorie wordt een map aangemaakt. De door de API verzonden categorie wordt vervolgens genegeerd.",
+    "Identifiers and categories for a few heat pumps can be downloaded here and imported into the table.": "Identificatiegegevens en categorieën voor enkele warmtepompen kunnen hier worden gedownload en in de tabel worden geïmporteerd."
 }

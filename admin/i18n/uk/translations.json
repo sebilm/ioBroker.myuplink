@@ -37,5 +37,6 @@
     "Devices": "Пристрої",
     "Categories": "Категорії",
     "Parameter Data IDs": "Ідентифікатори даних параметрів",
-    "A Patameter data ID can also be assigned to a category here. A folder is created for this category. The category sent by the API is then ignored.": "Ідентифікатор даних Patameter також можна призначити категорії тут. Для цієї категорії створюється папка. Тоді категорія, надіслана API, ігнорується."
+    "A Parameter data ID can also be assigned to a category here. A folder is created for this category. The category sent by the API is then ignored.": "Ідентифікатор даних параметра також можна призначити категорії тут. Для цієї категорії створюється папка. Тоді категорія, надіслана API, ігнорується.",
+    "Identifiers and categories for a few heat pumps can be downloaded here and imported into the table.": "Ідентифікатори та категорії для кількох теплових насосів можна завантажити тут і імпортувати в таблицю."
 }
