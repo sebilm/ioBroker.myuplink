@@ -134,6 +134,7 @@
         "mode": "daemon",
         "type": "climate-control",
         "compact": true,
+        "tier": 2,
         "connectionType": "cloud",
         "dataSource": "poll",
         "adminUI": {

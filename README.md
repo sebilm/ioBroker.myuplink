@@ -27,7 +27,23 @@ This ioBroker adapter receives data from myUplink.com.
 11. Choose your language and all other settings.
 12. Click Save and Close
 
+Each device has an object in the object tree called `setData`. You can enter a JSON object of the form
+
+```json
+{
+    "12345": "42",
+    "23456": "1"
+}
+```
+
+in this object. This makes it possible to send and change several data points to the API at the same time.
+It can also be used to change data points that are not sent by the API.
+
 ## Changelog
+
+### **WORK IN PROGRESS**
+
+-   The setData object has been added
 
 ### 0.5.0 (2024-01-14)
 
