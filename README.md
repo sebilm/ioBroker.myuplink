@@ -41,7 +41,7 @@ It can also be used to change data points that are not sent by the API.
 
 ## Changelog
 
-### **WORK IN PROGRESS**
+### 0.6.0 (2024-01-28)
 
 -   The setData object has been added
 

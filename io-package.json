@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "myuplink",
-        "version": "0.5.0",
+        "version": "0.6.0",
         "news": {
+            "0.6.0": {
+                "en": "The setData object has been added",
+                "de": "Das setData Objekt wurde hinzugefügt",
+                "ru": "Добавлен объект setData",
+                "pt": "O objeto setData foi adicionado",
+                "nl": "Het setData object is toegevoegd",
+                "fr": "L'objet setData a été ajouté",
+                "it": "L'oggetto setData è stato aggiunto",
+                "es": "El objeto setData ha sido añadido",
+                "pl": "Dodano obiekt setData",
+                "uk": "Додано об'єкт setData",
+                "zh-cn": "添加了设定的数据对象"
+            },
             "0.5.0": {
                 "en": "Parameter IDs and categories have been added for a few heat pumps",
                 "de": "Parameter-IDs und Kategorien wurden für einige Wärmepumpen hinzugefügt",
@@ -80,19 +93,6 @@
                 "pl": "Strona domowa została zmieniona na jsonConfigg\nZależności zostały zaktualizowane",
                 "uk": "Настроювання сторінки були змінені з матеріалів, які використовують jsonConfig\nОновлено залежність",
                 "zh-cn": "定页从物质上改为 json Configg\n已更新了属地"
-            },
-            "0.1.0": {
-                "en": "Initial release",
-                "de": "Erstveröffentlichung",
-                "ru": "Начальная версия",
-                "pt": "Lançamento inicial",
-                "nl": "Eerste uitgave",
-                "fr": "Première version",
-                "it": "Versione iniziale",
-                "es": "Versión inicial",
-                "pl": "Pierwsze wydanie",
-                "uk": "Початкова версія",
-                "zh-cn": "首次出版"
             }
         },
         "titleLang": {
