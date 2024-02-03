@@ -39,6 +39,7 @@ class Myuplink extends utils.Adapter {
     this.categories = /* @__PURE__ */ new Map();
     this.parameterIds = /* @__PURE__ */ new Map();
     this.parameterIdToCategory = /* @__PURE__ */ new Map();
+    this.stateIdByParameterIdByDeviceIdBySystemId = /* @__PURE__ */ new Map();
     this.on("ready", this.onReady.bind(this));
     this.on("stateChange", this.onStateChange.bind(this));
     this.on("unload", this.onUnload.bind(this));
@@ -145,9 +146,9 @@ class Myuplink extends utils.Adapter {
     );
     await this.subscribeStatesAsync("*");
     this.log.info("Adapter started.");
-    this.getData();
+    await this.getDataAsync();
   }
-  async getData() {
+  async getDataAsync() {
     var _a;
     try {
       if (this.authRepository) {
@@ -160,7 +161,7 @@ class Myuplink extends utils.Adapter {
           this.setState("info.updateTime", { val: datetime, ack: true });
           this.setState("info.currentError", { val: "", ack: true });
           (_a = systems.systems) == null ? void 0 : _a.forEach(async (value) => {
-            await this.setSystemWithDevices(value, accessToken);
+            await this.setSystemWithDevicesAsync(value, accessToken);
           });
         }
       }
@@ -175,189 +176,220 @@ class Myuplink extends utils.Adapter {
     }
     this.timeout = this.setTimeout(
       async () => {
-        await this.getData();
+        await this.getDataAsync();
       },
       this.refreshInterval * 1e3
     );
   }
-  async setSystemWithDevices(system, accessToken) {
+  async setSystemWithDevicesAsync(system, accessToken) {
     var _a, _b, _c;
     if (system.systemId != void 0 && system.name != void 0) {
+      const existingMap = this.stateIdByParameterIdByDeviceIdBySystemId.get(system.systemId);
+      const firstRun = !existingMap;
+      const stateIdByParameterIdByDeviceId = existingMap != null ? existingMap : /* @__PURE__ */ new Map();
+      if (!existingMap) {
+        this.stateIdByParameterIdByDeviceIdBySystemId.set(system.systemId, stateIdByParameterIdByDeviceId);
+      }
       const systemId = this.replaceForbiddenCharacters(system.systemId);
       const newSystemId = this.systemIds.get(systemId);
       const systemPath = newSystemId != null ? newSystemId : systemId;
       const systemName = this.removeSoftHyphen(system.name);
-      await this.myCreateDeviceAsync(systemPath, systemName);
-      await this.myCreateStringStateAsync(`${systemPath}.systemId`, "System ID", system.systemId);
-      await this.myCreateStringStateAsync(`${systemPath}.name`, "Name", systemName, "info.name");
+      if (firstRun) {
+        await this.myCreateDeviceAsync(systemPath, systemName);
+      }
+      await this.myCreateStringStateAsync(`${systemPath}.systemId`, "System ID", system.systemId, firstRun);
+      await this.myCreateStringStateAsync(`${systemPath}.name`, "Name", systemName, firstRun, "info.name");
       if (system.country != void 0) {
-        await this.myCreateStringStateAsync(`${systemPath}.country`, "Country", system.country);
+        await this.myCreateStringStateAsync(`${systemPath}.country`, "Country", system.country, firstRun);
       }
       if (system.securityLevel != void 0) {
-        await this.myCreateStringStateAsync(`${systemPath}.securityLevel`, "Security Level", system.securityLevel);
+        await this.myCreateStringStateAsync(`${systemPath}.securityLevel`, "Security Level", system.securityLevel, firstRun);
       }
       if (system.hasAlarm != void 0) {
-        await this.myCreateBooleanStateAsync(`${systemPath}.hasAlarm`, "Has Alarm", "indicator.alarm", system.hasAlarm);
+        await this.myCreateBooleanStateAsync(`${systemPath}.hasAlarm`, "Has Alarm", "indicator.alarm", system.hasAlarm, firstRun);
       }
       (_a = system.devices) == null ? void 0 : _a.forEach(async (dev) => {
-        await this.setSystemDevice(dev, systemPath, accessToken);
+        await this.setSystemDeviceAsync(dev, systemPath, accessToken, stateIdByParameterIdByDeviceId);
       });
       if (this.config.AddActiveNotifications) {
         const notifications = await ((_b = this.myUplinkRepository) == null ? void 0 : _b.getActiveNotificationsAsync(system.systemId, accessToken));
         if (this.config.AddRawActiveNotifications) {
-          await this.myCreateStringStateAsync(`${systemPath}.rawActiveNotifications`, "Received raw JSON of active notifications", JSON.stringify(notifications == null ? void 0 : notifications.notifications, null, ""));
+          await this.myCreateStringStateAsync(
+            `${systemPath}.rawActiveNotifications`,
+            "Received raw JSON of active notifications",
+            JSON.stringify(notifications == null ? void 0 : notifications.notifications, null, ""),
+            firstRun
+          );
         }
         let notificationsDescriptions = "";
         (_c = notifications == null ? void 0 : notifications.notifications) == null ? void 0 : _c.forEach((notification) => {
           notificationsDescriptions += `${notification.header}: ${notification.description}
 `;
         });
-        await this.myCreateStringStateAsync(`${systemPath}.activeNotifications`, "Active notification descriptions", notificationsDescriptions);
+        await this.myCreateStringStateAsync(`${systemPath}.activeNotifications`, "Active notification descriptions", notificationsDescriptions, firstRun);
       }
     }
   }
-  async setSystemDevice(device, systemPath, accessToken) {
+  async setSystemDeviceAsync(device, systemPath, accessToken, stateIdByParameterIdByDeviceId) {
     var _a, _b, _c;
     if (device.id != void 0 && ((_a = device.product) == null ? void 0 : _a.name) != void 0) {
+      const existingMap = stateIdByParameterIdByDeviceId.get(device.id);
+      const firstRun = !existingMap;
+      const stateIdByParameterId = existingMap != null ? existingMap : /* @__PURE__ */ new Map();
+      if (!existingMap) {
+        stateIdByParameterIdByDeviceId.set(device.id, stateIdByParameterId);
+      }
       const deviceId = this.replaceForbiddenCharacters(device.id);
       const newDeviceId = this.deviceIds.get(deviceId);
       const deviceSubPath = newDeviceId != null ? newDeviceId : deviceId;
       const devicePath = `${systemPath}.${deviceSubPath}`;
       const deviceName = this.removeSoftHyphen(device.product.name);
-      await this.myCreateChannelAsync(devicePath, deviceName);
-      await this.myCreateStringStateAsync(`${devicePath}.deviceId`, "Device ID", device.id);
-      await this.myCreateStringStateAsync(`${devicePath}.name`, "Name", deviceName, "info.name");
+      if (firstRun) {
+        await this.myCreateChannelAsync(devicePath, deviceName);
+      }
+      await this.myCreateStringStateAsync(`${devicePath}.deviceId`, "Device ID", device.id, firstRun);
+      await this.myCreateStringStateAsync(`${devicePath}.name`, "Name", deviceName, firstRun, "info.name");
       if (device.connectionState != void 0) {
-        await this.myCreateStringStateAsync(`${devicePath}.connectionState`, "Connection State", device.connectionState, "info.status");
+        await this.myCreateStringStateAsync(`${devicePath}.connectionState`, "Connection State", device.connectionState, firstRun, "info.status");
       }
       if (device.currentFwVersion != void 0) {
-        await this.myCreateStringStateAsync(`${devicePath}.currentFwVersion`, "Current Firmware Version", device.currentFwVersion, "info.firmware");
+        await this.myCreateStringStateAsync(`${devicePath}.currentFwVersion`, "Current Firmware Version", device.currentFwVersion, firstRun, "info.firmware");
       }
       if (((_b = device.product) == null ? void 0 : _b.serialNumber) != void 0) {
-        await this.myCreateStringStateAsync(`${devicePath}.serialNumber`, "Serial Number", device.product.serialNumber, "info.serial");
+        await this.myCreateStringStateAsync(`${devicePath}.serialNumber`, "Serial Number", device.product.serialNumber, firstRun, "info.serial");
       }
       if (this.config.AddData) {
         const devicePoints = await ((_c = this.myUplinkRepository) == null ? void 0 : _c.getDevicePointsAsync(device.id, accessToken));
         if (this.config.AddRawData) {
-          await this.myCreateStringStateAsync(`${devicePath}.rawData`, "Received raw JSON of parameter data", JSON.stringify(devicePoints, null, ""));
+          await this.myCreateStringStateAsync(`${devicePath}.rawData`, "Received raw JSON of parameter data", JSON.stringify(devicePoints, null, ""), firstRun);
         }
         devicePoints == null ? void 0 : devicePoints.forEach(async (data) => {
-          await this.setParameterData(data, devicePath, device.id);
+          await this.setParameterDataAsync(data, devicePath, device.id, stateIdByParameterId);
         });
-        await this.setObjectNotExistsAsync(`${devicePath}.setData`, {
-          type: "state",
-          common: {
-            name: "Send raw JSON of parameter data",
-            type: "string",
-            role: "json",
-            read: true,
-            write: true
-          },
-          native: {
-            rawJson: true,
-            writable: true,
-            deviceId: device.id
-          }
-        });
+        if (firstRun) {
+          await this.setObjectNotExistsAsync(`${devicePath}.setData`, {
+            type: "state",
+            common: {
+              name: "Send raw JSON of parameter data",
+              type: "string",
+              role: "json",
+              read: true,
+              write: true
+            },
+            native: {
+              rawJson: true,
+              writable: true,
+              deviceId: device.id
+            }
+          });
+        }
       }
     }
   }
-  async setParameterData(data, devicePath, deviceId) {
-    var _a;
-    if (data.parameterId && data.parameterName) {
-      const parameterId = this.replaceForbiddenCharacters(data.parameterId);
-      const newParameterId = this.parameterIds.get(parameterId);
-      const parameterSubPath = newParameterId != null ? newParameterId : parameterId;
-      let path2 = `${devicePath}.${parameterSubPath}`;
-      const newCategory = this.parameterIdToCategory.get(parameterId);
-      if (newCategory) {
-        path2 = `${devicePath}.${newCategory}.${parameterSubPath}`;
-      } else if (data.category) {
-        const categoryId = this.replaceForbiddenCharacters(data.category);
-        const newCategoryId = this.categories.get(categoryId);
-        const categorySubPath = newCategoryId != null ? newCategoryId : categoryId;
-        const catPath = `${devicePath}.${categorySubPath}`;
-        const pathWithCat = `${catPath}.${parameterSubPath}`;
-        if (this.config.GroupData) {
-          await this.delObjectAsync(path2);
-          path2 = pathWithCat;
-          await this.myCreateFolderAsync(catPath, data.category);
-        } else {
-          await this.delObjectAsync(pathWithCat);
-          await this.delObjectAsync(catPath);
-        }
+  async setParameterDataAsync(data, devicePath, deviceId, stateIdByParameterId) {
+    if (data.parameterId) {
+      const existingObjectId = stateIdByParameterId.get(data.parameterId);
+      const stateId = existingObjectId != null ? existingObjectId : await this.getObjectIdAndCreateCategoryAsync(data.parameterId, data.category, devicePath);
+      if (!existingObjectId) {
+        stateIdByParameterId.set(data.parameterId, stateId);
+        await this.createParameterObjectAsync(data, deviceId, stateId);
       }
-      const objectExists = await this.objectExists(path2);
-      if (!objectExists) {
-        const obj = {
-          type: "state",
-          common: {
-            name: this.removeSoftHyphen(data.parameterName),
-            type: "number",
-            role: "value",
-            read: true,
-            write: (_a = data.writable) != null ? _a : false
-          },
-          native: {
-            parameterId: data.parameterId,
-            writable: data.writable,
-            deviceId
-          }
-        };
-        if (data.parameterUnit) {
-          obj.common.unit = data.parameterUnit;
-          switch (data.parameterUnit) {
-            case "kWh":
-            case "Ws":
-              obj.common.role = "value.energy";
-              break;
-            case "W":
-            case "kW":
-              obj.common.role = "value.power";
-              break;
-            case "\xB0C":
-              obj.common.role = "value.temperature";
-              break;
-            case "Hz":
-              obj.common.role = "value.frequency";
-              break;
-            case "A":
-              obj.common.role = "value.current";
-              break;
-            case "V":
-              obj.common.role = "value.voltage";
-              break;
-            case "%RH":
-              obj.common.role = "value.humidity";
-              obj.common.unit = "%";
-              break;
-            case "bar":
-              obj.common.role = "value.pressure";
-              break;
-          }
-        }
-        if (data.minValue) {
-          obj.common.min = data.minValue;
-        }
-        if (data.maxValue) {
-          obj.common.max = data.maxValue;
-        }
-        if (data.stepValue) {
-          obj.common.step = data.stepValue;
-        }
-        if (data.enumValues && data.enumValues.length > 0) {
-          const states = {};
-          data.enumValues.forEach((enumValue) => {
-            if (enumValue.text && enumValue.value) {
-              states[enumValue.value] = this.removeSoftHyphen(enumValue.text);
-            }
-          });
-          obj.common.states = states;
-        }
-        await this.setObjectNotExistsAsync(path2, obj);
-      }
-      await this.setStateAsync(path2, { val: data.value, ack: true });
+      await this.setStateAsync(stateId, { val: data.value, ack: true });
     }
+  }
+  async getObjectIdAndCreateCategoryAsync(parameterId, category, devicePath) {
+    var _a;
+    const newParameterId = (_a = this.parameterIds.get(parameterId)) != null ? _a : parameterId;
+    const parameterSubPath = this.replaceForbiddenCharacters(newParameterId);
+    let objectId = `${devicePath}.${parameterSubPath}`;
+    const newCategory = this.parameterIdToCategory.get(parameterId);
+    if (newCategory) {
+      objectId = `${devicePath}.${newCategory}.${parameterSubPath}`;
+    } else if (category) {
+      const categoryId = this.replaceForbiddenCharacters(category);
+      const newCategoryId = this.categories.get(categoryId);
+      const categorySubPath = newCategoryId != null ? newCategoryId : categoryId;
+      const catPath = `${devicePath}.${categorySubPath}`;
+      const pathWithCat = `${catPath}.${parameterSubPath}`;
+      if (this.config.GroupData) {
+        await this.delObjectAsync(objectId);
+        objectId = pathWithCat;
+        await this.myCreateFolderAsync(catPath, category);
+      } else {
+        await this.delObjectAsync(pathWithCat);
+        await this.delObjectAsync(catPath);
+      }
+    }
+    return objectId;
+  }
+  async createParameterObjectAsync(data, deviceId, stateId) {
+    var _a, _b;
+    const obj = {
+      type: "state",
+      common: {
+        name: this.removeSoftHyphen((_a = data.parameterName) != null ? _a : ""),
+        type: "number",
+        role: "value",
+        read: true,
+        write: (_b = data.writable) != null ? _b : false
+      },
+      native: {
+        parameterId: data.parameterId,
+        writable: data.writable,
+        deviceId
+      }
+    };
+    if (data.parameterUnit) {
+      obj.common.unit = data.parameterUnit;
+      switch (data.parameterUnit) {
+        case "kWh":
+        case "Ws":
+          obj.common.role = "value.energy";
+          break;
+        case "W":
+        case "kW":
+          obj.common.role = "value.power";
+          break;
+        case "\xB0C":
+          obj.common.role = "value.temperature";
+          break;
+        case "Hz":
+          obj.common.role = "value.frequency";
+          break;
+        case "A":
+          obj.common.role = "value.current";
+          break;
+        case "V":
+          obj.common.role = "value.voltage";
+          break;
+        case "%RH":
+          obj.common.role = "value.humidity";
+          obj.common.unit = "%";
+          break;
+        case "bar":
+          obj.common.role = "value.pressure";
+          break;
+      }
+    }
+    if (data.minValue) {
+      obj.common.min = data.minValue;
+    }
+    if (data.maxValue) {
+      obj.common.max = data.maxValue;
+    }
+    if (data.stepValue) {
+      obj.common.step = data.stepValue;
+    }
+    if (data.enumValues && data.enumValues.length > 0) {
+      const states = {};
+      data.enumValues.forEach((enumValue) => {
+        if (enumValue.text && enumValue.value) {
+          states[enumValue.value] = this.removeSoftHyphen(enumValue.text);
+        }
+      });
+      obj.common.states = states;
+    }
+    await this.setObjectNotExistsAsync(stateId, obj);
   }
   async setInfoObjects() {
     await this.setObjectNotExistsAsync("info", {
@@ -429,6 +461,7 @@ class Myuplink extends utils.Adapter {
     });
   }
   async myCreateDeviceAsync(path2, name) {
+    this.log.debug(`create Device: ${path2}`);
     await this.setObjectNotExistsAsync(path2, {
       type: "device",
       common: {
@@ -438,6 +471,7 @@ class Myuplink extends utils.Adapter {
     });
   }
   async myCreateChannelAsync(path2, name) {
+    this.log.debug(`create Channel: ${path2}`);
     await this.setObjectNotExistsAsync(path2, {
       type: "channel",
       common: {
@@ -447,6 +481,7 @@ class Myuplink extends utils.Adapter {
     });
   }
   async myCreateFolderAsync(path2, name) {
+    this.log.debug(`create Folder: ${path2}`);
     await this.setObjectNotExistsAsync(path2, {
       type: "folder",
       common: {
@@ -455,32 +490,38 @@ class Myuplink extends utils.Adapter {
       native: {}
     });
   }
-  async myCreateStringStateAsync(path2, name, value, role = "text") {
-    await this.setObjectNotExistsAsync(path2, {
-      type: "state",
-      common: {
-        name,
-        type: "string",
-        role,
-        read: true,
-        write: false
-      },
-      native: {}
-    });
+  async myCreateStringStateAsync(path2, name, value, createObject, role = "text") {
+    if (createObject) {
+      this.log.debug(`create State: ${path2}`);
+      await this.setObjectNotExistsAsync(path2, {
+        type: "state",
+        common: {
+          name,
+          type: "string",
+          role,
+          read: true,
+          write: false
+        },
+        native: {}
+      });
+    }
     await this.setStateAsync(path2, { val: value, ack: true });
   }
-  async myCreateBooleanStateAsync(path2, name, role, value) {
-    await this.setObjectNotExistsAsync(path2, {
-      type: "state",
-      common: {
-        name,
-        type: "boolean",
-        role,
-        read: true,
-        write: false
-      },
-      native: {}
-    });
+  async myCreateBooleanStateAsync(path2, name, role, value, createObject) {
+    if (createObject) {
+      this.log.debug(`create State: ${path2}`);
+      await this.setObjectNotExistsAsync(path2, {
+        type: "state",
+        common: {
+          name,
+          type: "boolean",
+          role,
+          read: true,
+          write: false
+        },
+        native: {}
+      });
+    }
     await this.setStateAsync(path2, { val: value, ack: true });
   }
   removeSoftHyphen(text) {
