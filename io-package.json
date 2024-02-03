@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "myuplink",
-        "version": "0.6.0",
+        "version": "0.6.1",
         "news": {
+            "0.6.1": {
+                "en": "Performance has been improved\nDependencies have been updated",
+                "de": "Die Leistung wurde verbessert\nAbhängigkeiten wurden aktualisiert",
+                "ru": "Повышение эффективности\nЗависимость обновлена",
+                "pt": "O desempenho foi melhorado\nAs dependências foram atualizadas",
+                "nl": "De prestaties zijn verbeterd\nAfhankelijkheden zijn bijgewerkt",
+                "fr": "Amélioration des résultats\nLes dépendances ont été actualisées",
+                "it": "Le prestazioni sono migliorate\nLe dipendenze sono state aggiornate",
+                "es": "Se ha mejorado el rendimiento\nSe han actualizado las dependencias",
+                "pl": "Poprawa wydajności\nZaktualizowano zależności",
+                "uk": "Покращено продуктивність\nЗалежність було оновлено",
+                "zh-cn": "业绩有所改善\n依赖关系已更新"
+            },
             "0.6.0": {
                 "en": "The setData object has been added",
                 "de": "Das setData Objekt wurde hinzugefügt",
@@ -80,19 +93,6 @@
                 "pl": "Wszystkie reagujące rozmiary zostały dodane do jsonConfig\nDodano więcej błędów logowania",
                 "uk": "Всі чуйні розміри додано в jsonConfig\nДодано більш детальну інформацію",
                 "zh-cn": "所有反应规模都被增加到 json Configg\n增加的错误伐木"
-            },
-            "0.2.0": {
-                "en": "Settings page have been changed from materialize to jsonConfig\nDependencies have been updated",
-                "de": "Einstellungsseite wurden von materialize zu jsonConfig geändert\nAbhängigkeiten wurden aktualisiert",
-                "ru": "Страница настроек была изменена с материализации на jsonConfig\nВ зависимости были обновлены",
-                "pt": "A página de configurações foi alterada de materializar para jsonConfig\nAs dependências foram atualizadas",
-                "nl": "Pagina's van JsonConfig\nAfhankelijkheid",
-                "fr": "Les paramètres de la page ont été changés de matérialisation à jsonConfig\nLes dépendances ont été mises à jour",
-                "it": "La pagina delle impostazioni è stata modificata da materialize a jsonConfig\nLe dipendenze sono state aggiornate",
-                "es": "Página de configuración se han cambiado de materializar a jsonConfig\nSe han actualizado las dependencias",
-                "pl": "Strona domowa została zmieniona na jsonConfigg\nZależności zostały zaktualizowane",
-                "uk": "Настроювання сторінки були змінені з матеріалів, які використовують jsonConfig\nОновлено залежність",
-                "zh-cn": "定页从物质上改为 json Configg\n已更新了属地"
             }
         },
         "titleLang": {
