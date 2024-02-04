@@ -49,6 +49,8 @@ class Myuplink extends utils.Adapter {
         this.refreshInterval = 0;
     }
 
+    private STRICT_FORBIDDEN_CHARS = /[^a-zA-Z0-9_-]+/gu;
+
     private authRepository: AuthRepository | undefined;
     private myUplinkRepository: MyUplinkRepository | undefined;
     private timeout: ioBroker.Timeout | undefined;
@@ -573,7 +575,7 @@ class Myuplink extends utils.Adapter {
     }
 
     private replaceForbiddenCharacters(text: string): string {
-        return this.removeSoftHyphen(text).replace(new RegExp('\\.', 'g'), '_').replace(this.FORBIDDEN_CHARS, '_');
+        return this.removeSoftHyphen(text).replace(this.STRICT_FORBIDDEN_CHARS, '_');
     }
 
     /**

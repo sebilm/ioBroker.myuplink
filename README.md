@@ -41,6 +41,10 @@ It can also be used to change data points that are not sent by the API.
 
 ## Changelog
 
+### **WORK IN PROGRESS**
+
+-   Forbidden characters are removed from the category
+
 ### 0.6.1 (2024-02-03)
 
 -   Performance has been improved
