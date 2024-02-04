@@ -60,7 +60,9 @@ class Myuplink extends utils.Adapter {
     private categories: Map<string, string> = new Map<string, string>();
     private parameterIds: Map<string, string> = new Map<string, string>();
     private parameterIdToCategory: Map<string, string> = new Map<string, string>();
-    private stateIdByParameterIdByDeviceIdBySystemId: Map<string, Map<string, Map<string, string>>> = new Map<string, Map<string, Map<string, string>>>();
+    private stateIdByParameterIdByDeviceId: Map<string, Map<string, string>> = new Map<string, Map<string, string>>();
+    private existingSystemIds: string[] = [];
+    private existingFolders: string[] = [];
 
     /**
      * Is called when databases are connected and adapter received configuration.
@@ -221,11 +223,10 @@ class Myuplink extends utils.Adapter {
 
     private async setSystemWithDevicesAsync(system: SystemWithDevices, accessToken: string): Promise<void> {
         if (system.systemId != undefined && system.name != undefined) {
-            const existingMap = this.stateIdByParameterIdByDeviceIdBySystemId.get(system.systemId);
-            const firstRun = !existingMap;
-            const stateIdByParameterIdByDeviceId = existingMap ?? new Map<string, Map<string, string>>();
-            if (!existingMap) {
-                this.stateIdByParameterIdByDeviceIdBySystemId.set(system.systemId, stateIdByParameterIdByDeviceId);
+            const systemIdExists = this.existingSystemIds.includes(system.systemId);
+            const firstRun = !systemIdExists;
+            if (!systemIdExists) {
+                this.existingSystemIds.push(system.systemId);
             }
             const systemId = this.replaceForbiddenCharacters(system.systemId);
             const newSystemId = this.systemIds.get(systemId);
@@ -246,7 +247,7 @@ class Myuplink extends utils.Adapter {
                 await this.myCreateBooleanStateAsync(`${systemPath}.hasAlarm`, 'Has Alarm', 'indicator.alarm', system.hasAlarm, firstRun);
             }
             system.devices?.forEach(async (dev: SystemDevice) => {
-                await this.setSystemDeviceAsync(dev, systemPath, accessToken, stateIdByParameterIdByDeviceId);
+                await this.setSystemDeviceAsync(dev, systemPath, accessToken);
             });
 
             if (this.config.AddActiveNotifications) {
@@ -268,13 +269,13 @@ class Myuplink extends utils.Adapter {
         }
     }
 
-    private async setSystemDeviceAsync(device: SystemDevice, systemPath: string, accessToken: string, stateIdByParameterIdByDeviceId: Map<string, Map<string, string>>): Promise<void> {
+    private async setSystemDeviceAsync(device: SystemDevice, systemPath: string, accessToken: string): Promise<void> {
         if (device.id != undefined && device.product?.name != undefined) {
-            const existingMap = stateIdByParameterIdByDeviceId.get(device.id);
+            const existingMap = this.stateIdByParameterIdByDeviceId.get(device.id);
             const firstRun = !existingMap;
             const stateIdByParameterId = existingMap ?? new Map<string, string>();
             if (!existingMap) {
-                stateIdByParameterIdByDeviceId.set(device.id, stateIdByParameterId);
+                this.stateIdByParameterIdByDeviceId.set(device.id, stateIdByParameterId);
             }
             const deviceId = this.replaceForbiddenCharacters(device.id);
             const newDeviceId = this.deviceIds.get(deviceId);
@@ -524,14 +525,17 @@ class Myuplink extends utils.Adapter {
     }
 
     private async myCreateFolderAsync(path: string, name: string): Promise<void> {
-        this.log.debug(`create Folder: ${path}`);
-        await this.setObjectNotExistsAsync(path, {
-            type: 'folder',
-            common: {
-                name: name,
-            },
-            native: {},
-        });
+        if (!this.existingFolders.includes(path)) {
+            this.existingFolders.push(path);
+            this.log.debug(`create Folder: ${path}`);
+            await this.setObjectNotExistsAsync(path, {
+                type: 'folder',
+                common: {
+                    name: name,
+                },
+                native: {},
+            });
+        }
     }
 
     private async myCreateStringStateAsync(path: string, name: string, value: string, createObject: boolean, role: string = 'text'): Promise<void> {

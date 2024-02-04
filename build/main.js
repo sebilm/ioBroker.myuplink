@@ -34,12 +34,15 @@ class Myuplink extends utils.Adapter {
       ...options,
       name: "myuplink"
     });
+    this.STRICT_FORBIDDEN_CHARS = /[^a-zA-Z0-9_-]+/gu;
     this.systemIds = /* @__PURE__ */ new Map();
     this.deviceIds = /* @__PURE__ */ new Map();
     this.categories = /* @__PURE__ */ new Map();
     this.parameterIds = /* @__PURE__ */ new Map();
     this.parameterIdToCategory = /* @__PURE__ */ new Map();
-    this.stateIdByParameterIdByDeviceIdBySystemId = /* @__PURE__ */ new Map();
+    this.stateIdByParameterIdByDeviceId = /* @__PURE__ */ new Map();
+    this.existingSystemIds = [];
+    this.existingFolders = [];
     this.on("ready", this.onReady.bind(this));
     this.on("stateChange", this.onStateChange.bind(this));
     this.on("unload", this.onUnload.bind(this));
@@ -184,11 +187,10 @@ class Myuplink extends utils.Adapter {
   async setSystemWithDevicesAsync(system, accessToken) {
     var _a, _b, _c;
     if (system.systemId != void 0 && system.name != void 0) {
-      const existingMap = this.stateIdByParameterIdByDeviceIdBySystemId.get(system.systemId);
-      const firstRun = !existingMap;
-      const stateIdByParameterIdByDeviceId = existingMap != null ? existingMap : /* @__PURE__ */ new Map();
-      if (!existingMap) {
-        this.stateIdByParameterIdByDeviceIdBySystemId.set(system.systemId, stateIdByParameterIdByDeviceId);
+      const systemIdExists = this.existingSystemIds.includes(system.systemId);
+      const firstRun = !systemIdExists;
+      if (!systemIdExists) {
+        this.existingSystemIds.push(system.systemId);
       }
       const systemId = this.replaceForbiddenCharacters(system.systemId);
       const newSystemId = this.systemIds.get(systemId);
@@ -209,7 +211,7 @@ class Myuplink extends utils.Adapter {
         await this.myCreateBooleanStateAsync(`${systemPath}.hasAlarm`, "Has Alarm", "indicator.alarm", system.hasAlarm, firstRun);
       }
       (_a = system.devices) == null ? void 0 : _a.forEach(async (dev) => {
-        await this.setSystemDeviceAsync(dev, systemPath, accessToken, stateIdByParameterIdByDeviceId);
+        await this.setSystemDeviceAsync(dev, systemPath, accessToken);
       });
       if (this.config.AddActiveNotifications) {
         const notifications = await ((_b = this.myUplinkRepository) == null ? void 0 : _b.getActiveNotificationsAsync(system.systemId, accessToken));
@@ -230,14 +232,14 @@ class Myuplink extends utils.Adapter {
       }
     }
   }
-  async setSystemDeviceAsync(device, systemPath, accessToken, stateIdByParameterIdByDeviceId) {
+  async setSystemDeviceAsync(device, systemPath, accessToken) {
     var _a, _b, _c;
     if (device.id != void 0 && ((_a = device.product) == null ? void 0 : _a.name) != void 0) {
-      const existingMap = stateIdByParameterIdByDeviceId.get(device.id);
+      const existingMap = this.stateIdByParameterIdByDeviceId.get(device.id);
       const firstRun = !existingMap;
       const stateIdByParameterId = existingMap != null ? existingMap : /* @__PURE__ */ new Map();
       if (!existingMap) {
-        stateIdByParameterIdByDeviceId.set(device.id, stateIdByParameterId);
+        this.stateIdByParameterIdByDeviceId.set(device.id, stateIdByParameterId);
       }
       const deviceId = this.replaceForbiddenCharacters(device.id);
       const newDeviceId = this.deviceIds.get(deviceId);
@@ -481,14 +483,17 @@ class Myuplink extends utils.Adapter {
     });
   }
   async myCreateFolderAsync(path2, name) {
-    this.log.debug(`create Folder: ${path2}`);
-    await this.setObjectNotExistsAsync(path2, {
-      type: "folder",
-      common: {
-        name
-      },
-      native: {}
-    });
+    if (!this.existingFolders.includes(path2)) {
+      this.existingFolders.push(path2);
+      this.log.debug(`create Folder: ${path2}`);
+      await this.setObjectNotExistsAsync(path2, {
+        type: "folder",
+        common: {
+          name
+        },
+        native: {}
+      });
+    }
   }
   async myCreateStringStateAsync(path2, name, value, createObject, role = "text") {
     if (createObject) {
@@ -528,7 +533,7 @@ class Myuplink extends utils.Adapter {
     return text.replace(new RegExp("\xAD", "g"), "");
   }
   replaceForbiddenCharacters(text) {
-    return this.removeSoftHyphen(text).replace(new RegExp("\\.", "g"), "_").replace(this.FORBIDDEN_CHARS, "_");
+    return this.removeSoftHyphen(text).replace(this.STRICT_FORBIDDEN_CHARS, "_");
   }
   async onStateChange(id, state) {
     if (state != null && state.ack === false && state.q == this.constants.STATE_QUALITY.GOOD && state.val != null && this.authRepository != null && this.myUplinkRepository != null) {
