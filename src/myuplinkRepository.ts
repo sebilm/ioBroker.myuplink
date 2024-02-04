@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { AlarmsPaged } from './models/AlarmsPaged';
+import { CloudToDeviceMethodResult } from './models/CloudToDeviceMethodResult';
 import { PagedSystemResult } from './models/PagedSystemResult';
 import { ParameterData } from './models/ParameterData';
 
@@ -31,22 +32,18 @@ export class MyUplinkRepository {
         return this.getFromMyUplinkAsync<PagedSystemResult>('/v2/systems/me', accessToken);
     }
 
-    async getDevicePointsAsync(deviceId: string, accessToken: string, parameters: string | undefined = undefined): Promise<ParameterData[]> {
-        let url = `/v3/devices/${deviceId}/points`;
-        if (parameters) {
-            url = `${url}&parameters=${parameters}`;
-        }
-        return await this.getFromMyUplinkAsync<ParameterData[]>(url, accessToken);
+    async getDevicePointsAsync(deviceId: string, accessToken: string): Promise<ParameterData[]> {
+        return await this.getFromMyUplinkAsync<ParameterData[]>(`/v3/devices/${deviceId}/points`, accessToken);
     }
 
-    async setDevicePointAsync(deviceId: string, accessToken: string, parameterId: string, value: string): Promise<void> {
+    async setDevicePointAsync(deviceId: string, accessToken: string, parameterId: string, value: string): Promise<CloudToDeviceMethodResult> {
         const body = {};
         setProperty(body, parameterId, value);
-        await this.setDevicePointsAsync(deviceId, accessToken, body);
+        return await this.setDevicePointsAsync(deviceId, accessToken, body);
     }
 
-    async setDevicePointsAsync(deviceId: string, accessToken: string, keyValueDictionary: Record<string, string>): Promise<void> {
-        await this.patchToMyUplinkAsync(`/v2/devices/${deviceId}/points`, keyValueDictionary, accessToken);
+    async setDevicePointsAsync(deviceId: string, accessToken: string, keyValueDictionary: Record<string, string>): Promise<CloudToDeviceMethodResult> {
+        return await this.patchToMyUplinkAsync<CloudToDeviceMethodResult>(`/v2/devices/${deviceId}/points`, keyValueDictionary, accessToken);
     }
 
     getActiveNotificationsAsync(systemId: string, accessToken: string): Promise<AlarmsPaged> {
@@ -70,18 +67,19 @@ export class MyUplinkRepository {
         }
     }
 
-    private async patchToMyUplinkAsync(url: string, body: any, accessToken: string): Promise<void> {
+    private async patchToMyUplinkAsync<T>(url: string, body: any, accessToken: string): Promise<T> {
         const lang = this.options.language;
         this.log.debug(`PATCH ${url} (lang: ${lang})`);
         this.log.silly(`PATCH body: ${JSON.stringify(body, null, ' ')}`);
         try {
-            const { data } = await axios.patch(url, body, {
+            const { data } = await axios.patch<T>(url, body, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                     'Accept-Language': lang,
                 },
             });
             this.log.debug(JSON.stringify(data, null, ' '));
+            return data;
         } catch (error) {
             throw this.checkError(url, error);
         }

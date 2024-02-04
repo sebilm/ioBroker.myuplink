@@ -42,20 +42,16 @@ class MyUplinkRepository {
   getSystemsAndDevicesAsync(accessToken) {
     return this.getFromMyUplinkAsync("/v2/systems/me", accessToken);
   }
-  async getDevicePointsAsync(deviceId, accessToken, parameters = void 0) {
-    let url = `/v3/devices/${deviceId}/points`;
-    if (parameters) {
-      url = `${url}&parameters=${parameters}`;
-    }
-    return await this.getFromMyUplinkAsync(url, accessToken);
+  async getDevicePointsAsync(deviceId, accessToken) {
+    return await this.getFromMyUplinkAsync(`/v3/devices/${deviceId}/points`, accessToken);
   }
   async setDevicePointAsync(deviceId, accessToken, parameterId, value) {
     const body = {};
     setProperty(body, parameterId, value);
-    await this.setDevicePointsAsync(deviceId, accessToken, body);
+    return await this.setDevicePointsAsync(deviceId, accessToken, body);
   }
   async setDevicePointsAsync(deviceId, accessToken, keyValueDictionary) {
-    await this.patchToMyUplinkAsync(`/v2/devices/${deviceId}/points`, keyValueDictionary, accessToken);
+    return await this.patchToMyUplinkAsync(`/v2/devices/${deviceId}/points`, keyValueDictionary, accessToken);
   }
   getActiveNotificationsAsync(systemId, accessToken) {
     return this.getFromMyUplinkAsync(`/v2/systems/${systemId}/notifications/active?itemsPerPage=100`, accessToken);
@@ -88,6 +84,7 @@ class MyUplinkRepository {
         }
       });
       this.log.debug(JSON.stringify(data, null, " "));
+      return data;
     } catch (error) {
       throw this.checkError(url, error);
     }

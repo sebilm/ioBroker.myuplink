@@ -60,7 +60,7 @@ class Myuplink extends utils.Adapter {
     private categories: Map<string, string> = new Map<string, string>();
     private parameterIds: Map<string, string> = new Map<string, string>();
     private parameterIdToCategory: Map<string, string> = new Map<string, string>();
-    private stateIdByParameterIdByDeviceId: Map<string, Map<string, string>> = new Map<string, Map<string, string>>();
+    private objectIdIdByParameterIdByDeviceId: Map<string, Map<string, string>> = new Map<string, Map<string, string>>();
     private existingSystemIds: string[] = [];
     private existingFolders: string[] = [];
 
@@ -271,11 +271,11 @@ class Myuplink extends utils.Adapter {
 
     private async setSystemDeviceAsync(device: SystemDevice, systemPath: string, accessToken: string): Promise<void> {
         if (device.id != undefined && device.product?.name != undefined) {
-            const existingMap = this.stateIdByParameterIdByDeviceId.get(device.id);
+            const existingMap = this.objectIdIdByParameterIdByDeviceId.get(device.id);
             const firstRun = !existingMap;
             const stateIdByParameterId = existingMap ?? new Map<string, string>();
             if (!existingMap) {
-                this.stateIdByParameterIdByDeviceId.set(device.id, stateIdByParameterId);
+                this.objectIdIdByParameterIdByDeviceId.set(device.id, stateIdByParameterId);
             }
             const deviceId = this.replaceForbiddenCharacters(device.id);
             const newDeviceId = this.deviceIds.get(deviceId);
@@ -597,14 +597,30 @@ class Myuplink extends utils.Adapter {
                         const value = state.val.toString();
                         if (obj.native.parameterId != null && obj.native.parameterId != '') {
                             const parameterId = obj.native.parameterId.toString();
-                            await this.myUplinkRepository.setDevicePointAsync(deviceId, accessToken, parameterId, value);
-                            await this.getAndSetParameters(id, deviceId, accessToken, [parameterId]);
-                        } else if (obj.native.rawJson === true) {
+                            const result = await this.myUplinkRepository.setDevicePointAsync(deviceId, accessToken, parameterId, value);
+                            if (result.status == 200 && result.payload && parameterId in result.payload && result.payload[parameterId] == 'modified') {
+                                this.log.debug(`Parameter ${parameterId} modified by API`);
+                                await this.setStateAsync(id, { val: state.val, ack: true });
+                            }
+                        } else if (obj.native.rawJson === true && value) {
                             const keyValueDictionary: Record<string, string> = JSON.parse(value);
-                            await this.myUplinkRepository.setDevicePointsAsync(deviceId, accessToken, keyValueDictionary);
-                            await this.setStateAsync(id, { val: state.val, q: this.constants.STATE_QUALITY.GOOD, ack: true, c: undefined });
-                            const parameterIds = Object.keys(keyValueDictionary);
-                            await this.getAndSetParameters(id, deviceId, accessToken, parameterIds);
+                            const result = await this.myUplinkRepository.setDevicePointsAsync(deviceId, accessToken, keyValueDictionary);
+                            if (result.status == 200) {
+                                await this.setStateAsync(id, { val: state.val, q: this.constants.STATE_QUALITY.GOOD, ack: true, c: undefined });
+                                const objectIdByParameterId = this.objectIdIdByParameterIdByDeviceId.get(deviceId);
+                                if (objectIdByParameterId && result.payload) {
+                                    Object.entries(keyValueDictionary).forEach(async ([parameterId, value]) => {
+                                        const objectId = objectIdByParameterId.get(parameterId);
+                                        const valNumber = parseFloat(value);
+                                        if (objectId && !Number.isNaN(valNumber) && parameterId in result.payload && result.payload[parameterId] == 'modified') {
+                                            await this.setStateAsync(objectId, { val: valNumber, ack: true });
+                                        }
+                                    });
+                                }
+                            } else {
+                                this.log.error(`SetData: "${value}"\nResult: "${JSON.stringify(result, null, ' ')}"`);
+                                await this.setStateAsync(id, { val: state.val, q: this.constants.STATE_QUALITY.DEVICE_ERROR_REPORT, ack: false, c: `Status: ${result.status}` });
+                            }
                         }
                     }
                 } catch (error) {
@@ -614,17 +630,6 @@ class Myuplink extends utils.Adapter {
                     await this.setStateAsync(id, { val: state.val, q: quality, c: errorString, ack: false });
                 }
             }
-        }
-    }
-
-    private async getAndSetParameters(id: string, deviceId: string, accessToken: string, parameterIds: string[]): Promise<void> {
-        if (this.myUplinkRepository) {
-            const devicePoints = await this.myUplinkRepository.getDevicePointsAsync(deviceId, accessToken, parameterIds.join(','));
-            devicePoints?.forEach(async (data: ParameterData) => {
-                if (data.parameterId && parameterIds.includes(data.parameterId)) {
-                    await this.setStateAsync(id, { val: data.value, ack: true });
-                }
-            });
         }
     }
 
