@@ -41,7 +41,7 @@ It can also be used to change data points that are not sent by the API.
 
 ## Changelog
 
-### **WORK IN PROGRESS**
+### 0.7.0 (2024-02-04)
 
 -   Forbidden characters are removed from the category
 -   An error when setting data has been fixed

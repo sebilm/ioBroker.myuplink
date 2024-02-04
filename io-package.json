@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "myuplink",
-        "version": "0.6.1",
+        "version": "0.7.0",
         "news": {
+            "0.7.0": {
+                "en": "Forbidden characters are removed from the category\nAn error when setting data has been fixed\nPerformance has been improved",
+                "de": "Verbotene Zeichen werden aus der Kategorie entfernt\nEin Fehler beim Setzen von Daten wurde behoben\nDie Leistung wurde verbessert",
+                "ru": "Запрещенные символы выводятся из категории\nОшибка при установке данных\nПовышение эффективности",
+                "pt": "Os caracteres proibidos são removidos da categoria\nUm erro ao definir dados foi corrigido\nO desempenho foi melhorado",
+                "nl": "Verboden tekens worden uit de categorie verwijderd\nEr is een fout opgetreden bij het instellen van gegevens\nDe prestaties zijn verbeterd",
+                "fr": "Les caractères interdits sont supprimés de la catégorie\nUne erreur lors du réglage des données a été corrigée\nAmélioration des résultats",
+                "it": "I caratteri proibiti vengono rimossi dalla categoria\nUn errore durante l'impostazione dei dati è stato risolto\nLe prestazioni sono migliorate",
+                "es": "Los caracteres prohibidos se eliminan de la categoría\nUn error al establecer datos se ha corregido\nSe ha mejorado el rendimiento",
+                "pl": "Zakazane znaki są usuwane z kategorii\nBłąd podczas ustawiania danych został ustalony\nPoprawa wydajności",
+                "uk": "Заборонені символи знімаються з категорії\nВиправлено помилку при встановленні даних\nПокращено продуктивність",
+                "zh-cn": "禁止字符从分类中删除\n设置数据时的错误\n业绩有所改善"
+            },
             "0.6.1": {
                 "en": "Performance has been improved\nDependencies have been updated",
                 "de": "Die Leistung wurde verbessert\nAbhängigkeiten wurden aktualisiert",
@@ -80,19 +93,6 @@
                 "pl": "Wsparcie dla wartości parametru zostało dodane (must be paid for at myuplink.com) #4\nKodeks Granta Zmiany kwiatów zostały przeniesione do nowej tabeli rozszerzonej\nKontrola hasła została wykorzystana w grze Secret i Auth Code",
                 "uk": "Додано підтримку значень параметра налаштування (обов'язково оплачується на myuplink.com) #4\nГранти кодів авторизації Налаштування потоку було перенесено на нову розширену вкладку\nКонтроль пароля буде використовуватися для коду секрету та автів",
                 "zh-cn": "添加了确定参数价值的支助(必须支付给我的连接。 行动4\nA. 授权法 进入新趋势的环境中已移入。\n护照控制将用于搜寻和整部法典。"
-            },
-            "0.2.1": {
-                "en": "All responsive sizes have been added to jsonConfig\nMore error logging have been added",
-                "de": "Alle responsive Größen wurden zur jsonConfig hinzugefügt\nMehr Fehlerprotokollierung wurden hinzugefügt",
-                "ru": "Все адаптивные размеры были добавлены в jsonConfig\nДобавлена ошибка входа",
-                "pt": "Todos os tamanhos responsivos foram adicionados ao jsonConfig\nMais registro de erro foram adicionados",
-                "nl": "Alle verantwoordelijke maten zijn toegevoegd aan JsonConfig\nEr zijn meer fouten ingedeeld",
-                "fr": "Toutes les tailles sensibles ont été ajoutées à jsonConfig\nPlus d'enregistrement d'erreurs ont été ajoutés",
-                "it": "Tutte le dimensioni reattive sono state aggiunte a jsonConfig\nSono stati aggiunti altri errori di registrazione",
-                "es": "Todos los tamaños sensibles se han añadido a jsonConfig\nSe ha añadido más registro de errores",
-                "pl": "Wszystkie reagujące rozmiary zostały dodane do jsonConfig\nDodano więcej błędów logowania",
-                "uk": "Всі чуйні розміри додано в jsonConfig\nДодано більш детальну інформацію",
-                "zh-cn": "所有反应规模都被增加到 json Configg\n增加的错误伐木"
             }
         },
         "titleLang": {

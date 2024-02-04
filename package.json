@@ -1,6 +1,6 @@
 {
   "name": "iobroker.myuplink",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "description": "Get data of heat pumps from myUplink.com",
   "author": {
     "name": "Sebastian Haesselbarth",
