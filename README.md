@@ -41,6 +41,10 @@ It can also be used to change data points that are not sent by the API.
 
 ## Changelog
 
+### **WORK IN PROGRESS**
+
+-   Do not send empty objects (setData)
+
 ### 0.7.1 (2024-02-10)
 
 -   Crash after 'unhandled promise rejection' fixed #15

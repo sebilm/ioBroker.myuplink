@@ -560,23 +560,25 @@ class Myuplink extends utils.Adapter {
               }
             } else if (obj.native.rawJson === true && value) {
               const keyValueDictionary = JSON.parse(value);
-              const result = await this.myUplinkRepository.setDevicePointsAsync(deviceId, accessToken, keyValueDictionary);
-              if (result.status == 200) {
-                await this.setStateAsync(id, { val: state.val, q: this.constants.STATE_QUALITY.GOOD, ack: true, c: void 0 });
-                const objectIdByParameterId = this.objectIdIdByParameterIdByDeviceId.get(deviceId);
-                if (objectIdByParameterId && result.payload) {
-                  for (const [parameterId, value2] of Object.entries(keyValueDictionary)) {
-                    const objectId = objectIdByParameterId.get(parameterId);
-                    const valNumber = parseFloat(value2);
-                    if (objectId && !Number.isNaN(valNumber) && parameterId in result.payload && result.payload[parameterId] == "modified") {
-                      await this.setStateAsync(objectId, { val: valNumber, ack: true });
+              if (Object.keys(keyValueDictionary).length > 0) {
+                const result = await this.myUplinkRepository.setDevicePointsAsync(deviceId, accessToken, keyValueDictionary);
+                if (result.status == 200) {
+                  await this.setStateAsync(id, { val: state.val, q: this.constants.STATE_QUALITY.GOOD, ack: true, c: void 0 });
+                  const objectIdByParameterId = this.objectIdIdByParameterIdByDeviceId.get(deviceId);
+                  if (objectIdByParameterId && result.payload) {
+                    for (const [parameterId, value2] of Object.entries(keyValueDictionary)) {
+                      const objectId = objectIdByParameterId.get(parameterId);
+                      const valNumber = parseFloat(value2);
+                      if (objectId && !Number.isNaN(valNumber) && parameterId in result.payload && result.payload[parameterId] == "modified") {
+                        await this.setStateAsync(objectId, { val: valNumber, ack: true });
+                      }
                     }
                   }
-                }
-              } else {
-                this.log.error(`SetData: "${value}"
+                } else {
+                  this.log.error(`SetData: "${value}"
 Result: "${JSON.stringify(result, null, " ")}"`);
-                await this.setStateAsync(id, { val: state.val, q: this.constants.STATE_QUALITY.DEVICE_ERROR_REPORT, ack: false, c: `Status: ${result.status}` });
+                  await this.setStateAsync(id, { val: state.val, q: this.constants.STATE_QUALITY.DEVICE_ERROR_REPORT, ack: false, c: `Status: ${result.status}` });
+                }
               }
             }
           }

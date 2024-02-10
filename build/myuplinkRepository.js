@@ -66,7 +66,7 @@ class MyUplinkRepository {
           "Accept-Language": lang
         }
       });
-      this.log.silly(JSON.stringify(data, null, " "));
+      this.log.silly(`Response from GET ${url} (lang: ${lang}): ${JSON.stringify(data, null, " ")}`);
       return data;
     } catch (error) {
       throw this.checkError(url, error);
@@ -83,7 +83,7 @@ class MyUplinkRepository {
           "Accept-Language": lang
         }
       });
-      this.log.debug(JSON.stringify(data, null, " "));
+      this.log.debug(`Response from PATCH ${url} (lang: ${lang}): ${JSON.stringify(data, null, " ")}`);
       return data;
     } catch (error) {
       throw this.checkError(url, error);
