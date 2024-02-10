@@ -43,37 +43,37 @@ export class AuthRepository {
     private options: AuthOptions;
     private auth: Session | undefined;
 
-    async getAccessToken(): Promise<string | undefined> {
+    async getAccessTokenAsync(): Promise<string | undefined> {
         this.log.debug('Get access token');
 
         if (!this.hasAccessToken()) {
             if (this.options.useAuthorizationCodeGrant) {
                 if (this.options.authCode) {
-                    const token = await this.getAuthorizationCodeGrantToken(this.options.authCode);
-                    await this.setSesssion(token);
+                    const token = await this.getAuthorizationCodeGrantTokenAsync(this.options.authCode);
+                    await this.setSesssionAsync(token);
                 } else {
                     this.log.error('You need to get and set a new Auth Code. You can do this in the adapter setting.');
                     return undefined;
                 }
             } else {
-                const token = await this.getClientCredentialsGrantToken();
-                await this.setSesssion(token);
+                const token = await this.getClientCredentialsGrantTokenAsync();
+                await this.setSesssionAsync(token);
             }
         }
         if (this.isTokenExpired()) {
             if (this.options.useAuthorizationCodeGrant) {
-                const token = await this.refreshToken();
-                await this.setSesssion(token);
+                const token = await this.refreshTokenAsync();
+                await this.setSesssionAsync(token);
             } else {
-                const token = await this.getClientCredentialsGrantToken();
-                await this.setSesssion(token);
+                const token = await this.getClientCredentialsGrantTokenAsync();
+                await this.setSesssionAsync(token);
             }
         }
 
         return this.auth?.access_token;
     }
 
-    private async getAuthorizationCodeGrantToken(authCode: string): Promise<Session> {
+    private async getAuthorizationCodeGrantTokenAsync(authCode: string): Promise<Session> {
         this.log.debug('Get token via Authorization Code Grant Flow');
         const data = {
             grant_type: 'authorization_code',
@@ -83,7 +83,7 @@ export class AuthRepository {
             redirect_uri: this.options.redirectUri,
             scope: this.options.scope,
         };
-        const session = await this.postTokenRequest(data);
+        const session = await this.postTokenRequestAsync(data);
         this.log.debug(`Token received. Refresh Token received: ${session.refresh_token != undefined}. Access Token expires in: ${session.expires_in}`);
         if (!session.refresh_token) {
             this.log.warn('Receive Access Token without Refresh Token.');
@@ -91,7 +91,7 @@ export class AuthRepository {
         return session;
     }
 
-    private async getClientCredentialsGrantToken(): Promise<Session> {
+    private async getClientCredentialsGrantTokenAsync(): Promise<Session> {
         this.log.debug('Get token via Client Credentials Grant Flow');
         const data = {
             grant_type: 'client_credentials',
@@ -99,12 +99,12 @@ export class AuthRepository {
             client_secret: this.options.clientSecret,
             scope: this.options.scope,
         };
-        const session = await this.postTokenRequest(data);
+        const session = await this.postTokenRequestAsync(data);
         this.log.debug(`Token received. Refresh Token received: ${session.refresh_token != undefined}. Access Token expires in: ${session.expires_in}`);
         return session;
     }
 
-    private async refreshToken(): Promise<Session> {
+    private async refreshTokenAsync(): Promise<Session> {
         if (!this.auth?.refresh_token) {
             throw new Error('Cannot refresh the token because no refresh token is available.');
         }
@@ -116,7 +116,7 @@ export class AuthRepository {
             client_id: this.options.clientId,
             client_secret: this.options.clientSecret,
         };
-        const session = await this.postTokenRequest(data);
+        const session = await this.postTokenRequestAsync(data);
         this.log.debug(`Token received. Refresh Token received: ${session.refresh_token != undefined}. Access Token expires in: ${session.expires_in}`);
         if (!session.refresh_token) {
             this.log.warn('Receive Access Token without Refresh Token.');
@@ -124,7 +124,7 @@ export class AuthRepository {
         return session;
     }
 
-    private async postTokenRequest(body: any): Promise<Session> {
+    private async postTokenRequestAsync(body: any): Promise<Session> {
         const stringBody = new URLSearchParams(body).toString();
         const url = '/oauth/token';
         try {
@@ -171,7 +171,7 @@ export class AuthRepository {
         this.auth = jsonfile.readFileSync(this.options.sessionStoreFilePath, { throws: false });
     }
 
-    private async setSesssion(auth: Session): Promise<void> {
+    private async setSesssionAsync(auth: Session): Promise<void> {
         this.log.debug('Set session');
         if (auth.authCode == null) {
             auth.authCode = this.options.authCode;

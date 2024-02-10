@@ -152,10 +152,9 @@ class Myuplink extends utils.Adapter {
     await this.getDataAsync();
   }
   async getDataAsync() {
-    var _a;
     try {
       if (this.authRepository) {
-        const accessToken = await this.authRepository.getAccessToken();
+        const accessToken = await this.authRepository.getAccessTokenAsync();
         if (accessToken && this.myUplinkRepository) {
           const systems = await this.myUplinkRepository.getSystemsAndDevicesAsync(accessToken);
           this.setState("info.connection", { val: true, expire: this.refreshInterval + 30, ack: true });
@@ -541,7 +540,7 @@ class Myuplink extends utils.Adapter {
       const obj = await this.getObjectAsync(id);
       if (obj != null && obj.native != null && obj.native.writable == true && obj.native.deviceId != null && obj.native.deviceId != "") {
         try {
-          const accessToken = await this.authRepository.getAccessToken();
+          const accessToken = await this.authRepository.getAccessTokenAsync();
           if (accessToken) {
             const deviceId = obj.native.deviceId;
             const value = state.val.toString();

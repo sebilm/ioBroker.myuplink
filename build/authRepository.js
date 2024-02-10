@@ -44,35 +44,35 @@ class AuthRepository {
       }
     }
   }
-  async getAccessToken() {
+  async getAccessTokenAsync() {
     var _a;
     this.log.debug("Get access token");
     if (!this.hasAccessToken()) {
       if (this.options.useAuthorizationCodeGrant) {
         if (this.options.authCode) {
-          const token = await this.getAuthorizationCodeGrantToken(this.options.authCode);
-          await this.setSesssion(token);
+          const token = await this.getAuthorizationCodeGrantTokenAsync(this.options.authCode);
+          await this.setSesssionAsync(token);
         } else {
           this.log.error("You need to get and set a new Auth Code. You can do this in the adapter setting.");
           return void 0;
         }
       } else {
-        const token = await this.getClientCredentialsGrantToken();
-        await this.setSesssion(token);
+        const token = await this.getClientCredentialsGrantTokenAsync();
+        await this.setSesssionAsync(token);
       }
     }
     if (this.isTokenExpired()) {
       if (this.options.useAuthorizationCodeGrant) {
-        const token = await this.refreshToken();
-        await this.setSesssion(token);
+        const token = await this.refreshTokenAsync();
+        await this.setSesssionAsync(token);
       } else {
-        const token = await this.getClientCredentialsGrantToken();
-        await this.setSesssion(token);
+        const token = await this.getClientCredentialsGrantTokenAsync();
+        await this.setSesssionAsync(token);
       }
     }
     return (_a = this.auth) == null ? void 0 : _a.access_token;
   }
-  async getAuthorizationCodeGrantToken(authCode) {
+  async getAuthorizationCodeGrantTokenAsync(authCode) {
     this.log.debug("Get token via Authorization Code Grant Flow");
     const data = {
       grant_type: "authorization_code",
@@ -82,14 +82,14 @@ class AuthRepository {
       redirect_uri: this.options.redirectUri,
       scope: this.options.scope
     };
-    const session2 = await this.postTokenRequest(data);
+    const session2 = await this.postTokenRequestAsync(data);
     this.log.debug(`Token received. Refresh Token received: ${session2.refresh_token != void 0}. Access Token expires in: ${session2.expires_in}`);
     if (!session2.refresh_token) {
       this.log.warn("Receive Access Token without Refresh Token.");
     }
     return session2;
   }
-  async getClientCredentialsGrantToken() {
+  async getClientCredentialsGrantTokenAsync() {
     this.log.debug("Get token via Client Credentials Grant Flow");
     const data = {
       grant_type: "client_credentials",
@@ -97,11 +97,11 @@ class AuthRepository {
       client_secret: this.options.clientSecret,
       scope: this.options.scope
     };
-    const session2 = await this.postTokenRequest(data);
+    const session2 = await this.postTokenRequestAsync(data);
     this.log.debug(`Token received. Refresh Token received: ${session2.refresh_token != void 0}. Access Token expires in: ${session2.expires_in}`);
     return session2;
   }
-  async refreshToken() {
+  async refreshTokenAsync() {
     var _a, _b;
     if (!((_a = this.auth) == null ? void 0 : _a.refresh_token)) {
       throw new Error("Cannot refresh the token because no refresh token is available.");
@@ -113,14 +113,14 @@ class AuthRepository {
       client_id: this.options.clientId,
       client_secret: this.options.clientSecret
     };
-    const session2 = await this.postTokenRequest(data);
+    const session2 = await this.postTokenRequestAsync(data);
     this.log.debug(`Token received. Refresh Token received: ${session2.refresh_token != void 0}. Access Token expires in: ${session2.expires_in}`);
     if (!session2.refresh_token) {
       this.log.warn("Receive Access Token without Refresh Token.");
     }
     return session2;
   }
-  async postTokenRequest(body) {
+  async postTokenRequestAsync(body) {
     var _a;
     const stringBody = new URLSearchParams(body).toString();
     const url = "/oauth/token";
@@ -164,7 +164,7 @@ class AuthRepository {
     this.log.debug(`Read session from file '${this.options.sessionStoreFilePath}'`);
     this.auth = import_jsonfile.default.readFileSync(this.options.sessionStoreFilePath, { throws: false });
   }
-  async setSesssion(auth) {
+  async setSesssionAsync(auth) {
     this.log.debug("Set session");
     if (auth.authCode == null) {
       auth.authCode = this.options.authCode;
