@@ -42,16 +42,16 @@ class MyUplinkRepository {
   getSystemsAndDevicesAsync(accessToken) {
     return this.getFromMyUplinkAsync("/v2/systems/me", accessToken);
   }
-  async getDevicePointsAsync(deviceId, accessToken) {
-    return await this.getFromMyUplinkAsync(`/v3/devices/${deviceId}/points`, accessToken);
+  getDevicePointsAsync(deviceId, accessToken) {
+    return this.getFromMyUplinkAsync(`/v3/devices/${deviceId}/points`, accessToken);
   }
-  async setDevicePointAsync(deviceId, accessToken, parameterId, value) {
+  setDevicePointAsync(deviceId, accessToken, parameterId, value) {
     const body = {};
     setProperty(body, parameterId, value);
-    return await this.setDevicePointsAsync(deviceId, accessToken, body);
+    return this.setDevicePointsAsync(deviceId, accessToken, body);
   }
-  async setDevicePointsAsync(deviceId, accessToken, keyValueDictionary) {
-    return await this.patchToMyUplinkAsync(`/v2/devices/${deviceId}/points`, keyValueDictionary, accessToken);
+  setDevicePointsAsync(deviceId, accessToken, keyValueDictionary) {
+    return this.patchToMyUplinkAsync(`/v2/devices/${deviceId}/points`, keyValueDictionary, accessToken);
   }
   getActiveNotificationsAsync(systemId, accessToken) {
     return this.getFromMyUplinkAsync(`/v2/systems/${systemId}/notifications/active?itemsPerPage=100`, accessToken);

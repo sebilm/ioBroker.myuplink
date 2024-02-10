@@ -32,18 +32,18 @@ export class MyUplinkRepository {
         return this.getFromMyUplinkAsync<PagedSystemResult>('/v2/systems/me', accessToken);
     }
 
-    async getDevicePointsAsync(deviceId: string, accessToken: string): Promise<ParameterData[]> {
-        return await this.getFromMyUplinkAsync<ParameterData[]>(`/v3/devices/${deviceId}/points`, accessToken);
+    getDevicePointsAsync(deviceId: string, accessToken: string): Promise<ParameterData[]> {
+        return this.getFromMyUplinkAsync<ParameterData[]>(`/v3/devices/${deviceId}/points`, accessToken);
     }
 
-    async setDevicePointAsync(deviceId: string, accessToken: string, parameterId: string, value: string): Promise<CloudToDeviceMethodResult> {
+    setDevicePointAsync(deviceId: string, accessToken: string, parameterId: string, value: string): Promise<CloudToDeviceMethodResult> {
         const body = {};
         setProperty(body, parameterId, value);
-        return await this.setDevicePointsAsync(deviceId, accessToken, body);
+        return this.setDevicePointsAsync(deviceId, accessToken, body);
     }
 
-    async setDevicePointsAsync(deviceId: string, accessToken: string, keyValueDictionary: Record<string, string>): Promise<CloudToDeviceMethodResult> {
-        return await this.patchToMyUplinkAsync<CloudToDeviceMethodResult>(`/v2/devices/${deviceId}/points`, keyValueDictionary, accessToken);
+    setDevicePointsAsync(deviceId: string, accessToken: string, keyValueDictionary: Record<string, string>): Promise<CloudToDeviceMethodResult> {
+        return this.patchToMyUplinkAsync<CloudToDeviceMethodResult>(`/v2/devices/${deviceId}/points`, keyValueDictionary, accessToken);
     }
 
     getActiveNotificationsAsync(systemId: string, accessToken: string): Promise<AlarmsPaged> {

@@ -195,10 +195,11 @@ class Myuplink extends utils.Adapter {
                     const datetime = newDate.today() + ' ' + newDate.timeNow();
                     this.setState('info.updateTime', { val: datetime, ack: true });
                     this.setState('info.currentError', { val: '', ack: true });
-
-                    systems.systems?.forEach(async (value: SystemWithDevices) => {
-                        await this.setSystemWithDevicesAsync(value, accessToken);
-                    });
+                    if (systems.systems) {
+                        for (const value of systems.systems) {
+                            await this.setSystemWithDevicesAsync(value, accessToken);
+                        }
+                    }
                 }
             }
         } catch (error) {
@@ -213,6 +214,7 @@ class Myuplink extends utils.Adapter {
             this.setState('info.currentError', { val: '' + error, ack: true });
         }
 
+        this.log.debug('Set timer');
         this.timeout = this.setTimeout(
             async () => {
                 await this.getDataAsync();
@@ -246,9 +248,11 @@ class Myuplink extends utils.Adapter {
             if (system.hasAlarm != undefined) {
                 await this.myCreateBooleanStateAsync(`${systemPath}.hasAlarm`, 'Has Alarm', 'indicator.alarm', system.hasAlarm, firstRun);
             }
-            system.devices?.forEach(async (dev: SystemDevice) => {
-                await this.setSystemDeviceAsync(dev, systemPath, accessToken);
-            });
+            if (system.devices) {
+                for (const device of system.devices) {
+                    await this.setSystemDeviceAsync(device, systemPath, accessToken);
+                }
+            }
 
             if (this.config.AddActiveNotifications) {
                 const notifications = await this.myUplinkRepository?.getActiveNotificationsAsync(system.systemId, accessToken);
@@ -302,9 +306,11 @@ class Myuplink extends utils.Adapter {
                 if (this.config.AddRawData) {
                     await this.myCreateStringStateAsync(`${devicePath}.rawData`, 'Received raw JSON of parameter data', JSON.stringify(devicePoints, null, ''), firstRun);
                 }
-                devicePoints?.forEach(async (data: ParameterData) => {
-                    await this.setParameterDataAsync(data, devicePath, device.id, stateIdByParameterId);
-                });
+                if (devicePoints) {
+                    for (const data of devicePoints) {
+                        await this.setParameterDataAsync(data, devicePath, device.id, stateIdByParameterId);
+                    }
+                }
                 if (firstRun) {
                     await this.setObjectNotExistsAsync(`${devicePath}.setData`, {
                         type: 'state',
@@ -609,13 +615,13 @@ class Myuplink extends utils.Adapter {
                                 await this.setStateAsync(id, { val: state.val, q: this.constants.STATE_QUALITY.GOOD, ack: true, c: undefined });
                                 const objectIdByParameterId = this.objectIdIdByParameterIdByDeviceId.get(deviceId);
                                 if (objectIdByParameterId && result.payload) {
-                                    Object.entries(keyValueDictionary).forEach(async ([parameterId, value]) => {
+                                    for (const [parameterId, value] of Object.entries(keyValueDictionary)) {
                                         const objectId = objectIdByParameterId.get(parameterId);
                                         const valNumber = parseFloat(value);
                                         if (objectId && !Number.isNaN(valNumber) && parameterId in result.payload && result.payload[parameterId] == 'modified') {
                                             await this.setStateAsync(objectId, { val: valNumber, ack: true });
                                         }
-                                    });
+                                    }
                                 }
                             } else {
                                 this.log.error(`SetData: "${value}"\nResult: "${JSON.stringify(result, null, ' ')}"`);
