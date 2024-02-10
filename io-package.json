@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "myuplink",
-        "version": "0.7.0",
+        "version": "0.7.1",
         "news": {
+            "0.7.1": {
+                "en": "Crash after 'unhandled promise rejection' fixed #15",
+                "de": "Crash nach \"unhandled promise rejection\" behoben #15",
+                "ru": "Исправлен крах после \"unhandled promise rejection\" #15",
+                "pt": "Crash após \"unhandled promise rejection\" fixo #15",
+                "nl": "Crash na \"unhandled promise rejection\" gerepareerd #15",
+                "fr": "Crash après le \"unhandled promise rejection\" fixé #15",
+                "it": "Crash dopo \"unhandled promise rejection\" fisso #15",
+                "es": "Crash después de \"unhandled promise rejection\" fijo #15",
+                "pl": "Naprawiono awarię po \"unhandled promise rejection\" #15",
+                "uk": "Крейш після того, як \"unhandled promise rejection\" фіксована #15",
+                "zh-cn": "修复了 \"unhandled promise rejection\" 后的崩溃 #15"
+            },
             "0.7.0": {
                 "en": "Forbidden characters are removed from the category\nAn error when setting data has been fixed\nPerformance has been improved",
                 "de": "Verbotene Zeichen werden aus der Kategorie entfernt\nEin Fehler beim Setzen von Daten wurde behoben\nDie Leistung wurde verbessert",
@@ -80,19 +93,6 @@
                 "pl": "Nowe opcje dotyczące renamingu zostały dodane do #5\nOpcje są dezaktywowane, jeśli nie sprawdza się skrzynki",
                 "uk": "Додано нові параметри для перейменування ID #5\nВаріанти деактивуються, якщо прапорці не перевіряють",
                 "zh-cn": "重新命名国际发展部的新办法已增加第5号。\n如果检查箱没有检查,则选择。"
-            },
-            "0.3.0": {
-                "en": "Support for setting parameter values has been added (must be paid for at myuplink.com) #4\nAuthorization Code Grant Flow settings have been moved to new Extended tab\nPassword control will be used for Secret and Auth Code",
-                "de": "Unterstützung für die Einstellung von Parameterwerten wurde hinzugefügt (muss bei myuplink.com bezahlt werden) #4\nAutorisierung Code Grant Flow-Einstellungen wurden auf neue erweiterte Registerkarte verschoben\nPasswort-Kontrolle wird für Secret und Auth Code verwendet",
-                "ru": "Добавлена поддержка параметров установки (должна быть оплачена на myuplink.com) #4\nКод авторизации Grant Настройки потока были перемещены в новую расширенную вкладку\nКонтроль пароля будет использоваться для секрета и Auth Code",
-                "pt": "O suporte para definir valores de parâmetros foi adicionado (deve ser pago no myuplink.com) #4\nCódigo de Autorização Grant As configurações de fluxo foram movidas para a nova guia estendida\nO controle de senha será usado para o segredo e o código de Auth",
-                "nl": "Versterking voor het plaatsen van parameter waarden is toegevoegd voor mijn uplink. #4\nAuthorisatie Code Grant Flow settings zijn verplaatst naar nieuwe uitgebreide rekeningen\nPaswoordcontrole zal worden gebruikt voor Geheime en Auth Code",
-                "fr": "Le support pour le réglage des valeurs de paramètres a été ajouté (doit être payé sur myuplink.com) #4\nCode d ' autorisation Les réglages de débit ont été déplacés vers un nouvel onglet élargi\nLe contrôle de mot de passe sera utilisé pour Secret et Auth Code",
-                "it": "È stato aggiunto il supporto per l'impostazione dei valori dei parametri (da pagare su myuplink.com) #4\nCodice di autorizzazione Grant Le impostazioni di flusso sono state spostate nella nuova scheda estesa\nIl controllo password sarà utilizzato per il codice segreto e l'auth",
-                "es": "Se ha añadido soporte para establecer valores de parámetro (debe pagarse en myuplink.com) #4\nCódigo de Autorización Ajustes de flujo se han movido a la nueva pestaña Extendida\nControl de contraseña se utilizará para el Código Secreto y Auth",
-                "pl": "Wsparcie dla wartości parametru zostało dodane (must be paid for at myuplink.com) #4\nKodeks Granta Zmiany kwiatów zostały przeniesione do nowej tabeli rozszerzonej\nKontrola hasła została wykorzystana w grze Secret i Auth Code",
-                "uk": "Додано підтримку значень параметра налаштування (обов'язково оплачується на myuplink.com) #4\nГранти кодів авторизації Налаштування потоку було перенесено на нову розширену вкладку\nКонтроль пароля буде використовуватися для коду секрету та автів",
-                "zh-cn": "添加了确定参数价值的支助(必须支付给我的连接。 行动4\nA. 授权法 进入新趋势的环境中已移入。\n护照控制将用于搜寻和整部法典。"
             }
         },
         "titleLang": {
