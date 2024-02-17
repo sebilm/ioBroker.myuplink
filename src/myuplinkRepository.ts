@@ -3,12 +3,13 @@ import { AlarmsPaged } from './models/AlarmsPaged';
 import { CloudToDeviceMethodResult } from './models/CloudToDeviceMethodResult';
 import { PagedSystemResult } from './models/PagedSystemResult';
 import { ParameterData } from './models/ParameterData';
+import { Logger } from './types';
 
 function setProperty<K extends keyof any>(obj: any, propertyName: K, value: any): void {
     obj[propertyName] = value;
 }
 
-export default interface MyUplinkOptions {
+export interface MyUplinkOptions {
     baseUrl: string;
     timeout: number;
     userAgent: string;
@@ -16,7 +17,7 @@ export default interface MyUplinkOptions {
 }
 
 export class MyUplinkRepository {
-    constructor(options: MyUplinkOptions, log: ioBroker.Log) {
+    constructor(options: MyUplinkOptions, log: Logger) {
         this.log = log;
         this.options = options;
 
@@ -25,7 +26,7 @@ export class MyUplinkRepository {
         axios.defaults.timeout = options.timeout;
     }
 
-    private log: ioBroker.Log;
+    private log: Logger;
     private options: MyUplinkOptions;
 
     getSystemsAndDevicesAsync(accessToken: string): Promise<PagedSystemResult> {

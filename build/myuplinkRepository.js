@@ -22,11 +22,11 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var myuplinkRepository_exports = {};
-__export(myuplinkRepository_exports, {
+var myUplinkRepository_exports = {};
+__export(myUplinkRepository_exports, {
   MyUplinkRepository: () => MyUplinkRepository
 });
-module.exports = __toCommonJS(myuplinkRepository_exports);
+module.exports = __toCommonJS(myUplinkRepository_exports);
 var import_axios = __toESM(require("axios"));
 function setProperty(obj, propertyName, value) {
   obj[propertyName] = value;
@@ -111,4 +111,4 @@ class MyUplinkRepository {
 0 && (module.exports = {
   MyUplinkRepository
 });
-//# sourceMappingURL=myuplinkRepository.js.map
+//# sourceMappingURL=myUplinkRepository.js.map

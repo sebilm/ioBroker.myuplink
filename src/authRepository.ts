@@ -2,8 +2,9 @@ import axios, { AxiosError } from 'axios';
 import * as fs from 'fs';
 import jsonfile from 'jsonfile';
 import * as session from './models/Session';
+import { Logger } from './types';
 
-export default interface AuthOptions {
+export interface AuthOptions {
     clientId: string;
     clientSecret: string;
     useAuthorizationCodeGrant: boolean;
@@ -23,7 +24,7 @@ interface Session extends session.Session {
 }
 
 export class AuthRepository {
-    constructor(options: AuthOptions, log: ioBroker.Log) {
+    constructor(options: AuthOptions, log: Logger) {
         this.log = log;
         this.options = options;
 
@@ -39,11 +40,11 @@ export class AuthRepository {
         }
     }
 
-    private log: ioBroker.Log;
+    private log: Logger;
     private options: AuthOptions;
     private auth: Session | undefined;
 
-    async getAccessTokenAsync(): Promise<string | undefined> {
+    async getAccessTokenAsync(): Promise<string> {
         this.log.debug('Get access token');
 
         if (!this.hasAccessToken()) {
@@ -53,7 +54,7 @@ export class AuthRepository {
                     await this.setSesssionAsync(token);
                 } else {
                     this.log.error('You need to get and set a new Auth Code. You can do this in the adapter setting.');
-                    return undefined;
+                    throw new Error('You need to get and set a new Auth Code. You can do this in the adapter setting.');
                 }
             } else {
                 const token = await this.getClientCredentialsGrantTokenAsync();
@@ -70,7 +71,12 @@ export class AuthRepository {
             }
         }
 
-        return this.auth?.access_token;
+        const accessToken = this.auth?.access_token;
+        if (accessToken) {
+            return accessToken;
+        } else {
+            throw new Error('No access token!');
+        }
     }
 
     private async getAuthorizationCodeGrantTokenAsync(authCode: string): Promise<Session> {

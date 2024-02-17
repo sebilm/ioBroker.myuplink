@@ -54,7 +54,7 @@ class AuthRepository {
           await this.setSesssionAsync(token);
         } else {
           this.log.error("You need to get and set a new Auth Code. You can do this in the adapter setting.");
-          return void 0;
+          throw new Error("You need to get and set a new Auth Code. You can do this in the adapter setting.");
         }
       } else {
         const token = await this.getClientCredentialsGrantTokenAsync();
@@ -70,7 +70,12 @@ class AuthRepository {
         await this.setSesssionAsync(token);
       }
     }
-    return (_a = this.auth) == null ? void 0 : _a.access_token;
+    const accessToken = (_a = this.auth) == null ? void 0 : _a.access_token;
+    if (accessToken) {
+      return accessToken;
+    } else {
+      throw new Error("No access token!");
+    }
   }
   async getAuthorizationCodeGrantTokenAsync(authCode) {
     this.log.debug("Get token via Authorization Code Grant Flow");
