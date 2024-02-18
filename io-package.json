@@ -159,7 +159,7 @@
         "UseAuthorizationCodeGrant": false,
         "CallbackURL": "https://sebilm.github.io/ioBroker.myuplink/myuplink.html",
         "AuthCode": "",
-        "Interval": 1,
+        "Interval": 5,
         "Language": "en",
         "Configured": false,
         "AddData": true,

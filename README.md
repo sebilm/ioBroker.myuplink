@@ -44,6 +44,8 @@ It can also be used to change data points that are not sent by the API.
 ### **WORK IN PROGRESS**
 
 -   Do not send empty objects (setData)
+-   The initial refresh interval was set to 5 minutes
+-   The code has been restructured internally
 
 ### 0.7.1 (2024-02-10)
 
