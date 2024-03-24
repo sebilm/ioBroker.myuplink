@@ -21,16 +21,15 @@ __export(ProductRegistrationResponseWithAddress_exports, {
   ProductRegistrationResponseWithAddress: () => ProductRegistrationResponseWithAddress
 });
 module.exports = __toCommonJS(ProductRegistrationResponseWithAddress_exports);
-const _ProductRegistrationResponseWithAddress = class {
+const _ProductRegistrationResponseWithAddress = class _ProductRegistrationResponseWithAddress {
   static getAttributeTypeMap() {
     return _ProductRegistrationResponseWithAddress.attributeTypeMap;
   }
   constructor() {
   }
 };
-let ProductRegistrationResponseWithAddress = _ProductRegistrationResponseWithAddress;
-ProductRegistrationResponseWithAddress.discriminator = void 0;
-ProductRegistrationResponseWithAddress.attributeTypeMap = [
+_ProductRegistrationResponseWithAddress.discriminator = void 0;
+_ProductRegistrationResponseWithAddress.attributeTypeMap = [
   {
     name: "address",
     baseName: "address",
@@ -134,6 +133,7 @@ ProductRegistrationResponseWithAddress.attributeTypeMap = [
     format: ""
   }
 ];
+let ProductRegistrationResponseWithAddress = _ProductRegistrationResponseWithAddress;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   ProductRegistrationResponseWithAddress

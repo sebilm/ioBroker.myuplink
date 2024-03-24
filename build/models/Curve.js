@@ -21,16 +21,15 @@ __export(Curve_exports, {
   Curve: () => Curve
 });
 module.exports = __toCommonJS(Curve_exports);
-const _Curve = class {
+const _Curve = class _Curve {
   static getAttributeTypeMap() {
     return _Curve.attributeTypeMap;
   }
   constructor() {
   }
 };
-let Curve = _Curve;
-Curve.discriminator = void 0;
-Curve.attributeTypeMap = [
+_Curve.discriminator = void 0;
+_Curve.attributeTypeMap = [
   {
     name: "parameter",
     baseName: "parameter",
@@ -44,6 +43,7 @@ Curve.attributeTypeMap = [
     format: ""
   }
 ];
+let Curve = _Curve;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   Curve

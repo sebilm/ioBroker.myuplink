@@ -14,13 +14,17 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
   isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
   mod
 ));
 var utils = __toESM(require("@iobroker/adapter-core"));
 var fs = __toESM(require("fs"));
 var path = __toESM(require("path"));
-var import_myUplink = require("./myUplink");
+var import_myUplinkLogic = require("./myUplinkLogic");
 Date.prototype.today = function() {
   return this.getFullYear() + "-" + (this.getMonth() + 1 < 10 ? "0" : "") + (this.getMonth() + 1) + "-" + (this.getDate() < 10 ? "0" : "") + this.getDate();
 };
@@ -146,6 +150,9 @@ class Myuplink extends utils.Adapter {
   async SetStateAsync(path2, value) {
     await this.setStateAsync(path2, { val: value, ack: true });
   }
+  /**
+   * Is called when databases are connected and adapter received configuration.
+   */
   async onReady() {
     this.log.info("Starting adapter.");
     await this.setInfoObjects();
@@ -164,7 +171,7 @@ class Myuplink extends utils.Adapter {
       return;
     }
     try {
-      this.myUplink = new import_myUplink.MyUplink(this, this.config, storeDir, this.log);
+      this.myUplink = new import_myUplinkLogic.MyUplinkLogic(this, this.config, storeDir, this.log);
     } catch (error) {
       this.setState("info.connection", { val: false, ack: true });
       this.setState("info.currentError", { val: `${error}`, ack: true });
@@ -177,7 +184,7 @@ class Myuplink extends utils.Adapter {
   async getDataAsync() {
     if (this.myUplink) {
       const error = await this.myUplink.GetDataAsync();
-      const newDate = new Date();
+      const newDate = /* @__PURE__ */ new Date();
       const datetime = newDate.today() + " " + newDate.timeNow();
       if (error) {
         await this.setStateAsync("info.connection", { val: false, ack: true });
@@ -267,6 +274,9 @@ class Myuplink extends utils.Adapter {
       native: {}
     });
   }
+  /**
+   * Is called if a subscribed state changes
+   */
   async onStateChange(id, state) {
     var _a;
     if (state != null && state.ack === false && state.q == this.constants.STATE_QUALITY.GOOD && state.val != null && this.myUplink != null) {
@@ -282,6 +292,9 @@ class Myuplink extends utils.Adapter {
       }
     }
   }
+  /**
+   * Is called when adapter shuts down - callback has to be called under any circumstances!
+   */
   onUnload(callback) {
     try {
       this.clearTimeout(this.timeout);

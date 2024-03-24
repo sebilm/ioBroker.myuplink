@@ -21,16 +21,15 @@ __export(FirmwareResponseModel_exports, {
   FirmwareResponseModel: () => FirmwareResponseModel
 });
 module.exports = __toCommonJS(FirmwareResponseModel_exports);
-const _FirmwareResponseModel = class {
+const _FirmwareResponseModel = class _FirmwareResponseModel {
   static getAttributeTypeMap() {
     return _FirmwareResponseModel.attributeTypeMap;
   }
   constructor() {
   }
 };
-let FirmwareResponseModel = _FirmwareResponseModel;
-FirmwareResponseModel.discriminator = void 0;
-FirmwareResponseModel.attributeTypeMap = [
+_FirmwareResponseModel.discriminator = void 0;
+_FirmwareResponseModel.attributeTypeMap = [
   {
     name: "currentFwVersion",
     baseName: "currentFwVersion",
@@ -44,6 +43,7 @@ FirmwareResponseModel.attributeTypeMap = [
     format: ""
   }
 ];
+let FirmwareResponseModel = _FirmwareResponseModel;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   FirmwareResponseModel

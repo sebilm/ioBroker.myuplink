@@ -21,16 +21,15 @@ __export(DeviceInfoSyncResponseModel_exports, {
   DeviceInfoSyncResponseModel: () => DeviceInfoSyncResponseModel
 });
 module.exports = __toCommonJS(DeviceInfoSyncResponseModel_exports);
-const _DeviceInfoSyncResponseModel = class {
+const _DeviceInfoSyncResponseModel = class _DeviceInfoSyncResponseModel {
   static getAttributeTypeMap() {
     return _DeviceInfoSyncResponseModel.attributeTypeMap;
   }
   constructor() {
   }
 };
-let DeviceInfoSyncResponseModel = _DeviceInfoSyncResponseModel;
-DeviceInfoSyncResponseModel.discriminator = void 0;
-DeviceInfoSyncResponseModel.attributeTypeMap = [
+_DeviceInfoSyncResponseModel.discriminator = void 0;
+_DeviceInfoSyncResponseModel.attributeTypeMap = [
   {
     name: "syncId",
     baseName: "syncId",
@@ -44,6 +43,7 @@ DeviceInfoSyncResponseModel.attributeTypeMap = [
     format: ""
   }
 ];
+let DeviceInfoSyncResponseModel = _DeviceInfoSyncResponseModel;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   DeviceInfoSyncResponseModel

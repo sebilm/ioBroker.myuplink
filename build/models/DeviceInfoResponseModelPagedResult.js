@@ -21,16 +21,15 @@ __export(DeviceInfoResponseModelPagedResult_exports, {
   DeviceInfoResponseModelPagedResult: () => DeviceInfoResponseModelPagedResult
 });
 module.exports = __toCommonJS(DeviceInfoResponseModelPagedResult_exports);
-const _DeviceInfoResponseModelPagedResult = class {
+const _DeviceInfoResponseModelPagedResult = class _DeviceInfoResponseModelPagedResult {
   static getAttributeTypeMap() {
     return _DeviceInfoResponseModelPagedResult.attributeTypeMap;
   }
   constructor() {
   }
 };
-let DeviceInfoResponseModelPagedResult = _DeviceInfoResponseModelPagedResult;
-DeviceInfoResponseModelPagedResult.discriminator = void 0;
-DeviceInfoResponseModelPagedResult.attributeTypeMap = [
+_DeviceInfoResponseModelPagedResult.discriminator = void 0;
+_DeviceInfoResponseModelPagedResult.attributeTypeMap = [
   {
     name: "page",
     baseName: "page",
@@ -56,6 +55,7 @@ DeviceInfoResponseModelPagedResult.attributeTypeMap = [
     format: "int32"
   }
 ];
+let DeviceInfoResponseModelPagedResult = _DeviceInfoResponseModelPagedResult;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   DeviceInfoResponseModelPagedResult

@@ -21,16 +21,15 @@ __export(ZonePatchRequest_exports, {
   ZonePatchRequest: () => ZonePatchRequest
 });
 module.exports = __toCommonJS(ZonePatchRequest_exports);
-const _ZonePatchRequest = class {
+const _ZonePatchRequest = class _ZonePatchRequest {
   static getAttributeTypeMap() {
     return _ZonePatchRequest.attributeTypeMap;
   }
   constructor() {
   }
 };
-let ZonePatchRequest = _ZonePatchRequest;
-ZonePatchRequest.discriminator = void 0;
-ZonePatchRequest.attributeTypeMap = [
+_ZonePatchRequest.discriminator = void 0;
+_ZonePatchRequest.attributeTypeMap = [
   {
     name: "setpointHeat",
     baseName: "setpointHeat",
@@ -50,6 +49,7 @@ ZonePatchRequest.attributeTypeMap = [
     format: ""
   }
 ];
+let ZonePatchRequest = _ZonePatchRequest;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   ZonePatchRequest

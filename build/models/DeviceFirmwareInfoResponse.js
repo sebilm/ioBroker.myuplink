@@ -21,16 +21,15 @@ __export(DeviceFirmwareInfoResponse_exports, {
   DeviceFirmwareInfoResponse: () => DeviceFirmwareInfoResponse
 });
 module.exports = __toCommonJS(DeviceFirmwareInfoResponse_exports);
-const _DeviceFirmwareInfoResponse = class {
+const _DeviceFirmwareInfoResponse = class _DeviceFirmwareInfoResponse {
   static getAttributeTypeMap() {
     return _DeviceFirmwareInfoResponse.attributeTypeMap;
   }
   constructor() {
   }
 };
-let DeviceFirmwareInfoResponse = _DeviceFirmwareInfoResponse;
-DeviceFirmwareInfoResponse.discriminator = void 0;
-DeviceFirmwareInfoResponse.attributeTypeMap = [
+_DeviceFirmwareInfoResponse.discriminator = void 0;
+_DeviceFirmwareInfoResponse.attributeTypeMap = [
   {
     name: "deviceId",
     baseName: "deviceId",
@@ -62,6 +61,7 @@ DeviceFirmwareInfoResponse.attributeTypeMap = [
     format: ""
   }
 ];
+let DeviceFirmwareInfoResponse = _DeviceFirmwareInfoResponse;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   DeviceFirmwareInfoResponse

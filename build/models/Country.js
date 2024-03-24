@@ -21,16 +21,15 @@ __export(Country_exports, {
   Country: () => Country
 });
 module.exports = __toCommonJS(Country_exports);
-const _Country = class {
+const _Country = class _Country {
   static getAttributeTypeMap() {
     return _Country.attributeTypeMap;
   }
   constructor() {
   }
 };
-let Country = _Country;
-Country.discriminator = void 0;
-Country.attributeTypeMap = [
+_Country.discriminator = void 0;
+_Country.attributeTypeMap = [
   {
     name: "name",
     baseName: "name",
@@ -38,6 +37,7 @@ Country.attributeTypeMap = [
     format: ""
   }
 ];
+let Country = _Country;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   Country

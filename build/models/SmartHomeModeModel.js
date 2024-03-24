@@ -21,16 +21,15 @@ __export(SmartHomeModeModel_exports, {
   SmartHomeModeModel: () => SmartHomeModeModel
 });
 module.exports = __toCommonJS(SmartHomeModeModel_exports);
-const _SmartHomeModeModel = class {
+const _SmartHomeModeModel = class _SmartHomeModeModel {
   static getAttributeTypeMap() {
     return _SmartHomeModeModel.attributeTypeMap;
   }
   constructor() {
   }
 };
-let SmartHomeModeModel = _SmartHomeModeModel;
-SmartHomeModeModel.discriminator = void 0;
-SmartHomeModeModel.attributeTypeMap = [
+_SmartHomeModeModel.discriminator = void 0;
+_SmartHomeModeModel.attributeTypeMap = [
   {
     name: "smartHomeMode",
     baseName: "smartHomeMode",
@@ -38,6 +37,7 @@ SmartHomeModeModel.attributeTypeMap = [
     format: ""
   }
 ];
+let SmartHomeModeModel = _SmartHomeModeModel;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   SmartHomeModeModel

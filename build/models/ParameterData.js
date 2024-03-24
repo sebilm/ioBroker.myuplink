@@ -21,16 +21,15 @@ __export(ParameterData_exports, {
   ParameterData: () => ParameterData
 });
 module.exports = __toCommonJS(ParameterData_exports);
-const _ParameterData = class {
+const _ParameterData = class _ParameterData {
   static getAttributeTypeMap() {
     return _ParameterData.attributeTypeMap;
   }
   constructor() {
   }
 };
-let ParameterData = _ParameterData;
-ParameterData.discriminator = void 0;
-ParameterData.attributeTypeMap = [
+_ParameterData.discriminator = void 0;
+_ParameterData.attributeTypeMap = [
   {
     name: "category",
     baseName: "category",
@@ -122,6 +121,7 @@ ParameterData.attributeTypeMap = [
     format: ""
   }
 ];
+let ParameterData = _ParameterData;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   ParameterData

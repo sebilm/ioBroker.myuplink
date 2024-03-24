@@ -21,16 +21,15 @@ __export(AddressResponseModel_exports, {
   AddressResponseModel: () => AddressResponseModel
 });
 module.exports = __toCommonJS(AddressResponseModel_exports);
-const _AddressResponseModel = class {
+const _AddressResponseModel = class _AddressResponseModel {
   static getAttributeTypeMap() {
     return _AddressResponseModel.attributeTypeMap;
   }
   constructor() {
   }
 };
-let AddressResponseModel = _AddressResponseModel;
-AddressResponseModel.discriminator = void 0;
-AddressResponseModel.attributeTypeMap = [
+_AddressResponseModel.discriminator = void 0;
+_AddressResponseModel.attributeTypeMap = [
   {
     name: "city",
     baseName: "city",
@@ -56,6 +55,7 @@ AddressResponseModel.attributeTypeMap = [
     format: ""
   }
 ];
+let AddressResponseModel = _AddressResponseModel;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   AddressResponseModel

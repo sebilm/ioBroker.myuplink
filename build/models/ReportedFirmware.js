@@ -21,16 +21,15 @@ __export(ReportedFirmware_exports, {
   ReportedFirmware: () => ReportedFirmware
 });
 module.exports = __toCommonJS(ReportedFirmware_exports);
-const _ReportedFirmware = class {
+const _ReportedFirmware = class _ReportedFirmware {
   static getAttributeTypeMap() {
     return _ReportedFirmware.attributeTypeMap;
   }
   constructor() {
   }
 };
-let ReportedFirmware = _ReportedFirmware;
-ReportedFirmware.discriminator = void 0;
-ReportedFirmware.attributeTypeMap = [
+_ReportedFirmware.discriminator = void 0;
+_ReportedFirmware.attributeTypeMap = [
   {
     name: "firmwareId",
     baseName: "firmwareId",
@@ -62,6 +61,7 @@ ReportedFirmware.attributeTypeMap = [
     format: ""
   }
 ];
+let ReportedFirmware = _ReportedFirmware;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   ReportedFirmware

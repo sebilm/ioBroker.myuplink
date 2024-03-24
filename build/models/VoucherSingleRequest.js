@@ -21,16 +21,15 @@ __export(VoucherSingleRequest_exports, {
   VoucherSingleRequest: () => VoucherSingleRequest
 });
 module.exports = __toCommonJS(VoucherSingleRequest_exports);
-const _VoucherSingleRequest = class {
+const _VoucherSingleRequest = class _VoucherSingleRequest {
   static getAttributeTypeMap() {
     return _VoucherSingleRequest.attributeTypeMap;
   }
   constructor() {
   }
 };
-let VoucherSingleRequest = _VoucherSingleRequest;
-VoucherSingleRequest.discriminator = void 0;
-VoucherSingleRequest.attributeTypeMap = [
+_VoucherSingleRequest.discriminator = void 0;
+_VoucherSingleRequest.attributeTypeMap = [
   {
     name: "numDays",
     baseName: "numDays",
@@ -50,6 +49,7 @@ VoucherSingleRequest.attributeTypeMap = [
     format: ""
   }
 ];
+let VoucherSingleRequest = _VoucherSingleRequest;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   VoucherSingleRequest

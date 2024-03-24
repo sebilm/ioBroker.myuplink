@@ -21,16 +21,15 @@ __export(Product_exports, {
   Product: () => Product
 });
 module.exports = __toCommonJS(Product_exports);
-const _Product = class {
+const _Product = class _Product {
   static getAttributeTypeMap() {
     return _Product.attributeTypeMap;
   }
   constructor() {
   }
 };
-let Product = _Product;
-Product.discriminator = void 0;
-Product.attributeTypeMap = [
+_Product.discriminator = void 0;
+_Product.attributeTypeMap = [
   {
     name: "serialNumber",
     baseName: "serialNumber",
@@ -44,6 +43,7 @@ Product.attributeTypeMap = [
     format: ""
   }
 ];
+let Product = _Product;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   Product

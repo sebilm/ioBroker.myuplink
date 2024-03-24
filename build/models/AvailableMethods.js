@@ -21,16 +21,15 @@ __export(AvailableMethods_exports, {
   AvailableMethods: () => AvailableMethods
 });
 module.exports = __toCommonJS(AvailableMethods_exports);
-const _AvailableMethods = class {
+const _AvailableMethods = class _AvailableMethods {
   static getAttributeTypeMap() {
     return _AvailableMethods.attributeTypeMap;
   }
   constructor() {
   }
 };
-let AvailableMethods = _AvailableMethods;
-AvailableMethods.discriminator = void 0;
-AvailableMethods.attributeTypeMap = [
+_AvailableMethods.discriminator = void 0;
+_AvailableMethods.attributeTypeMap = [
   {
     name: "settings",
     baseName: "settings",
@@ -188,6 +187,7 @@ AvailableMethods.attributeTypeMap = [
     format: ""
   }
 ];
+let AvailableMethods = _AvailableMethods;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   AvailableMethods

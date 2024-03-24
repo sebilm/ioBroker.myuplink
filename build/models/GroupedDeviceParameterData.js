@@ -21,16 +21,15 @@ __export(GroupedDeviceParameterData_exports, {
   GroupedDeviceParameterData: () => GroupedDeviceParameterData
 });
 module.exports = __toCommonJS(GroupedDeviceParameterData_exports);
-const _GroupedDeviceParameterData = class {
+const _GroupedDeviceParameterData = class _GroupedDeviceParameterData {
   static getAttributeTypeMap() {
     return _GroupedDeviceParameterData.attributeTypeMap;
   }
   constructor() {
   }
 };
-let GroupedDeviceParameterData = _GroupedDeviceParameterData;
-GroupedDeviceParameterData.discriminator = void 0;
-GroupedDeviceParameterData.attributeTypeMap = [
+_GroupedDeviceParameterData.discriminator = void 0;
+_GroupedDeviceParameterData.attributeTypeMap = [
   {
     name: "categoryName",
     baseName: "categoryName",
@@ -44,6 +43,7 @@ GroupedDeviceParameterData.attributeTypeMap = [
     format: ""
   }
 ];
+let GroupedDeviceParameterData = _GroupedDeviceParameterData;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   GroupedDeviceParameterData

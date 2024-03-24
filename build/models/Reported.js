@@ -21,16 +21,15 @@ __export(Reported_exports, {
   Reported: () => Reported
 });
 module.exports = __toCommonJS(Reported_exports);
-const _Reported = class {
+const _Reported = class _Reported {
   static getAttributeTypeMap() {
     return _Reported.attributeTypeMap;
   }
   constructor() {
   }
 };
-let Reported = _Reported;
-Reported.discriminator = void 0;
-Reported.attributeTypeMap = [
+_Reported.discriminator = void 0;
+_Reported.attributeTypeMap = [
   {
     name: "deviceName",
     baseName: "deviceName",
@@ -92,6 +91,7 @@ Reported.attributeTypeMap = [
     format: ""
   }
 ];
+let Reported = _Reported;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   Reported

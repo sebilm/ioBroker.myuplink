@@ -21,16 +21,15 @@ __export(DeviceResponseModel_exports, {
   DeviceResponseModel: () => DeviceResponseModel
 });
 module.exports = __toCommonJS(DeviceResponseModel_exports);
-const _DeviceResponseModel = class {
+const _DeviceResponseModel = class _DeviceResponseModel {
   static getAttributeTypeMap() {
     return _DeviceResponseModel.attributeTypeMap;
   }
   constructor() {
   }
 };
-let DeviceResponseModel = _DeviceResponseModel;
-DeviceResponseModel.discriminator = void 0;
-DeviceResponseModel.attributeTypeMap = [
+_DeviceResponseModel.discriminator = void 0;
+_DeviceResponseModel.attributeTypeMap = [
   {
     name: "id",
     baseName: "id",
@@ -62,6 +61,7 @@ DeviceResponseModel.attributeTypeMap = [
     format: ""
   }
 ];
+let DeviceResponseModel = _DeviceResponseModel;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   DeviceResponseModel

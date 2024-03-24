@@ -21,16 +21,15 @@ __export(SearchGroupSSG_exports, {
   SearchGroupSSG: () => SearchGroupSSG
 });
 module.exports = __toCommonJS(SearchGroupSSG_exports);
-const _SearchGroupSSG = class {
+const _SearchGroupSSG = class _SearchGroupSSG {
   static getAttributeTypeMap() {
     return _SearchGroupSSG.attributeTypeMap;
   }
   constructor() {
   }
 };
-let SearchGroupSSG = _SearchGroupSSG;
-SearchGroupSSG.discriminator = void 0;
-SearchGroupSSG.attributeTypeMap = [
+_SearchGroupSSG.discriminator = void 0;
+_SearchGroupSSG.attributeTypeMap = [
   {
     name: "deviceId",
     baseName: "deviceId",
@@ -80,6 +79,7 @@ SearchGroupSSG.attributeTypeMap = [
     format: ""
   }
 ];
+let SearchGroupSSG = _SearchGroupSSG;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   SearchGroupSSG

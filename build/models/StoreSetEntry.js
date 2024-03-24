@@ -21,16 +21,15 @@ __export(StoreSetEntry_exports, {
   StoreSetEntry: () => StoreSetEntry
 });
 module.exports = __toCommonJS(StoreSetEntry_exports);
-const _StoreSetEntry = class {
+const _StoreSetEntry = class _StoreSetEntry {
   static getAttributeTypeMap() {
     return _StoreSetEntry.attributeTypeMap;
   }
   constructor() {
   }
 };
-let StoreSetEntry = _StoreSetEntry;
-StoreSetEntry.discriminator = void 0;
-StoreSetEntry.attributeTypeMap = [
+_StoreSetEntry.discriminator = void 0;
+_StoreSetEntry.attributeTypeMap = [
   {
     name: "variableId",
     baseName: "variableId",
@@ -56,6 +55,7 @@ StoreSetEntry.attributeTypeMap = [
     format: "int32"
   }
 ];
+let StoreSetEntry = _StoreSetEntry;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   StoreSetEntry

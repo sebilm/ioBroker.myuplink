@@ -21,16 +21,15 @@ __export(EnumValues_exports, {
   EnumValues: () => EnumValues
 });
 module.exports = __toCommonJS(EnumValues_exports);
-const _EnumValues = class {
+const _EnumValues = class _EnumValues {
   static getAttributeTypeMap() {
     return _EnumValues.attributeTypeMap;
   }
   constructor() {
   }
 };
-let EnumValues = _EnumValues;
-EnumValues.discriminator = void 0;
-EnumValues.attributeTypeMap = [
+_EnumValues.discriminator = void 0;
+_EnumValues.attributeTypeMap = [
   {
     name: "value",
     baseName: "value",
@@ -50,6 +49,7 @@ EnumValues.attributeTypeMap = [
     format: ""
   }
 ];
+let EnumValues = _EnumValues;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   EnumValues

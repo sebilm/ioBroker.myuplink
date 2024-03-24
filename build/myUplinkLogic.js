@@ -18,19 +18,23 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
   isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
   mod
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var myUplink_exports = {};
-__export(myUplink_exports, {
-  MyUplink: () => MyUplink
+var myUplinkLogic_exports = {};
+__export(myUplinkLogic_exports, {
+  MyUplinkLogic: () => MyUplinkLogic
 });
-module.exports = __toCommonJS(myUplink_exports);
+module.exports = __toCommonJS(myUplinkLogic_exports);
 var path = __toESM(require("path"));
 var import_authRepository = require("./authRepository");
 var import_myUplinkRepository = require("./myUplinkRepository");
-class MyUplink {
+class MyUplinkLogic {
   constructor(dataTarget, config, storeDir, log) {
     this.STRICT_FORBIDDEN_CHARS = /[^a-zA-Z0-9_-]+/gu;
     this.systemIds = /* @__PURE__ */ new Map();
@@ -131,6 +135,11 @@ class MyUplink {
       this.log
     );
   }
+  /**
+   * Async function to get data asynchronously.
+   *
+   * @return {Promise<string | undefined>} a promise with the error string (if there was an error) or undefined (if its all good)
+   */
   async GetDataAsync() {
     try {
       const accessToken = await this.authRepository.getAccessTokenAsync();
@@ -146,6 +155,16 @@ class MyUplink {
       return errorString;
     }
   }
+  /**
+   * A function to asynchronously set data.
+   *
+   * @param {string} id - the object id
+   * @param {StateValue} value - the value to be set
+   * @param {string} deviceId - the id of the device
+   * @param {string | null} parameterId - the id of the parameter, or null
+   * @param {boolean} isRawJson - flag indicating if the value is raw JSON
+   * @return {Promise<string | undefined>} a promise with the error string (if there was an error) or undefined (if its all good)
+   */
   async SetDataAsync(id, value, deviceId, parameterId, isRawJson) {
     try {
       const accessToken = await this.authRepository.getAccessTokenAsync();
@@ -376,6 +395,6 @@ Result: "${JSON.stringify(result, null, " ")}"`);
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  MyUplink
+  MyUplinkLogic
 });
-//# sourceMappingURL=myUplink.js.map
+//# sourceMappingURL=myUplinkLogic.js.map

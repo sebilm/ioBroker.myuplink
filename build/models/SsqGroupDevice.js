@@ -21,16 +21,15 @@ __export(SsqGroupDevice_exports, {
   SsqGroupDevice: () => SsqGroupDevice
 });
 module.exports = __toCommonJS(SsqGroupDevice_exports);
-const _SsqGroupDevice = class {
+const _SsqGroupDevice = class _SsqGroupDevice {
   static getAttributeTypeMap() {
     return _SsqGroupDevice.attributeTypeMap;
   }
   constructor() {
   }
 };
-let SsqGroupDevice = _SsqGroupDevice;
-SsqGroupDevice.discriminator = void 0;
-SsqGroupDevice.attributeTypeMap = [
+_SsqGroupDevice.discriminator = void 0;
+_SsqGroupDevice.attributeTypeMap = [
   {
     name: "name",
     baseName: "name",
@@ -56,6 +55,7 @@ SsqGroupDevice.attributeTypeMap = [
     format: ""
   }
 ];
+let SsqGroupDevice = _SsqGroupDevice;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   SsqGroupDevice

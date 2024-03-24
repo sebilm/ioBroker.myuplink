@@ -21,16 +21,15 @@ __export(DeviceParameterData_exports, {
   DeviceParameterData: () => DeviceParameterData
 });
 module.exports = __toCommonJS(DeviceParameterData_exports);
-const _DeviceParameterData = class {
+const _DeviceParameterData = class _DeviceParameterData {
   static getAttributeTypeMap() {
     return _DeviceParameterData.attributeTypeMap;
   }
   constructor() {
   }
 };
-let DeviceParameterData = _DeviceParameterData;
-DeviceParameterData.discriminator = void 0;
-DeviceParameterData.attributeTypeMap = [
+_DeviceParameterData.discriminator = void 0;
+_DeviceParameterData.attributeTypeMap = [
   {
     name: "parameterId",
     baseName: "parameterId",
@@ -74,6 +73,7 @@ DeviceParameterData.attributeTypeMap = [
     format: ""
   }
 ];
+let DeviceParameterData = _DeviceParameterData;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   DeviceParameterData

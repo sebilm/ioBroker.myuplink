@@ -21,16 +21,15 @@ __export(SpotPriceDeliveryModel_exports, {
   SpotPriceDeliveryModel: () => SpotPriceDeliveryModel
 });
 module.exports = __toCommonJS(SpotPriceDeliveryModel_exports);
-const _SpotPriceDeliveryModel = class {
+const _SpotPriceDeliveryModel = class _SpotPriceDeliveryModel {
   static getAttributeTypeMap() {
     return _SpotPriceDeliveryModel.attributeTypeMap;
   }
   constructor() {
   }
 };
-let SpotPriceDeliveryModel = _SpotPriceDeliveryModel;
-SpotPriceDeliveryModel.discriminator = void 0;
-SpotPriceDeliveryModel.attributeTypeMap = [
+_SpotPriceDeliveryModel.discriminator = void 0;
+_SpotPriceDeliveryModel.attributeTypeMap = [
   {
     name: "prices",
     baseName: "prices",
@@ -38,6 +37,7 @@ SpotPriceDeliveryModel.attributeTypeMap = [
     format: "int32"
   }
 ];
+let SpotPriceDeliveryModel = _SpotPriceDeliveryModel;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   SpotPriceDeliveryModel

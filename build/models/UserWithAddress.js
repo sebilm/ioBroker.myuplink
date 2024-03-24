@@ -21,16 +21,15 @@ __export(UserWithAddress_exports, {
   UserWithAddress: () => UserWithAddress
 });
 module.exports = __toCommonJS(UserWithAddress_exports);
-const _UserWithAddress = class {
+const _UserWithAddress = class _UserWithAddress {
   static getAttributeTypeMap() {
     return _UserWithAddress.attributeTypeMap;
   }
   constructor() {
   }
 };
-let UserWithAddress = _UserWithAddress;
-UserWithAddress.discriminator = void 0;
-UserWithAddress.attributeTypeMap = [
+_UserWithAddress.discriminator = void 0;
+_UserWithAddress.attributeTypeMap = [
   {
     name: "userId",
     baseName: "userId",
@@ -56,6 +55,7 @@ UserWithAddress.attributeTypeMap = [
     format: ""
   }
 ];
+let UserWithAddress = _UserWithAddress;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   UserWithAddress

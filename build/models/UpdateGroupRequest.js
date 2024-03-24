@@ -21,16 +21,15 @@ __export(UpdateGroupRequest_exports, {
   UpdateGroupRequest: () => UpdateGroupRequest
 });
 module.exports = __toCommonJS(UpdateGroupRequest_exports);
-const _UpdateGroupRequest = class {
+const _UpdateGroupRequest = class _UpdateGroupRequest {
   static getAttributeTypeMap() {
     return _UpdateGroupRequest.attributeTypeMap;
   }
   constructor() {
   }
 };
-let UpdateGroupRequest = _UpdateGroupRequest;
-UpdateGroupRequest.discriminator = void 0;
-UpdateGroupRequest.attributeTypeMap = [
+_UpdateGroupRequest.discriminator = void 0;
+_UpdateGroupRequest.attributeTypeMap = [
   {
     name: "name",
     baseName: "name",
@@ -38,6 +37,7 @@ UpdateGroupRequest.attributeTypeMap = [
     format: ""
   }
 ];
+let UpdateGroupRequest = _UpdateGroupRequest;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   UpdateGroupRequest

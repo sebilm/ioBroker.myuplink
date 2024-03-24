@@ -21,16 +21,15 @@ __export(Properties_exports, {
   Properties: () => Properties
 });
 module.exports = __toCommonJS(Properties_exports);
-const _Properties = class {
+const _Properties = class _Properties {
   static getAttributeTypeMap() {
     return _Properties.attributeTypeMap;
   }
   constructor() {
   }
 };
-let Properties = _Properties;
-Properties.discriminator = void 0;
-Properties.attributeTypeMap = [
+_Properties.discriminator = void 0;
+_Properties.attributeTypeMap = [
   {
     name: "reported",
     baseName: "reported",
@@ -38,6 +37,7 @@ Properties.attributeTypeMap = [
     format: ""
   }
 ];
+let Properties = _Properties;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   Properties

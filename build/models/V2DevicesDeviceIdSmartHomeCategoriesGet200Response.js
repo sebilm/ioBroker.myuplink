@@ -21,16 +21,15 @@ __export(V2DevicesDeviceIdSmartHomeCategoriesGet200Response_exports, {
   V2DevicesDeviceIdSmartHomeCategoriesGet200Response: () => V2DevicesDeviceIdSmartHomeCategoriesGet200Response
 });
 module.exports = __toCommonJS(V2DevicesDeviceIdSmartHomeCategoriesGet200Response_exports);
-const _V2DevicesDeviceIdSmartHomeCategoriesGet200Response = class {
+const _V2DevicesDeviceIdSmartHomeCategoriesGet200Response = class _V2DevicesDeviceIdSmartHomeCategoriesGet200Response {
   static getAttributeTypeMap() {
     return _V2DevicesDeviceIdSmartHomeCategoriesGet200Response.attributeTypeMap;
   }
   constructor() {
   }
 };
-let V2DevicesDeviceIdSmartHomeCategoriesGet200Response = _V2DevicesDeviceIdSmartHomeCategoriesGet200Response;
-V2DevicesDeviceIdSmartHomeCategoriesGet200Response.discriminator = void 0;
-V2DevicesDeviceIdSmartHomeCategoriesGet200Response.attributeTypeMap = [
+_V2DevicesDeviceIdSmartHomeCategoriesGet200Response.discriminator = void 0;
+_V2DevicesDeviceIdSmartHomeCategoriesGet200Response.attributeTypeMap = [
   {
     name: "shEnergyMetered",
     baseName: "sh-energyMetered",
@@ -296,6 +295,7 @@ V2DevicesDeviceIdSmartHomeCategoriesGet200Response.attributeTypeMap = [
     format: ""
   }
 ];
+let V2DevicesDeviceIdSmartHomeCategoriesGet200Response = _V2DevicesDeviceIdSmartHomeCategoriesGet200Response;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   V2DevicesDeviceIdSmartHomeCategoriesGet200Response

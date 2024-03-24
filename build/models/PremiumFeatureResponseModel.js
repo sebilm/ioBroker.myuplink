@@ -21,16 +21,15 @@ __export(PremiumFeatureResponseModel_exports, {
   PremiumFeatureResponseModel: () => PremiumFeatureResponseModel
 });
 module.exports = __toCommonJS(PremiumFeatureResponseModel_exports);
-const _PremiumFeatureResponseModel = class {
+const _PremiumFeatureResponseModel = class _PremiumFeatureResponseModel {
   static getAttributeTypeMap() {
     return _PremiumFeatureResponseModel.attributeTypeMap;
   }
   constructor() {
   }
 };
-let PremiumFeatureResponseModel = _PremiumFeatureResponseModel;
-PremiumFeatureResponseModel.discriminator = void 0;
-PremiumFeatureResponseModel.attributeTypeMap = [
+_PremiumFeatureResponseModel.discriminator = void 0;
+_PremiumFeatureResponseModel.attributeTypeMap = [
   {
     name: "validUntil",
     baseName: "validUntil",
@@ -44,6 +43,7 @@ PremiumFeatureResponseModel.attributeTypeMap = [
     format: ""
   }
 ];
+let PremiumFeatureResponseModel = _PremiumFeatureResponseModel;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   PremiumFeatureResponseModel

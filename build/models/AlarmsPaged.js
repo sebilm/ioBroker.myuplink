@@ -21,16 +21,15 @@ __export(AlarmsPaged_exports, {
   AlarmsPaged: () => AlarmsPaged
 });
 module.exports = __toCommonJS(AlarmsPaged_exports);
-const _AlarmsPaged = class {
+const _AlarmsPaged = class _AlarmsPaged {
   static getAttributeTypeMap() {
     return _AlarmsPaged.attributeTypeMap;
   }
   constructor() {
   }
 };
-let AlarmsPaged = _AlarmsPaged;
-AlarmsPaged.discriminator = void 0;
-AlarmsPaged.attributeTypeMap = [
+_AlarmsPaged.discriminator = void 0;
+_AlarmsPaged.attributeTypeMap = [
   {
     name: "page",
     baseName: "page",
@@ -56,6 +55,7 @@ AlarmsPaged.attributeTypeMap = [
     format: ""
   }
 ];
+let AlarmsPaged = _AlarmsPaged;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   AlarmsPaged

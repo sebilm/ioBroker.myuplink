@@ -21,16 +21,15 @@ __export(CloudToDeviceMethodResult_exports, {
   CloudToDeviceMethodResult: () => CloudToDeviceMethodResult
 });
 module.exports = __toCommonJS(CloudToDeviceMethodResult_exports);
-const _CloudToDeviceMethodResult = class {
+const _CloudToDeviceMethodResult = class _CloudToDeviceMethodResult {
   static getAttributeTypeMap() {
     return _CloudToDeviceMethodResult.attributeTypeMap;
   }
   constructor() {
   }
 };
-let CloudToDeviceMethodResult = _CloudToDeviceMethodResult;
-CloudToDeviceMethodResult.discriminator = void 0;
-CloudToDeviceMethodResult.attributeTypeMap = [
+_CloudToDeviceMethodResult.discriminator = void 0;
+_CloudToDeviceMethodResult.attributeTypeMap = [
   {
     name: "status",
     baseName: "status",
@@ -44,6 +43,7 @@ CloudToDeviceMethodResult.attributeTypeMap = [
     format: ""
   }
 ];
+let CloudToDeviceMethodResult = _CloudToDeviceMethodResult;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   CloudToDeviceMethodResult

@@ -21,16 +21,15 @@ __export(AidModeResponseModel_exports, {
   AidModeResponseModel: () => AidModeResponseModel
 });
 module.exports = __toCommonJS(AidModeResponseModel_exports);
-const _AidModeResponseModel = class {
+const _AidModeResponseModel = class _AidModeResponseModel {
   static getAttributeTypeMap() {
     return _AidModeResponseModel.attributeTypeMap;
   }
   constructor() {
   }
 };
-let AidModeResponseModel = _AidModeResponseModel;
-AidModeResponseModel.discriminator = void 0;
-AidModeResponseModel.attributeTypeMap = [
+_AidModeResponseModel.discriminator = void 0;
+_AidModeResponseModel.attributeTypeMap = [
   {
     name: "aidMode",
     baseName: "aidMode",
@@ -38,6 +37,7 @@ AidModeResponseModel.attributeTypeMap = [
     format: ""
   }
 ];
+let AidModeResponseModel = _AidModeResponseModel;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   AidModeResponseModel

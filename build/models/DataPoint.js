@@ -21,16 +21,15 @@ __export(DataPoint_exports, {
   DataPoint: () => DataPoint
 });
 module.exports = __toCommonJS(DataPoint_exports);
-const _DataPoint = class {
+const _DataPoint = class _DataPoint {
   static getAttributeTypeMap() {
     return _DataPoint.attributeTypeMap;
   }
   constructor() {
   }
 };
-let DataPoint = _DataPoint;
-DataPoint.discriminator = void 0;
-DataPoint.attributeTypeMap = [
+_DataPoint.discriminator = void 0;
+_DataPoint.attributeTypeMap = [
   {
     name: "timestamp",
     baseName: "timestamp",
@@ -50,6 +49,7 @@ DataPoint.attributeTypeMap = [
     format: ""
   }
 ];
+let DataPoint = _DataPoint;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   DataPoint

@@ -21,16 +21,15 @@ __export(PatchSystemModel_exports, {
   PatchSystemModel: () => PatchSystemModel
 });
 module.exports = __toCommonJS(PatchSystemModel_exports);
-const _PatchSystemModel = class {
+const _PatchSystemModel = class _PatchSystemModel {
   static getAttributeTypeMap() {
     return _PatchSystemModel.attributeTypeMap;
   }
   constructor() {
   }
 };
-let PatchSystemModel = _PatchSystemModel;
-PatchSystemModel.discriminator = void 0;
-PatchSystemModel.attributeTypeMap = [
+_PatchSystemModel.discriminator = void 0;
+_PatchSystemModel.attributeTypeMap = [
   {
     name: "systemId",
     baseName: "systemId",
@@ -50,6 +49,7 @@ PatchSystemModel.attributeTypeMap = [
     format: ""
   }
 ];
+let PatchSystemModel = _PatchSystemModel;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   PatchSystemModel

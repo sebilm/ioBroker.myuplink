@@ -319,12 +319,24 @@ class ObjectSerializer {
       return instance;
     }
   }
+  /**
+   * Normalize media type
+   *
+   * We currently do not handle any media types attributes, i.e. anything
+   * after a semicolon. All content is assumed to be UTF-8 compatible.
+   */
   static normalizeMediaType(mediaType) {
     if (mediaType === void 0) {
       return void 0;
     }
     return mediaType.split(";")[0].trim().toLowerCase();
   }
+  /**
+   * From a list of possible media types, choose the one we can handle best.
+   *
+   * The order of the given media types does not have any impact on the choice
+   * made.
+   */
   static getPreferredMediaType(mediaTypes) {
     if (mediaTypes.length === 0) {
       return "application/json";
@@ -343,6 +355,9 @@ class ObjectSerializer {
     }
     return selectedMediaType;
   }
+  /**
+   * Convert data to a string according the given media type
+   */
   static stringify(data, mediaType) {
     if (mediaType === "text/plain") {
       return String(data);
@@ -352,6 +367,9 @@ class ObjectSerializer {
     }
     throw new Error("The mediaType " + mediaType + " is not supported by ObjectSerializer.stringify.");
   }
+  /**
+   * Parse data from a string according to the given media type
+   */
   static parse(rawData, mediaType) {
     if (mediaType === void 0) {
       throw new Error("Cannot parse content. No Content-Type defined.");
@@ -370,6 +388,69 @@ class ObjectSerializer {
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  ObjectSerializer
+  ObjectSerializer,
+  ...require("../models/Address"),
+  ...require("../models/AddressResponseModel"),
+  ...require("../models/AggregationMethod"),
+  ...require("../models/AggregationUnit"),
+  ...require("../models/AidMode"),
+  ...require("../models/AidModeResponseModel"),
+  ...require("../models/Alarm"),
+  ...require("../models/AlarmSeverity"),
+  ...require("../models/AlarmStatus"),
+  ...require("../models/AlarmsPaged"),
+  ...require("../models/AvailableMethods"),
+  ...require("../models/CloudToDeviceMethodResult"),
+  ...require("../models/Country"),
+  ...require("../models/Curve"),
+  ...require("../models/DataPoint"),
+  ...require("../models/DeviceCategoriesModel"),
+  ...require("../models/DeviceCategory"),
+  ...require("../models/DeviceCategoryModel"),
+  ...require("../models/DeviceConnectionState"),
+  ...require("../models/DeviceFirmwareInfoResponse"),
+  ...require("../models/DeviceInfoResponseModel"),
+  ...require("../models/DeviceInfoResponseModelPagedResult"),
+  ...require("../models/DeviceInfoSyncResponseModel"),
+  ...require("../models/DeviceParameterData"),
+  ...require("../models/DevicePremiumResponse"),
+  ...require("../models/DeviceResponseModel"),
+  ...require("../models/EnumValues"),
+  ...require("../models/FirmwareResponseModel"),
+  ...require("../models/GroupedDeviceParameterData"),
+  ...require("../models/LimitedUserProfile"),
+  ...require("../models/PagedSystemResult"),
+  ...require("../models/ParameterData"),
+  ...require("../models/ParameterDetail"),
+  ...require("../models/PatchSystemModel"),
+  ...require("../models/PremiumFeatureResponseModel"),
+  ...require("../models/PremiumFeatures"),
+  ...require("../models/Product"),
+  ...require("../models/ProductRegistrationAddress"),
+  ...require("../models/ProductRegistrationResponse"),
+  ...require("../models/ProductRegistrationResponseWithAddress"),
+  ...require("../models/ProductResponseModel"),
+  ...require("../models/Properties"),
+  ...require("../models/Reported"),
+  ...require("../models/ReportedFirmware"),
+  ...require("../models/SearchGroupSSG"),
+  ...require("../models/SecurityLevel"),
+  ...require("../models/SmartHomeModeModel"),
+  ...require("../models/SmartMode"),
+  ...require("../models/SpotPriceDeliveryModel"),
+  ...require("../models/SsqGroupDevice"),
+  ...require("../models/Status"),
+  ...require("../models/StoreSet"),
+  ...require("../models/StoreSetEntry"),
+  ...require("../models/SystemDevice"),
+  ...require("../models/SystemWithDevices"),
+  ...require("../models/UpdateGroupRequest"),
+  ...require("../models/UserWithAddress"),
+  ...require("../models/V2DevicesDeviceIdSmartHomeCategoriesGet200Response"),
+  ...require("../models/VoucherManyRequest"),
+  ...require("../models/VoucherSingleRequest"),
+  ...require("../models/VoucherType"),
+  ...require("../models/ZonePatchRequest"),
+  ...require("../models/ZoneResponse")
 });
 //# sourceMappingURL=ObjectSerializer.js.map

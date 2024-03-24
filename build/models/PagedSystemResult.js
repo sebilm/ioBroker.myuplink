@@ -21,16 +21,15 @@ __export(PagedSystemResult_exports, {
   PagedSystemResult: () => PagedSystemResult
 });
 module.exports = __toCommonJS(PagedSystemResult_exports);
-const _PagedSystemResult = class {
+const _PagedSystemResult = class _PagedSystemResult {
   static getAttributeTypeMap() {
     return _PagedSystemResult.attributeTypeMap;
   }
   constructor() {
   }
 };
-let PagedSystemResult = _PagedSystemResult;
-PagedSystemResult.discriminator = void 0;
-PagedSystemResult.attributeTypeMap = [
+_PagedSystemResult.discriminator = void 0;
+_PagedSystemResult.attributeTypeMap = [
   {
     name: "page",
     baseName: "page",
@@ -56,6 +55,7 @@ PagedSystemResult.attributeTypeMap = [
     format: ""
   }
 ];
+let PagedSystemResult = _PagedSystemResult;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   PagedSystemResult

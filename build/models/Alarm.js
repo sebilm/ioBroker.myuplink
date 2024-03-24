@@ -21,16 +21,15 @@ __export(Alarm_exports, {
   Alarm: () => Alarm
 });
 module.exports = __toCommonJS(Alarm_exports);
-const _Alarm = class {
+const _Alarm = class _Alarm {
   static getAttributeTypeMap() {
     return _Alarm.attributeTypeMap;
   }
   constructor() {
   }
 };
-let Alarm = _Alarm;
-Alarm.discriminator = void 0;
-Alarm.attributeTypeMap = [
+_Alarm.discriminator = void 0;
+_Alarm.attributeTypeMap = [
   {
     name: "id",
     baseName: "id",
@@ -92,6 +91,7 @@ Alarm.attributeTypeMap = [
     format: ""
   }
 ];
+let Alarm = _Alarm;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   Alarm

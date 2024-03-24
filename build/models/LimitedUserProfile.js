@@ -21,16 +21,15 @@ __export(LimitedUserProfile_exports, {
   LimitedUserProfile: () => LimitedUserProfile
 });
 module.exports = __toCommonJS(LimitedUserProfile_exports);
-const _LimitedUserProfile = class {
+const _LimitedUserProfile = class _LimitedUserProfile {
   static getAttributeTypeMap() {
     return _LimitedUserProfile.attributeTypeMap;
   }
   constructor() {
   }
 };
-let LimitedUserProfile = _LimitedUserProfile;
-LimitedUserProfile.discriminator = void 0;
-LimitedUserProfile.attributeTypeMap = [
+_LimitedUserProfile.discriminator = void 0;
+_LimitedUserProfile.attributeTypeMap = [
   {
     name: "fullName",
     baseName: "fullName",
@@ -38,6 +37,7 @@ LimitedUserProfile.attributeTypeMap = [
     format: ""
   }
 ];
+let LimitedUserProfile = _LimitedUserProfile;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   LimitedUserProfile
