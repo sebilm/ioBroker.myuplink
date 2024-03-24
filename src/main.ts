@@ -7,7 +7,7 @@
 import * as utils from '@iobroker/adapter-core';
 import * as fs from 'fs';
 import * as path from 'path';
-import { MyUplink } from './myUplink';
+import { MyUplinkLogic } from './myUplinkLogic';
 
 // Helper functions:
 
@@ -43,7 +43,7 @@ class Myuplink extends utils.Adapter {
         this.refreshInterval = 0;
     }
 
-    private myUplink: MyUplink | undefined;
+    private myUplink: MyUplinkLogic | undefined;
     private timeout: ioBroker.Timeout | undefined;
     private refreshInterval: number;
 
@@ -203,7 +203,7 @@ class Myuplink extends utils.Adapter {
         }
 
         try {
-            this.myUplink = new MyUplink(this, this.config, storeDir, this.log);
+            this.myUplink = new MyUplinkLogic(this, this.config, storeDir, this.log);
         } catch (error) {
             this.setState('info.connection', { val: false, ack: true });
             this.setState('info.currentError', { val: `${error}`, ack: true });

@@ -7,7 +7,7 @@ import { SystemWithDevices } from './models/SystemWithDevices';
 import { MyUplinkRepository } from './myUplinkRepository';
 import { AdapterConfig, DataTarget, Logger, RenameData, StateValue } from './types';
 
-export class MyUplink {
+export class MyUplinkLogic {
     constructor(dataTarget: DataTarget, config: AdapterConfig, storeDir: string, log: Logger) {
         this.dataTarget = dataTarget;
         this.config = config;
