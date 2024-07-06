@@ -3,6 +3,8 @@
     "eslint.enable": true,
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "mochaExplorer.files": "test/**/*.test.ts",
+    "mochaExplorer.require": "ts-node/register",
     "[typescript]": {
         "editor.codeActionsOnSave": {
             "source.organizeImports": "explicit"
