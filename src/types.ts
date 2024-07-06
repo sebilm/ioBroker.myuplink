@@ -31,5 +31,5 @@ export interface DataTarget {
 
 export type StateValue = string | number | boolean;
 
-export interface AdapterConfig extends ioBroker.AdapterConfig {}
-export interface RenameData extends ioBroker.RenameData {}
+export type AdapterConfig = ioBroker.AdapterConfig;
+export type RenameData = ioBroker.RenameData;

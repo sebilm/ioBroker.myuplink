@@ -103,12 +103,12 @@ export class MyUplinkLogic {
         );
     }
 
+    authRepository: AuthRepository;
+    myUplinkRepository: MyUplinkRepository;
     private STRICT_FORBIDDEN_CHARS = /[^a-zA-Z0-9_-]+/gu;
     private dataTarget: DataTarget;
     private config: AdapterConfig;
     private log: Logger;
-    private authRepository: AuthRepository;
-    private myUplinkRepository: MyUplinkRepository;
     private systemIds: Map<string, string> = new Map<string, string>();
     private deviceIds: Map<string, string> = new Map<string, string>();
     private categories: Map<string, string> = new Map<string, string>();

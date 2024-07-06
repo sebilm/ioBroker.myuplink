@@ -96,6 +96,7 @@ Der Adapter hat auch keinen Einfluss darauf, welche Parameter von myUplink gesen
 -   The initial refresh interval was set to 5 minutes
 -   The code has been restructured internally
 -   At least Node.js 18 is required!
+-   Unit tests have been added
 -   Dependencies have been updated
 
 ### 0.7.1 (2024-02-10)
