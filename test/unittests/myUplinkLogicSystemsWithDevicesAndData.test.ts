@@ -5,7 +5,7 @@ import { AdapterConfigMock } from './mocks/AdapterConfigMock';
 import { DataTargetMock } from './mocks/DataTargetMock';
 import { LoggerMock } from './mocks/LoggerMock';
 
-describe('MyUplinkLogic: two systems with devices', () => {
+describe('MyUplinkLogic: two systems with devices and data', () => {
     const dataTargetMock = new DataTargetMock();
     const adapterConfigMock = new AdapterConfigMock();
     const loggerMock = new LoggerMock();
@@ -22,12 +22,7 @@ describe('MyUplinkLogic: two systems with devices', () => {
                 country: 'MyCountry',
                 securityLevel: 'viewer',
                 hasAlarm: true,
-                devices: [
-                    { wrong: 'data will be ignored' },
-                    { id: 'ignoreWithoutName' },
-                    { id: 'Device1ID', product: { name: 'Product 1 Name' } },
-                    { product: { name: 'Ignore without ID' } },
-                ],
+                devices: [{ id: 'Device1ID', product: { name: 'Product 1 Name' } }],
             },
             {
                 systemId: 'myOtherSystemID',
@@ -35,19 +30,20 @@ describe('MyUplinkLogic: two systems with devices', () => {
                 country: 'Germany',
                 securityLevel: 'manager',
                 hasAlarm: false,
-                devices: [
-                    { id: 'DeviceId2', product: { name: 'Product B', serialNumber: '123ABC' }, connectionState: 'Connected', currentFwVersion: '1.2.3' },
-                    {},
-                    { id: 'Device3', product: { name: 'Product 3', serialNumber: 'ABCDEF' }, connectionState: 'Disconnected', currentFwVersion: '3.2.1' },
-                ],
+                devices: [{ id: 'DeviceId2', product: { name: 'Product B', serialNumber: '123ABC' }, connectionState: 'Connected', currentFwVersion: '1.2.3' }],
             },
         ],
     });
     myUplinkRepositoryMock.expects('getActiveNotificationsAsync').withArgs('mySystemTestID', 'testtoken').resolves({});
     myUplinkRepositoryMock.expects('getActiveNotificationsAsync').withArgs('myOtherSystemID', 'testtoken').resolves({});
-    myUplinkRepositoryMock.expects('getDevicePointsAsync').withArgs('Device1ID', 'testtoken').resolves(undefined);
-    myUplinkRepositoryMock.expects('getDevicePointsAsync').withArgs('DeviceId2', 'testtoken').resolves([]);
-    myUplinkRepositoryMock.expects('getDevicePointsAsync').withArgs('Device3', 'testtoken').resolves([]);
+    myUplinkRepositoryMock
+        .expects('getDevicePointsAsync')
+        .withArgs('Device1ID', 'testtoken')
+        .resolves([{ parameterId: '12345' }, { parameterId: 'Abcdef', value: 42 }, { parameterId: '2', parameterName: 'Parameter Test Name', value: 23 }]);
+    myUplinkRepositoryMock
+        .expects('getDevicePointsAsync')
+        .withArgs('DeviceId2', 'testtoken')
+        .resolves([{ parameterId: 's w f' }, { parameterId: '1 2 3', value: 123.456 }, { parameterId: '5', parameterName: 'Other Parameter Test Name', value: 65536 }]);
 
     let error: string | undefined;
     before(async () => {
@@ -75,11 +71,10 @@ describe('MyUplinkLogic: two systems with devices', () => {
     it('should create devices', () => {
         expect(dataTargetMock.CreateDeviceAsyncCalls).to.deep.include({ path: 'mySystemTestID.Device1ID', name: 'Product 1 Name' });
         expect(dataTargetMock.CreateDeviceAsyncCalls).to.deep.include({ path: 'myOtherSystemID.DeviceId2', name: 'Product B' });
-        expect(dataTargetMock.CreateDeviceAsyncCalls).to.deep.include({ path: 'myOtherSystemID.Device3', name: 'Product 3' });
-        expect(dataTargetMock.CreateDeviceAsyncCalls).to.have.lengthOf(3);
+        expect(dataTargetMock.CreateDeviceAsyncCalls).to.have.lengthOf(2);
     });
 
-    it('should create states', () => {
+    it('should create system states', () => {
         // System 1:
         expect(dataTargetMock.CreateStringStateAsyncCalls).to.deep.include({
             path: 'mySystemTestID.systemId',
@@ -129,28 +124,6 @@ describe('MyUplinkLogic: two systems with devices', () => {
             value: true,
             createObject: true,
             role: 'indicator.alarm',
-        });
-        // Device 1-1:
-        expect(dataTargetMock.CreateStringStateAsyncCalls).to.deep.include({
-            path: 'mySystemTestID.Device1ID.deviceId',
-            name: 'Device ID',
-            value: 'Device1ID',
-            createObject: true,
-            role: undefined,
-        });
-        expect(dataTargetMock.CreateStringStateAsyncCalls).to.deep.include({
-            path: 'mySystemTestID.Device1ID.name',
-            name: 'Name',
-            value: 'Product 1 Name',
-            createObject: true,
-            role: 'info.name',
-        });
-        expect(dataTargetMock.CreateStringStateAsyncCalls).to.deep.include({
-            path: 'mySystemTestID.Device1ID.rawData',
-            name: 'Received raw JSON of parameter data',
-            value: undefined,
-            createObject: true,
-            role: undefined,
         });
         // System 2:
         expect(dataTargetMock.CreateStringStateAsyncCalls).to.deep.include({
@@ -202,6 +175,31 @@ describe('MyUplinkLogic: two systems with devices', () => {
             createObject: true,
             role: 'indicator.alarm',
         });
+    });
+
+    it('should create device states', () => {
+        // Device 1-1:
+        expect(dataTargetMock.CreateStringStateAsyncCalls).to.deep.include({
+            path: 'mySystemTestID.Device1ID.deviceId',
+            name: 'Device ID',
+            value: 'Device1ID',
+            createObject: true,
+            role: undefined,
+        });
+        expect(dataTargetMock.CreateStringStateAsyncCalls).to.deep.include({
+            path: 'mySystemTestID.Device1ID.name',
+            name: 'Name',
+            value: 'Product 1 Name',
+            createObject: true,
+            role: 'info.name',
+        });
+        expect(dataTargetMock.CreateStringStateAsyncCalls).to.deep.include({
+            path: 'mySystemTestID.Device1ID.rawData',
+            name: 'Received raw JSON of parameter data',
+            value: '[{"parameterId":"12345"},{"parameterId":"Abcdef","value":42},{"parameterId":"2","parameterName":"Parameter Test Name","value":23}]',
+            createObject: true,
+            role: undefined,
+        });
         // Device 2-1:
         expect(dataTargetMock.CreateStringStateAsyncCalls).to.deep.include({
             path: 'myOtherSystemID.DeviceId2.deviceId',
@@ -220,7 +218,7 @@ describe('MyUplinkLogic: two systems with devices', () => {
         expect(dataTargetMock.CreateStringStateAsyncCalls).to.deep.include({
             path: 'myOtherSystemID.DeviceId2.rawData',
             name: 'Received raw JSON of parameter data',
-            value: '[]',
+            value: '[{"parameterId":"s w f"},{"parameterId":"1 2 3","value":123.456},{"parameterId":"5","parameterName":"Other Parameter Test Name","value":65536}]',
             createObject: true,
             role: undefined,
         });
@@ -245,51 +243,120 @@ describe('MyUplinkLogic: two systems with devices', () => {
             createObject: true,
             role: 'info.firmware',
         });
-        // Device 2-2:
-        expect(dataTargetMock.CreateStringStateAsyncCalls).to.deep.include({
-            path: 'myOtherSystemID.Device3.deviceId',
-            name: 'Device ID',
-            value: 'Device3',
-            createObject: true,
-            role: undefined,
-        });
-        expect(dataTargetMock.CreateStringStateAsyncCalls).to.deep.include({
-            path: 'myOtherSystemID.Device3.name',
-            name: 'Name',
-            value: 'Product 3',
-            createObject: true,
-            role: 'info.name',
-        });
-        expect(dataTargetMock.CreateStringStateAsyncCalls).to.deep.include({
-            path: 'myOtherSystemID.Device3.rawData',
-            name: 'Received raw JSON of parameter data',
-            value: '[]',
-            createObject: true,
-            role: undefined,
-        });
-        expect(dataTargetMock.CreateStringStateAsyncCalls).to.deep.include({
-            path: 'myOtherSystemID.Device3.serialNumber',
-            name: 'Serial Number',
-            value: 'ABCDEF',
-            createObject: true,
-            role: 'info.serial',
-        });
-        expect(dataTargetMock.CreateStringStateAsyncCalls).to.deep.include({
-            path: 'myOtherSystemID.Device3.connectionState',
-            name: 'Connection State',
-            value: 'Disconnected',
-            createObject: true,
-            role: 'info.status',
-        });
-        expect(dataTargetMock.CreateStringStateAsyncCalls).to.deep.include({
-            path: 'myOtherSystemID.Device3.currentFwVersion',
-            name: 'Current Firmware Version',
-            value: '3.2.1',
-            createObject: true,
-            role: 'info.firmware',
-        });
+    });
 
-        expect(dataTargetMock.CreateStringStateAsyncCalls).to.have.lengthOf(27);
+    it('should create data states', () => {
+        expect(dataTargetMock.CreateParameterObjectAsyncCalls).to.deep.include({
+            path: 'mySystemTestID.Device1ID.12345',
+            name: '',
+            deviceId: 'Device1ID',
+            parameterId: '12345',
+            role: 'value',
+            writable: false,
+            unit: undefined,
+            min: undefined,
+            max: undefined,
+            step: undefined,
+            states: undefined,
+        });
+        expect(dataTargetMock.CreateParameterObjectAsyncCalls).to.deep.include({
+            path: 'mySystemTestID.Device1ID.Abcdef',
+            name: '',
+            deviceId: 'Device1ID',
+            parameterId: 'Abcdef',
+            role: 'value',
+            writable: false,
+            unit: undefined,
+            min: undefined,
+            max: undefined,
+            step: undefined,
+            states: undefined,
+        });
+        expect(dataTargetMock.CreateParameterObjectAsyncCalls).to.deep.include({
+            path: 'mySystemTestID.Device1ID.2',
+            name: 'Parameter Test Name',
+            deviceId: 'Device1ID',
+            parameterId: '2',
+            role: 'value',
+            writable: false,
+            unit: undefined,
+            min: undefined,
+            max: undefined,
+            step: undefined,
+            states: undefined,
+        });
+        expect(dataTargetMock.CreateParameterObjectAsyncCalls).to.deep.include({
+            path: 'myOtherSystemID.DeviceId2.s_w_f',
+            name: '',
+            deviceId: 'DeviceId2',
+            parameterId: 's w f',
+            role: 'value',
+            writable: false,
+            unit: undefined,
+            min: undefined,
+            max: undefined,
+            step: undefined,
+            states: undefined,
+        });
+        expect(dataTargetMock.CreateParameterObjectAsyncCalls).to.deep.include({
+            path: 'myOtherSystemID.DeviceId2.1_2_3',
+            name: '',
+            deviceId: 'DeviceId2',
+            parameterId: '1 2 3',
+            role: 'value',
+            writable: false,
+            unit: undefined,
+            min: undefined,
+            max: undefined,
+            step: undefined,
+            states: undefined,
+        });
+        expect(dataTargetMock.CreateParameterObjectAsyncCalls).to.deep.include({
+            path: 'myOtherSystemID.DeviceId2.5',
+            name: 'Other Parameter Test Name',
+            deviceId: 'DeviceId2',
+            parameterId: '5',
+            role: 'value',
+            writable: false,
+            unit: undefined,
+            min: undefined,
+            max: undefined,
+            step: undefined,
+            states: undefined,
+        });
+        expect(dataTargetMock.CreateParameterObjectAsyncCalls).to.have.lengthOf(6);
+    });
+
+    it('should set data states', () => {
+        expect(dataTargetMock.SetStateAsyncCalls).to.deep.include({
+            path: 'mySystemTestID.Device1ID.12345',
+            value: null,
+        });
+        expect(dataTargetMock.SetStateAsyncCalls).to.deep.include({
+            path: 'mySystemTestID.Device1ID.Abcdef',
+            value: 42,
+        });
+        expect(dataTargetMock.SetStateAsyncCalls).to.deep.include({
+            path: 'mySystemTestID.Device1ID.2',
+            value: 23,
+        });
+        expect(dataTargetMock.SetStateAsyncCalls).to.deep.include({
+            path: 'myOtherSystemID.DeviceId2.s_w_f',
+            value: null,
+        });
+        expect(dataTargetMock.SetStateAsyncCalls).to.deep.include({
+            path: 'myOtherSystemID.DeviceId2.1_2_3',
+            value: 123.456,
+        });
+        expect(dataTargetMock.SetStateAsyncCalls).to.deep.include({
+            path: 'myOtherSystemID.DeviceId2.5',
+            value: 65536,
+        });
+        expect(dataTargetMock.SetStateAsyncCalls).to.have.lengthOf(6);
+    });
+
+    it('should create no more states', () => {
+        expect(dataTargetMock.CreateStringStateAsyncCalls).to.have.lengthOf(21);
         expect(dataTargetMock.CreateBooleanStateAsyncCalls).to.have.lengthOf(2);
     });
 
@@ -306,18 +373,10 @@ describe('MyUplinkLogic: two systems with devices', () => {
             role: 'json',
             deviceId: 'DeviceId2',
         });
-        expect(dataTargetMock.CreateWritableStringObjectAsyncCalls).to.deep.include({
-            path: 'myOtherSystemID.Device3.setData',
-            name: 'Send raw JSON of parameter data',
-            role: 'json',
-            deviceId: 'Device3',
-        });
-        expect(dataTargetMock.CreateWritableStringObjectAsyncCalls).to.have.lengthOf(3);
+        expect(dataTargetMock.CreateWritableStringObjectAsyncCalls).to.have.lengthOf(2);
     });
 
     it('should not do more', () => {
         expect(dataTargetMock.CreateCategoryAsyncCalls).to.empty;
-        expect(dataTargetMock.CreateParameterObjectAsyncCalls).to.empty;
-        expect(dataTargetMock.SetStateAsyncCalls).to.empty;
     });
 });
