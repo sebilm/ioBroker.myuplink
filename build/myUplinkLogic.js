@@ -335,7 +335,7 @@ Result: "${JSON.stringify(result, null, " ")}"`);
     }
   }
   async createParameterObjectAsync(data, deviceId, stateId) {
-    var _a, _b, _c, _d, _e;
+    var _a, _b, _c;
     let role = "value";
     let unit = void 0;
     if (data.parameterUnit) {
@@ -381,13 +381,21 @@ Result: "${JSON.stringify(result, null, " ")}"`);
     }
     const name = this.removeSoftHyphen((_a = data.parameterName) != null ? _a : "");
     const writable = (_b = data.writable) != null ? _b : false;
-    const min = (_c = data.minValue) != null ? _c : void 0;
-    const max = (_d = data.maxValue) != null ? _d : void 0;
-    const step = (_e = data.stepValue) != null ? _e : void 0;
-    this.dataTarget.CreateParameterObjectAsync(stateId, name, deviceId, data.parameterId, role, writable, unit, min, max, step, states);
+    let min = void 0;
+    let max = void 0;
+    if (data.minValue != null && data.maxValue != null) {
+      if (data.minValue < data.maxValue) {
+        min = data.minValue;
+        max = data.maxValue;
+      } else {
+        this.log.warn(`Parameter '${data.parameterId}': minValue is bigger than maxValue. Min: ${data.minValue}, Max: ${data.maxValue}. Ignoring min/max.`);
+      }
+    }
+    const step = (_c = data.stepValue) != null ? _c : void 0;
+    await this.dataTarget.CreateParameterObjectAsync(stateId, name, deviceId, data.parameterId, role, writable, unit, min, max, step, states);
   }
   removeSoftHyphen(text) {
-    return text.replace(new RegExp("\xAD", "g"), "");
+    return text.replace(new RegExp("\xAD", "g"), "").trim();
   }
   replaceForbiddenCharacters(text) {
     return this.removeSoftHyphen(text).replace(this.STRICT_FORBIDDEN_CHARS, "_");

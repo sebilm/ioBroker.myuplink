@@ -293,7 +293,9 @@ export class MyUplinkLogic {
             if (!existingObjectId) {
                 stateIdByParameterId.set(data.parameterId, stateId);
                 await this.createParameterObjectAsync(data, deviceId, stateId);
+                //this.log.debug(`Created parameter object: ${stateId}`);
             }
+            //this.log.debug(`Set state ${stateId} to ${data.value}`);
             await this.dataTarget.SetStateAsync(stateId, data.value ?? null);
         }
     }
@@ -366,14 +368,22 @@ export class MyUplinkLogic {
         }
         const name = this.removeSoftHyphen(data.parameterName ?? '');
         const writable = data.writable ?? false;
-        const min = data.minValue ?? undefined;
-        const max = data.maxValue ?? undefined;
+        let min: number | undefined = undefined;
+        let max: number | undefined = undefined;
+        if (data.minValue != null && data.maxValue != null) {
+            if (data.minValue < data.maxValue) {
+                min = data.minValue;
+                max = data.maxValue;
+            } else {
+                this.log.warn(`Parameter '${data.parameterId}': minValue is bigger than maxValue. Min: ${data.minValue}, Max: ${data.maxValue}. Ignoring min/max.`);
+            }
+        }
         const step = data.stepValue ?? undefined;
-        this.dataTarget.CreateParameterObjectAsync(stateId, name, deviceId, data.parameterId, role, writable, unit, min, max, step, states);
+        await this.dataTarget.CreateParameterObjectAsync(stateId, name, deviceId, data.parameterId, role, writable, unit, min, max, step, states);
     }
 
     private removeSoftHyphen(text: string): string {
-        return text.replace(new RegExp('\u00AD', 'g'), '');
+        return text.replace(new RegExp('\u00AD', 'g'), '').trim();
     }
 
     private replaceForbiddenCharacters(text: string): string {

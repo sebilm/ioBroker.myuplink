@@ -93,6 +93,7 @@ Der Adapter hat auch keinen Einfluss darauf, welche Parameter von myUplink gesen
 ### **WORK IN PROGRESS**
 
 -   Do not send empty objects (setData)
+-   Incorrect minimum and maximum values of the API are not adopted #39
 -   The initial refresh interval was set to 5 minutes
 -   The code has been restructured internally
 -   At least Node.js 18 is required!

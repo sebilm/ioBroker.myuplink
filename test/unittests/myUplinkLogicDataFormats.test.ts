@@ -67,7 +67,7 @@ describe('MyUplinkLogic: different data formats', () => {
             {
                 category: 'C1',
                 parameterId: '40311',
-                parameterName: 'Fan speed (GQ2)',
+                parameterName: 'Fan speed (GQ2)\r\n            ',
                 value: 77,
                 parameterUnit: '%',
                 writable: false,
@@ -165,6 +165,18 @@ describe('MyUplinkLogic: different data formats', () => {
                 stepValue: 0.1,
                 enumValues: [],
             },
+            {
+                category: 'C1',
+                parameterId: '666',
+                parameterName: 'Wrong min/max #39',
+                value: 56.7,
+                parameterUnit: '',
+                writable: false,
+                minValue: 120,
+                maxValue: -100,
+                stepValue: 0.1,
+                enumValues: [],
+            },
         ]);
 
     let error: string | undefined;
@@ -181,7 +193,7 @@ describe('MyUplinkLogic: different data formats', () => {
     });
 
     it('should log no warings', () => {
-        expect(loggerMock.WarnLogs).to.empty;
+        expect(loggerMock.WarnLogs).to.deep.include("Parameter '666': minValue is bigger than maxValue. Min: 120, Max: -100. Ignoring min/max.");
     });
 
     it('should create data states', () => {
@@ -315,7 +327,20 @@ describe('MyUplinkLogic: different data formats', () => {
             step: 0.1,
             states: undefined,
         });
-        expect(dataTargetMock.CreateParameterObjectAsyncCalls).to.have.lengthOf(10);
+        expect(dataTargetMock.CreateParameterObjectAsyncCalls).to.deep.include({
+            path: 'mySystemTestID.Device1ID.C1.666',
+            name: 'Wrong min/max #39',
+            deviceId: 'Device1ID',
+            parameterId: '666',
+            role: 'value',
+            writable: false,
+            unit: undefined,
+            min: undefined,
+            max: undefined,
+            step: 0.1,
+            states: undefined,
+        });
+        expect(dataTargetMock.CreateParameterObjectAsyncCalls).to.have.lengthOf(11);
     });
 
     it('should set data states', () => {
@@ -359,7 +384,11 @@ describe('MyUplinkLogic: different data formats', () => {
             path: 'mySystemTestID.Device1ID.inomhusklimat.50830',
             value: 45,
         });
-        expect(dataTargetMock.SetStateAsyncCalls).to.have.lengthOf(10);
+        expect(dataTargetMock.SetStateAsyncCalls).to.deep.include({
+            path: 'mySystemTestID.Device1ID.C1.666',
+            value: 56.7,
+        });
+        expect(dataTargetMock.SetStateAsyncCalls).to.have.lengthOf(11);
     });
 
     it('should create categories', () => {
