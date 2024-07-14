@@ -104,7 +104,7 @@ class Myuplink extends utils.Adapter {
                 native: {},
             });
         }
-        await this.setStateAsync(path, { val: value, ack: true });
+        await this.setState(path, { val: value, ack: true });
     }
 
     async CreateBooleanStateAsync(path: string, name: string, role: string, value: boolean, createObject: boolean): Promise<void> {
@@ -122,12 +122,12 @@ class Myuplink extends utils.Adapter {
                 native: {},
             });
         }
-        await this.setStateAsync(path, { val: value, ack: true });
+        await this.setState(path, { val: value, ack: true });
     }
 
     async CreateWritableStringObjectAsync(path: string, name: string, role: string, deviceId: string): Promise<void> {
         this.log.debug(`create writeable string state: ${path}`);
-        await this.extendObjectAsync(path, {
+        await this.extendObject(path, {
             type: 'state',
             common: {
                 name: name,
@@ -177,11 +177,11 @@ class Myuplink extends utils.Adapter {
                 deviceId: deviceId,
             },
         };
-        await this.extendObjectAsync(path, obj);
+        await this.extendObject(path, obj);
     }
 
     async SetStateAsync(path: string, value: string | number | boolean | null): Promise<void> {
-        await this.setStateAsync(path, { val: value, ack: true });
+        await this.setState(path, { val: value, ack: true });
     }
 
     /**
@@ -232,14 +232,14 @@ class Myuplink extends utils.Adapter {
             const newDate = new Date();
             const datetime = newDate.today() + ' ' + newDate.timeNow();
             if (error) {
-                await this.setStateAsync('info.connection', { val: false, ack: true });
-                await this.setStateAsync('info.lastErrorTime', { val: datetime, ack: true });
-                await this.setStateAsync('info.lastError', { val: error, ack: true });
-                await this.setStateAsync('info.currentError', { val: error, ack: true });
+                await this.setState('info.connection', { val: false, ack: true });
+                await this.setState('info.lastErrorTime', { val: datetime, ack: true });
+                await this.setState('info.lastError', { val: error, ack: true });
+                await this.setState('info.currentError', { val: error, ack: true });
             } else {
-                await this.setStateAsync('info.connection', { val: true, expire: this.refreshInterval + 30, ack: true });
-                await this.setStateAsync('info.updateTime', { val: datetime, ack: true });
-                await this.setStateAsync('info.currentError', { val: '', ack: true });
+                await this.setState('info.connection', { val: true, expire: this.refreshInterval + 30, ack: true });
+                await this.setState('info.updateTime', { val: datetime, ack: true });
+                await this.setState('info.currentError', { val: '', ack: true });
             }
         }
 
@@ -334,7 +334,7 @@ class Myuplink extends utils.Adapter {
                 const parameterId: string | null = obj.native.parameterId?.toString();
                 const error = await this.myUplink.SetDataAsync(id, state.val, deviceId, parameterId, obj.native.rawJson === true);
                 if (error) {
-                    await this.setStateAsync(id, { val: state.val, q: this.constants.STATE_QUALITY.DEVICE_ERROR_REPORT, ack: false, c: error });
+                    await this.setState(id, { val: state.val, q: this.constants.STATE_QUALITY.DEVICE_ERROR_REPORT, ack: false, c: error });
                 }
             }
         }
