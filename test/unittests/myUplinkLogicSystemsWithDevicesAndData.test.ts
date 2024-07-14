@@ -245,6 +245,11 @@ describe('MyUplinkLogic: two systems with devices and data', () => {
         });
     });
 
+    it('should create no more states', () => {
+        expect(dataTargetMock.CreateStringStateAsyncCalls).to.have.lengthOf(21);
+        expect(dataTargetMock.CreateBooleanStateAsyncCalls).to.have.lengthOf(2);
+    });
+
     it('should create data states', () => {
         expect(dataTargetMock.CreateParameterObjectAsyncCalls).to.deep.include({
             path: 'mySystemTestID.Device1ID.12345',
@@ -353,11 +358,6 @@ describe('MyUplinkLogic: two systems with devices and data', () => {
             value: 65536,
         });
         expect(dataTargetMock.SetStateAsyncCalls).to.have.lengthOf(6);
-    });
-
-    it('should create no more states', () => {
-        expect(dataTargetMock.CreateStringStateAsyncCalls).to.have.lengthOf(21);
-        expect(dataTargetMock.CreateBooleanStateAsyncCalls).to.have.lengthOf(2);
     });
 
     it('should create writeable string objects', () => {
