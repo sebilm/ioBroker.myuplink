@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "myuplink",
-        "version": "0.7.1",
+        "version": "0.8.0",
         "news": {
+            "0.8.0": {
+                "en": "No empty objects are sent (setData)\nIncorrect minimum and maximum values of the API are not adopted #39\nThe initial refresh interval was set to 5 minutes\nThe code has been restructured internally\nAt least Node.js 18 is required!\nUnit tests have been added\nDependencies have been updated",
+                "de": "Es werden keine leeren Objekte gesendet (setData)\nFalsche Mindest- und Maximalwerte der API werden nicht übernommen #39\nDas initiale Aktualisierungsintervall wurde auf 5 Minuten eingestellt\nDer Code wurde intern umstrukturiert\nMindestens Node.js 18 ist erforderlich!\nUnit-Tests wurden hinzugefügt\nAbhängigkeiten wurden aktualisiert",
+                "ru": "Не отправляется пустых объектов (setData)\nНеправильные минимальные и максимальные значения API не принимаются #39\nПервоначальный интервал обновления был установлен до 5 минут\nКод был реструктурирован внутри страны\nПо крайней мере Node.js 18 требуется!\nДобавлены испытания\nЗависимость обновлена",
+                "pt": "Nenhum objeto vazio é enviado (setData)\nOs valores mínimos e máximos incorretos da API não são adotados #39\nO intervalo inicial de atualização foi ajustado para 5 minutos\nO código foi reestruturado internamente\nPelo menos Node.js 18 é necessário!\nTestes de unidade foram adicionados\nAs dependências foram atualizadas",
+                "nl": "Er worden geen lege objecten verzonden (setData)\nOnjuiste minimum- en maximumwaarden van de API worden niet aangenomen #39\nHet initiële herhalingsinterval werd ingesteld op 5 minuten\nDe code is intern geherstructureerd\nTenminste Node.js 18 is vereist!\nEr zijn eenheidstests toegevoegd\nAfhankelijkheden zijn bijgewerkt",
+                "fr": "Aucun objet vide n'est envoyé (setData)\nLes valeurs minimales et maximales incorrectes de l'API ne sont pas adoptées #39\nL'intervalle initial de rafraîchissement a été fixé à 5 minutes\nLe code a été restructuré en interne\nAu moins Node.js 18 est nécessaire!\nDes tests unitaires ont été ajoutés\nLes dépendances ont été actualisées",
+                "it": "Non vengono inviati oggetti vuoti (setData)\nI valori minimi e massimi non corretti dell'API non sono adottati #39\nL'intervallo iniziale di aggiornamento è stato impostato a 5 minuti\nIl codice è stato ristrutturato internamente\nAlmeno Node.js 18 è richiesto!\nSono stati aggiunti test unitari\nLe dipendenze sono state aggiornate",
+                "es": "No se envían objetos vacíos (setData)\nLos valores mínimos y máximos incorrectos de la API no son adoptados #39\nEl intervalo inicial de actualización se fijó a 5 minutos\nEl código se ha reestructurado internamente\n¡Al menos Node.js 18 es necesario!\nSe han añadido pruebas de unidad\nSe han actualizado las dependencias",
+                "pl": "Nie są wysyłane puste obiekty (setData)\nNieprawidłowe wartości minimalne i maksymalne API nie zostały przyjęte # 39\nPoczątkowy odświeżający odstęp został ustawiony na 5 minut\nKod został zrestrukturyzowany wewnętrznie\nCo najmniej Node.js 18 jest wymagane!\nDodano testy jednostkowe\nZaktualizowano zależności",
+                "uk": "Немає порожніх об'єктів (setData)\nНекоректні мінімальні та максимальні значення API не приймаються #39\nПочатковий інтервал освіження був встановлений до 5 хвилин\nКод перебудовано внутрішньо\nПринаймні Node.js 18 потрібно!\nДодані агрегатні тести\nЗалежність було оновлено",
+                "zh-cn": "没有发送空对象( setData)\n未采用 API 的不正确最小值和最大值\n初始刷新间隔设定为 5 分钟\n代码已经内部调整\n至少需要18号节点!\n增加了单元测试\n依赖关系已更新"
+            },
             "0.7.1": {
                 "en": "Crash after 'unhandled promise rejection' fixed #15",
                 "de": "Crash nach \"unhandled promise rejection\" behoben #15",
@@ -80,19 +93,6 @@
                 "pl": "W identyfikatorach obiektów wszystkie znaki, które nie są oficjalnie obsługiwane, są teraz zastąpione przez podkreślenie\nRole obiektów danych zostały poprawione\nLogowanie danych tokena (w log poziom głupi) zostało usunięte\nZaktualizowano zależności",
                 "uk": "У ідентифікаторах об'єкта всі символи, які не офіційно підтримуються, тепер замінені на низ\nУдосконалено роль об’єктів даних\nЗняття даних про токени (в рівні колоди silly) було вилучено\nЗалежність було оновлено",
                 "zh-cn": "在对象ID中,所有未正式支持的字符现在都替换为下划线\n改进了数据对象的作用\n已删除对令牌数据的记录( 注册级别为傻话)\n依赖关系已更新"
-            },
-            "0.4.0": {
-                "en": "New options for renaming IDs have been added #5\nOptions are deactivated if checkboxes are not checked",
-                "de": "Neue Optionen zur Umbenennung von IDs wurden hinzugefügt #5\nOptionen werden deaktiviert, wenn Checkboxen nicht ausgewählt sind",
-                "ru": "Добавлены новые варианты переименования ID #5\nОпции деактивируются, если чекбоксы не проверены",
-                "pt": "Novas opções para renomear IDs foram adicionadas #5\nAs opções são desativadas se as caixas de seleção não forem verificadas",
-                "nl": "Nieuwe opties voor hernaming ID's zijn toegevoegd #5\nOpties worden gedeactiveerd als er geen cheques worden gecontroleerd",
-                "fr": "De nouvelles options pour renommer les ID ont été ajoutées #5\nLes options sont désactivées si les cases à cocher ne sont pas cochées",
-                "it": "Sono state aggiunte nuove opzioni per rinominare ID #5\nLe opzioni vengono disattivate se le caselle di controllo non vengono controllate",
-                "es": "Se han añadido nuevas opciones para renombrar IDs #5\nLas opciones se desactivan si no se revisan las casillas de verificación",
-                "pl": "Nowe opcje dotyczące renamingu zostały dodane do #5\nOpcje są dezaktywowane, jeśli nie sprawdza się skrzynki",
-                "uk": "Додано нові параметри для перейменування ID #5\nВаріанти деактивуються, якщо прапорці не перевіряють",
-                "zh-cn": "重新命名国际发展部的新办法已增加第5号。\n如果检查箱没有检查,则选择。"
             }
         },
         "titleLang": {

@@ -89,8 +89,7 @@ Der Adapter löscht generell keine Objekt, damit es nicht zu Datenverlust kommt,
 Der Adapter hat auch keinen Einfluss darauf, welche Parameter von myUplink gesendet werden.
 
 ## Changelog
-
-### **WORK IN PROGRESS**
+### 0.8.0 (2024-07-14)
 
 -   No empty objects are sent (setData)
 -   Incorrect minimum and maximum values of the API are not adopted #39
