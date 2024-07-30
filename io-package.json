@@ -123,9 +123,11 @@
         },
         "authors": ["Sebastian Haesselbarth <seb@sebmail.de>"],
         "keywords": ["myuplink", "heat pump", "NIBE", "AIT", "Cetetherm", "ClimateMaster", "Contura", "CTA", "CTC", "Enertech Global"],
-        "license": "MIT",
+        "licenseInformation": {
+            "license": "MIT",
+            "type": "free"
+        },
         "platform": "Javascript/Node.js",
-        "main": "build/main.js",
         "icon": "myuplink.png",
         "enabled": true,
         "extIcon": "https://raw.githubusercontent.com/sebilm/ioBroker.myuplink/main/admin/myuplink.png",
