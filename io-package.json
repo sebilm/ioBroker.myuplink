@@ -136,6 +136,10 @@
         "mode": "daemon",
         "type": "climate-control",
         "compact": true,
+        "docs": {
+            "en": ["docs/en/README.md"],
+            "de": ["docs/de/README.md"]
+        },
         "tier": 2,
         "connectionType": "cloud",
         "dataSource": "poll",
