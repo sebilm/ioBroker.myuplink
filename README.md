@@ -10,7 +10,7 @@
 
 ## myuplink.com adapter for ioBroker
 
-This ioBroker adapter receives data from myUplink.com.
+This ioBroker adapter receives data from myUplink.com. Settings that have been enabled for this by myUplink can be changed.
 
 ## Configuration
 
@@ -27,6 +27,7 @@ This ioBroker adapter receives data from myUplink.com.
 ### **WORK IN PROGRESS**
 
 -   Instructions for German and English have been moved to separate files #47
+-   Dependencies have been updated
 
 ### 0.8.0 (2024-07-14)
 
