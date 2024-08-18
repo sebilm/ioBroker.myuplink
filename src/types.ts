@@ -10,10 +10,10 @@ export interface DataTarget {
     CreateSystemAsync(path: string, name: string): Promise<void>;
     CreateDeviceAsync(path: string, name: string): Promise<void>;
     CreateCategoryAsync(path: string, name: string): Promise<void>;
-    CreateStringStateAsync(path: string, name: string, value: string, createObject: boolean, role?: string): Promise<void>;
-    CreateBooleanStateAsync(path: string, name: string, role: string, value: boolean, createObject: boolean): Promise<void>;
+    CreateStringObjectAsync(path: string, name: string, value: string, createObject: boolean, role?: string): Promise<void>;
+    CreateBooleanObjectAsync(path: string, name: string, role: string, value: boolean, createObject: boolean): Promise<void>;
     CreateWritableStringObjectAsync(path: string, name: string, role: string, deviceId: string): Promise<void>;
-    CreateParameterObjectAsync(
+    CreateOrUpdateParameterObjectAsync(
         path: string,
         name: string,
         deviceId: string | null | undefined,

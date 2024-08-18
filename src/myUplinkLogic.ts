@@ -205,16 +205,16 @@ export class MyUplinkLogic {
             if (firstRun) {
                 await this.dataTarget.CreateSystemAsync(systemPath, systemName);
             }
-            await this.dataTarget.CreateStringStateAsync(`${systemPath}.systemId`, 'System ID', system.systemId, firstRun);
-            await this.dataTarget.CreateStringStateAsync(`${systemPath}.name`, 'Name', systemName, firstRun, 'info.name');
+            await this.dataTarget.CreateStringObjectAsync(`${systemPath}.systemId`, 'System ID', system.systemId, firstRun);
+            await this.dataTarget.CreateStringObjectAsync(`${systemPath}.name`, 'Name', systemName, firstRun, 'info.name');
             if (system.country != undefined) {
-                await this.dataTarget.CreateStringStateAsync(`${systemPath}.country`, 'Country', system.country, firstRun);
+                await this.dataTarget.CreateStringObjectAsync(`${systemPath}.country`, 'Country', system.country, firstRun);
             }
             if (system.securityLevel != undefined) {
-                await this.dataTarget.CreateStringStateAsync(`${systemPath}.securityLevel`, 'Security Level', system.securityLevel, firstRun);
+                await this.dataTarget.CreateStringObjectAsync(`${systemPath}.securityLevel`, 'Security Level', system.securityLevel, firstRun);
             }
             if (system.hasAlarm != undefined) {
-                await this.dataTarget.CreateBooleanStateAsync(`${systemPath}.hasAlarm`, 'Has Alarm', 'indicator.alarm', system.hasAlarm, firstRun);
+                await this.dataTarget.CreateBooleanObjectAsync(`${systemPath}.hasAlarm`, 'Has Alarm', 'indicator.alarm', system.hasAlarm, firstRun);
             }
             if (system.devices) {
                 for (const device of system.devices) {
@@ -225,7 +225,7 @@ export class MyUplinkLogic {
             if (this.config.AddActiveNotifications) {
                 const notifications = await this.myUplinkRepository?.getActiveNotificationsAsync(system.systemId, accessToken);
                 if (this.config.AddRawActiveNotifications) {
-                    await this.dataTarget.CreateStringStateAsync(
+                    await this.dataTarget.CreateStringObjectAsync(
                         `${systemPath}.rawActiveNotifications`,
                         'Received raw JSON of active notifications',
                         JSON.stringify(notifications?.notifications, null, ''),
@@ -236,7 +236,7 @@ export class MyUplinkLogic {
                 notifications?.notifications?.forEach((notification: Alarm) => {
                     notificationsDescriptions += `${notification.header}: ${notification.description}\n`;
                 });
-                await this.dataTarget.CreateStringStateAsync(`${systemPath}.activeNotifications`, 'Active notification descriptions', notificationsDescriptions, firstRun);
+                await this.dataTarget.CreateStringObjectAsync(`${systemPath}.activeNotifications`, 'Active notification descriptions', notificationsDescriptions, firstRun);
             }
         }
     }
@@ -257,22 +257,22 @@ export class MyUplinkLogic {
             if (firstRun) {
                 await this.dataTarget.CreateDeviceAsync(devicePath, deviceName);
             }
-            await this.dataTarget.CreateStringStateAsync(`${devicePath}.deviceId`, 'Device ID', device.id, firstRun);
-            await this.dataTarget.CreateStringStateAsync(`${devicePath}.name`, 'Name', deviceName, firstRun, 'info.name');
+            await this.dataTarget.CreateStringObjectAsync(`${devicePath}.deviceId`, 'Device ID', device.id, firstRun);
+            await this.dataTarget.CreateStringObjectAsync(`${devicePath}.name`, 'Name', deviceName, firstRun, 'info.name');
             if (device.connectionState != undefined) {
-                await this.dataTarget.CreateStringStateAsync(`${devicePath}.connectionState`, 'Connection State', device.connectionState, firstRun, 'info.status');
+                await this.dataTarget.CreateStringObjectAsync(`${devicePath}.connectionState`, 'Connection State', device.connectionState, firstRun, 'info.status');
             }
             if (device.currentFwVersion != undefined) {
-                await this.dataTarget.CreateStringStateAsync(`${devicePath}.currentFwVersion`, 'Current Firmware Version', device.currentFwVersion, firstRun, 'info.firmware');
+                await this.dataTarget.CreateStringObjectAsync(`${devicePath}.currentFwVersion`, 'Current Firmware Version', device.currentFwVersion, firstRun, 'info.firmware');
             }
             if (device.product?.serialNumber != undefined) {
-                await this.dataTarget.CreateStringStateAsync(`${devicePath}.serialNumber`, 'Serial Number', device.product.serialNumber, firstRun, 'info.serial');
+                await this.dataTarget.CreateStringObjectAsync(`${devicePath}.serialNumber`, 'Serial Number', device.product.serialNumber, firstRun, 'info.serial');
             }
 
             if (this.config.AddData) {
                 const devicePoints = await this.myUplinkRepository?.getDevicePointsAsync(device.id, accessToken);
                 if (this.config.AddRawData) {
-                    await this.dataTarget.CreateStringStateAsync(`${devicePath}.rawData`, 'Received raw JSON of parameter data', JSON.stringify(devicePoints, null, ''), firstRun);
+                    await this.dataTarget.CreateStringObjectAsync(`${devicePath}.rawData`, 'Received raw JSON of parameter data', JSON.stringify(devicePoints, null, ''), firstRun);
                 }
                 if (devicePoints) {
                     for (const data of devicePoints) {
@@ -372,14 +372,20 @@ export class MyUplinkLogic {
         let max: number | undefined = undefined;
         if (data.minValue != null && data.maxValue != null) {
             if (data.minValue < data.maxValue) {
-                min = data.minValue;
-                max = data.maxValue;
+                if (data.value != null && (data.value < data.minValue || data.value > data.maxValue)) {
+                    this.log.warn(
+                        `Parameter '${data.parameterId}': value is outside min/max. Value: ${data.value}, Min: ${data.minValue}, Max: ${data.maxValue}. Ignoring min/max.`,
+                    );
+                } else {
+                    min = data.minValue;
+                    max = data.maxValue;
+                }
             } else {
-                this.log.warn(`Parameter '${data.parameterId}': minValue is bigger than maxValue. Min: ${data.minValue}, Max: ${data.maxValue}. Ignoring min/max.`);
+                this.log.warn(`Parameter '${data.parameterId}': min is bigger than max. Min: ${data.minValue}, Max: ${data.maxValue}. Ignoring min/max.`);
             }
         }
         const step = data.stepValue ?? undefined;
-        await this.dataTarget.CreateParameterObjectAsync(stateId, name, deviceId, data.parameterId, role, writable, unit, min, max, step, states);
+        await this.dataTarget.CreateOrUpdateParameterObjectAsync(stateId, name, deviceId, data.parameterId, role, writable, unit, min, max, step, states);
     }
 
     private removeSoftHyphen(text: string): string {

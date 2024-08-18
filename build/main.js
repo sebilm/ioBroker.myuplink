@@ -43,7 +43,7 @@ class Myuplink extends utils.Adapter {
     this.refreshInterval = 0;
   }
   async CreateSystemAsync(path2, name) {
-    this.log.debug(`create Device: ${path2}`);
+    this.log.debug(`Create Device object if not exists: ${path2}`);
     await this.setObjectNotExistsAsync(path2, {
       type: "device",
       common: {
@@ -53,7 +53,7 @@ class Myuplink extends utils.Adapter {
     });
   }
   async CreateDeviceAsync(path2, name) {
-    this.log.debug(`create Channel: ${path2}`);
+    this.log.debug(`Create Channel object if not exists: ${path2}`);
     await this.setObjectNotExistsAsync(path2, {
       type: "channel",
       common: {
@@ -63,7 +63,7 @@ class Myuplink extends utils.Adapter {
     });
   }
   async CreateCategoryAsync(path2, name) {
-    this.log.debug(`create Folder: ${path2}`);
+    this.log.debug(`Create Folder object if not exists: ${path2}`);
     await this.setObjectNotExistsAsync(path2, {
       type: "folder",
       common: {
@@ -72,9 +72,9 @@ class Myuplink extends utils.Adapter {
       native: {}
     });
   }
-  async CreateStringStateAsync(path2, name, value, createObject, role = "text") {
+  async CreateStringObjectAsync(path2, name, value, createObject, role = "text") {
     if (createObject) {
-      this.log.debug(`create string state: ${path2}`);
+      this.log.debug(`Create string object if not exists: ${path2}`);
       await this.setObjectNotExistsAsync(path2, {
         type: "state",
         common: {
@@ -89,9 +89,9 @@ class Myuplink extends utils.Adapter {
     }
     await this.setState(path2, { val: value, ack: true });
   }
-  async CreateBooleanStateAsync(path2, name, role, value, createObject) {
+  async CreateBooleanObjectAsync(path2, name, role, value, createObject) {
     if (createObject) {
-      this.log.debug(`create boolean state: ${path2}`);
+      this.log.debug(`Create boolean object if not exists: ${path2}`);
       await this.setObjectNotExistsAsync(path2, {
         type: "state",
         common: {
@@ -107,7 +107,7 @@ class Myuplink extends utils.Adapter {
     await this.setState(path2, { val: value, ack: true });
   }
   async CreateWritableStringObjectAsync(path2, name, role, deviceId) {
-    this.log.debug(`create writeable string state: ${path2}`);
+    this.log.debug(`Create or update writeable string object: ${path2}`);
     await this.extendObject(path2, {
       type: "state",
       common: {
@@ -124,31 +124,137 @@ class Myuplink extends utils.Adapter {
       }
     });
   }
-  async CreateParameterObjectAsync(path2, name, deviceId, parameterId, role, writable, unit, min, max, step, states) {
-    const obj = {
-      type: "state",
-      common: {
-        name,
-        type: "number",
-        role,
-        read: true,
-        write: writable,
-        unit,
-        min,
-        max,
-        step,
-        states
-      },
-      native: {
-        parameterId,
-        writable,
-        deviceId
+  async CreateOrUpdateParameterObjectAsync(path2, name, deviceId, parameterId, role, writable, unit, min, max, step, states) {
+    const readObject = await this.getObjectAsync(path2);
+    if (readObject == null) {
+      const newObject = {
+        type: "state",
+        common: {
+          name,
+          type: "number",
+          role,
+          read: true,
+          write: writable,
+          unit,
+          min,
+          max,
+          step,
+          states
+        },
+        native: {
+          parameterId,
+          writable,
+          deviceId
+        }
+      };
+      this.log.debug(`Create new parameter object: ${path2}`);
+      await this.setObjectAsync(path2, newObject);
+    } else {
+      let changed = false;
+      if (readObject.common == null) {
+        readObject.common = {
+          name,
+          type: "number",
+          role,
+          read: true,
+          write: writable,
+          unit,
+          min,
+          max,
+          step,
+          states
+        };
+        changed = true;
+      } else {
+        if (readObject.common.name != name) {
+          readObject.common.name = name;
+          changed = true;
+        }
+        if (readObject.common.type != "number") {
+          readObject.common.type = "number";
+          changed = true;
+        }
+        if (readObject.common.role != role) {
+          readObject.common.role = role;
+          changed = true;
+        }
+        if (readObject.common.read != true) {
+          readObject.common.read = true;
+          changed = true;
+        }
+        if (readObject.common.write != writable) {
+          readObject.common.write = writable;
+          changed = true;
+        }
+        if (readObject.common.unit != unit) {
+          readObject.common.unit = unit;
+          changed = true;
+        }
+        if (readObject.common.min != min) {
+          readObject.common.min = min;
+          changed = true;
+        }
+        if (readObject.common.max != max) {
+          readObject.common.max = max;
+          changed = true;
+        }
+        if (readObject.common.step != step) {
+          readObject.common.step = step;
+          changed = true;
+        }
+        if (!this.areRecordsEqual(readObject.common.states, states)) {
+          readObject.common.states = states;
+          changed = true;
+        }
       }
-    };
-    await this.extendObject(path2, obj);
+      if (readObject.native == null) {
+        readObject.native = {
+          parameterId,
+          writable,
+          deviceId
+        };
+        changed = true;
+      } else {
+        if (readObject.native.parameterId != parameterId) {
+          readObject.native.parameterId = parameterId;
+          changed = true;
+        }
+        if (readObject.native.writable != writable) {
+          readObject.native.writable = writable;
+          changed = true;
+        }
+        if (readObject.native.deviceId != deviceId) {
+          readObject.native.deviceId = deviceId;
+          changed = true;
+        }
+      }
+      if (changed) {
+        this.log.debug(`Update parameter object: ${path2}`);
+        await this.setObjectAsync(path2, readObject);
+      }
+    }
   }
   async SetStateAsync(path2, value) {
     await this.setState(path2, { val: value, ack: true });
+  }
+  areRecordsEqual(record1, record2) {
+    if (record1 == null && record2 == null) {
+      return true;
+    }
+    if (record1 == null || record2 == null) {
+      return false;
+    }
+    const keys1 = Object.keys(record1);
+    const keys2 = Object.keys(record2);
+    if (keys1.length !== keys2.length) {
+      return false;
+    }
+    for (const key of keys1) {
+      if (record1[key] !== record2[key]) {
+        return false;
+      }
+    }
+    return true;
   }
   /**
    * Is called when databases are connected and adapter received configuration.

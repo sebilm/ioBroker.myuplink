@@ -16,12 +16,12 @@ export class DataTargetMock implements DataTarget {
         return Promise.resolve();
     }
 
-    CreateStringStateAsync(path: string, name: string, value: string, createObject: boolean, role?: string | undefined): Promise<void> {
+    CreateStringObjectAsync(path: string, name: string, value: string, createObject: boolean, role?: string | undefined): Promise<void> {
         this.CreateStringStateAsyncCalls.push({ path, name, value, createObject, role });
         return Promise.resolve();
     }
 
-    CreateBooleanStateAsync(path: string, name: string, role: string, value: boolean, createObject: boolean): Promise<void> {
+    CreateBooleanObjectAsync(path: string, name: string, role: string, value: boolean, createObject: boolean): Promise<void> {
         this.CreateBooleanStateAsyncCalls.push({ path, name, role, value, createObject });
         return Promise.resolve();
     }
@@ -31,7 +31,7 @@ export class DataTargetMock implements DataTarget {
         return Promise.resolve();
     }
 
-    CreateParameterObjectAsync(
+    CreateOrUpdateParameterObjectAsync(
         path: string,
         name: string,
         deviceId: string | null | undefined,

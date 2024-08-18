@@ -177,6 +177,30 @@ describe('MyUplinkLogic: different data formats', () => {
                 stepValue: 0.1,
                 enumValues: [],
             },
+            {
+                category: 'C1',
+                parameterId: '111',
+                parameterName: 'Value outside min/max: min #39',
+                value: 30,
+                parameterUnit: '',
+                writable: false,
+                minValue: 50,
+                maxValue: 100,
+                stepValue: 0.1,
+                enumValues: [],
+            },
+            {
+                category: 'C1',
+                parameterId: '222',
+                parameterName: 'Value outside min/max: max #39',
+                value: 300,
+                parameterUnit: '',
+                writable: false,
+                minValue: 50,
+                maxValue: 100,
+                stepValue: 0.1,
+                enumValues: [],
+            },
         ]);
 
     let error: string | undefined;
@@ -192,8 +216,10 @@ describe('MyUplinkLogic: different data formats', () => {
         expect(loggerMock.ErrorLogs).to.empty;
     });
 
-    it('should log no warings', () => {
-        expect(loggerMock.WarnLogs).to.deep.include("Parameter '666': minValue is bigger than maxValue. Min: 120, Max: -100. Ignoring min/max.");
+    it('should log warings', () => {
+        expect(loggerMock.WarnLogs).to.deep.include("Parameter '666': min is bigger than max. Min: 120, Max: -100. Ignoring min/max.");
+        expect(loggerMock.WarnLogs).to.deep.include("Parameter '111': value is outside min/max. Value: 30, Min: 50, Max: 100. Ignoring min/max.");
+        expect(loggerMock.WarnLogs).to.deep.include("Parameter '222': value is outside min/max. Value: 300, Min: 50, Max: 100. Ignoring min/max.");
     });
 
     it('should create data states', () => {
@@ -340,7 +366,33 @@ describe('MyUplinkLogic: different data formats', () => {
             step: 0.1,
             states: undefined,
         });
-        expect(dataTargetMock.CreateParameterObjectAsyncCalls).to.have.lengthOf(11);
+        expect(dataTargetMock.CreateParameterObjectAsyncCalls).to.deep.include({
+            path: 'mySystemTestID.Device1ID.C1.111',
+            name: 'Value outside min/max: min #39',
+            deviceId: 'Device1ID',
+            parameterId: '111',
+            role: 'value',
+            writable: false,
+            unit: undefined,
+            min: undefined,
+            max: undefined,
+            step: 0.1,
+            states: undefined,
+        });
+        expect(dataTargetMock.CreateParameterObjectAsyncCalls).to.deep.include({
+            path: 'mySystemTestID.Device1ID.C1.222',
+            name: 'Value outside min/max: max #39',
+            deviceId: 'Device1ID',
+            parameterId: '222',
+            role: 'value',
+            writable: false,
+            unit: undefined,
+            min: undefined,
+            max: undefined,
+            step: 0.1,
+            states: undefined,
+        });
+        expect(dataTargetMock.CreateParameterObjectAsyncCalls).to.have.lengthOf(13);
     });
 
     it('should set data states', () => {
@@ -388,7 +440,15 @@ describe('MyUplinkLogic: different data formats', () => {
             path: 'mySystemTestID.Device1ID.C1.666',
             value: 56.7,
         });
-        expect(dataTargetMock.SetStateAsyncCalls).to.have.lengthOf(11);
+        expect(dataTargetMock.SetStateAsyncCalls).to.deep.include({
+            path: 'mySystemTestID.Device1ID.C1.111',
+            value: 30,
+        });
+        expect(dataTargetMock.SetStateAsyncCalls).to.deep.include({
+            path: 'mySystemTestID.Device1ID.C1.222',
+            value: 300,
+        });
+        expect(dataTargetMock.SetStateAsyncCalls).to.have.lengthOf(13);
     });
 
     it('should create categories', () => {

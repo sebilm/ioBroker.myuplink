@@ -26,6 +26,8 @@ This ioBroker adapter receives data from myUplink.com. Settings that have been e
 
 ### **WORK IN PROGRESS**
 
+-   Existing incorrect minimum and maximum values are now deleted #39
+-   Minimum and maximum values of the API are not adopted if the current value is outside minimum and maximum #39
 -   Instructions for German and English have been moved to separate files #47
 -   Dependencies have been updated
 
