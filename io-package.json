@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "myuplink",
-        "version": "0.8.0",
+        "version": "0.8.1",
         "news": {
+            "0.8.1": {
+                "en": "Existing incorrect minimum and maximum values are now deleted #39\nMinimum and maximum values of the API are not adopted if the current value is outside minimum and maximum #39\nInstructions for German and English have been moved to separate files #47\nDependencies have been updated",
+                "de": "Vorhandene falsche Mindest- und Maximalwerte werden nun gelöscht #39\nMindest- und Maximalwerte der API werden nicht übernommen, wenn der aktuelle Wert nicht zwischen Minimum und Maximum liegt #39\nAnleitungen für Deutsch und Englisch wurden in separate Dateien verschoben #47\nAbhängigkeiten wurden aktualisiert",
+                "ru": "Существующие неправильные минимальные и максимальные значения теперь исключены #39\nМинимальные и максимальные значения API не принимаются, если текущее значение находится за пределами минимума и максимума #39\nИнструкции для немецкого и английского языка были перенесены в отдельные файлы \nЗависимость обновлена #47",
+                "pt": "Os valores mínimos e máximos existentes estão agora excluídos #39\nValores mínimos e máximos da API não são adotados se o valor atual estiver fora do mínimo e máximo #39\nInstruções para alemão e inglês foram movidos para arquivos separados #47\nAs dependências foram atualizadas",
+                "nl": "Bestaande onjuiste minimum- en maximumwaarden worden nu verwijderd #39\nMinimum- en maximumwaarden van de API worden niet vastgesteld als de huidige waarde buiten het minimum en maximum ligt #39\nInstructies voor Duits en Engels zijn verplaatst naar aparte bestanden #47\nAfhankelijkheden zijn bijgewerkt",
+                "fr": "Les valeurs minimales et maximales incorrectes existantes sont maintenant supprimées #39\nLes valeurs minimales et maximales de l'API ne sont pas adoptées si la valeur actuelle est en dehors du minimum et du maximum #39\nLes instructions pour l'allemand et l'anglais ont été déplacées dans des fichiers distincts #47\nLes dépendances ont été actualisées",
+                "it": "I valori minimi e massimi errati sono ora eliminati #39\nValori minimi e massimi dell'API non sono adottati se il valore attuale è al di fuori del minimo e massimo #39\nLe istruzioni per il tedesco e l'inglese sono state spostate in file separati #47\nLe dipendenze sono state aggiornate",
+                "es": "Los valores mínimos y máximos existentes se eliminan ahora #39\nLos valores mínimos y máximos de la API no se adoptan si el valor actual es mínimo y máximo #39\nLas instrucciones para alemán e inglés se han trasladado a archivos separados #47\nSe han actualizado las dependencias",
+                "pl": "Istniejące nieprawidłowe wartości minimalne i maksymalne zostały usunięte # 39\nMinimalne i maksymalne wartości API nie są przyjmowane, jeżeli bieżąca wartość jest poza minimalnym i maksymalnym # 39\nInstrukcje dla niemieckiego i angielskiego zostały przeniesione do oddzielnych plików # 47\nZaktualizowano zależności",
+                "uk": "Використовуються мінімальні та максимальні значення тепер видаляються #39\nМінімальні та максимальні значення API не приймаються, якщо поточне значення не перевищує мінімуму та максимуму #39\nІнструкції для німецьких та англійських було перенесено на окремі файли #47\nЗалежність було оновлено",
+                "zh-cn": "现有错误的最小值和最大值现已删除# 39\n如果当前值在最小值和最大值39之外,则不采用API的最低值和最大值\n对德语和英语的指示已移至单独的文件47\n依赖关系已更新"
+            },
             "0.8.0": {
                 "en": "No empty objects are sent (setData)\nIncorrect minimum and maximum values of the API are not adopted #39\nThe initial refresh interval was set to 5 minutes\nThe code has been restructured internally\nAt least Node.js 18 is required!\nUnit tests have been added\nDependencies have been updated",
                 "de": "Es werden keine leeren Objekte gesendet (setData)\nFalsche Mindest- und Maximalwerte der API werden nicht übernommen #39\nDas initiale Aktualisierungsintervall wurde auf 5 Minuten eingestellt\nDer Code wurde intern umstrukturiert\nMindestens Node.js 18 ist erforderlich!\nUnit-Tests wurden hinzugefügt\nAbhängigkeiten wurden aktualisiert",
@@ -80,19 +93,6 @@
                 "pl": "Dla kilku pomp ciepła dodano identyfikatory parametrów i kategorie",
                 "uk": "Для декількох теплових насосів додано параметрові ідентифікатори та категорії",
                 "zh-cn": "为几个热泵增加了参数标识和类别"
-            },
-            "0.4.1": {
-                "en": "In object IDs, all characters that are not officially supported are now replaced by an underscore\nThe roles of the data objects have been improved\nThe logging of token data (in log level silly) has been removed\nDependencies have been updated",
-                "de": "In Objekt-IDs werden nun alle nicht offiziell unterstützten Zeichen durch einen Unterstrich ersetzt\nDie Rollen der Datenobjekte wurden verbessert\nDie Protokollierung von Tokendaten (in Log-Level Silly) wurde entfernt\nAbhängigkeiten wurden aktualisiert",
-                "ru": "В ID объектов все символы, которые официально не поддерживаются, теперь заменяются подчеркиванием\nУлучшена роль объектов данных\nЗапись токенов (в уровне журнала глупо) была удалена\nЗависимость обновлена",
-                "pt": "Em IDs de objeto, todos os caracteres que não são oficialmente suportados são agora substituídos por um underscore\nOs papéis dos objetos de dados foram melhorados\nO registro de dados token (no nível de log bobo) foi removido\nAs dependências foram atualizadas",
-                "nl": "In object ID's worden alle tekens die niet officieel ondersteund worden nu vervangen door een underscore\nDe rollen van de data objecten zijn verbeterd\nHet loggen van tokengegevens (in logniveau dwaas) is verwijderd\nAfhankelijkheden zijn bijgewerkt",
-                "fr": "Dans les ID d'objet, tous les caractères qui ne sont pas pris en charge officiellement sont maintenant remplacés par un soulignement\nLes rôles des objets de données ont été améliorés\nL'enregistrement des données de jeton (au niveau de log sot) a été supprimé\nLes dépendances ont été actualisées",
-                "it": "In ID oggetti, tutti i caratteri che non sono supportati ufficialmente sono ora sostituiti da un underscore\nI ruoli degli oggetti di dati sono stati migliorati\nLa registrazione dei dati di token (in silly livello di log) è stata rimossa\nLe dipendenze sono state aggiornate",
-                "es": "En ID de objeto, todos los caracteres que no están oficialmente soportados ahora son reemplazados por un subrayado\nSe han mejorado las funciones de los objetos de datos\nSe ha eliminado el registro de datos de ficha (en nivel de registro tonto)\nSe han actualizado las dependencias",
-                "pl": "W identyfikatorach obiektów wszystkie znaki, które nie są oficjalnie obsługiwane, są teraz zastąpione przez podkreślenie\nRole obiektów danych zostały poprawione\nLogowanie danych tokena (w log poziom głupi) zostało usunięte\nZaktualizowano zależności",
-                "uk": "У ідентифікаторах об'єкта всі символи, які не офіційно підтримуються, тепер замінені на низ\nУдосконалено роль об’єктів даних\nЗняття даних про токени (в рівні колоди silly) було вилучено\nЗалежність було оновлено",
-                "zh-cn": "在对象ID中,所有未正式支持的字符现在都替换为下划线\n改进了数据对象的作用\n已删除对令牌数据的记录( 注册级别为傻话)\n依赖关系已更新"
             }
         },
         "titleLang": {
