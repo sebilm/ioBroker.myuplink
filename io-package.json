@@ -4,17 +4,17 @@
         "version": "0.8.2",
         "news": {
             "0.8.2": {
-                "en": "Changes due to API changes -> #60\nDependencies have been updated",
-                "de": "Änderungen aufgrund von API-Änderungen -> #60\nAbhängigkeiten wurden aktualisiert",
-                "ru": "Изменения из-за изменений API -> #60\nЗависимость обновлена",
-                "pt": "Mudanças devido a alterações de API -> #60 #\nAs dependências foram atualizadas",
-                "nl": "Wijzigingen als gevolg van API-wijzigingen -> #60\nAfhankelijkheden zijn bijgewerkt",
-                "fr": "Modifications dues aux modifications de l'API -> #60\nLes dépendances ont été actualisées",
-                "it": "Modifiche dovute a modifiche API -> # 60 #\nLe dipendenze sono state aggiornate",
-                "es": "Cambios debido a cambios de API - título #60\nSe han actualizado las dependencias",
-                "pl": "Zmiany wynikające ze zmian API - > # 60\nZaktualizowano zależności",
-                "uk": "Зміни за допомогою змін API -> #60\nЗалежність було оновлено",
-                "zh-cn": "由 API 变化引起的变化 - > 60号\n依赖关系已更新"
+                "en": "Changes due to API changes #60\nDependencies have been updated",
+                "de": "Änderungen aufgrund von API-Änderungen #60\nAbhängigkeiten wurden aktualisiert",
+                "ru": "Изменения из-за изменений API #60\nЗависимость обновлена",
+                "pt": "Mudanças devido a alterações de API #60\nAs dependências foram atualizadas",
+                "nl": "Wijzigingen als gevolg van API-wijzigingen #60\nAfhankelijkheden zijn bijgewerkt",
+                "fr": "Modifications dues aux modifications de l'API #60\nLes dépendances ont été actualisées",
+                "it": "Modifiche dovute a modifiche API #60\nLe dipendenze sono state aggiornate",
+                "es": "Cambios debido a cambios de API #60\nSe han actualizado las dependencias",
+                "pl": "Zmiany wynikające ze zmian API #60\nZaktualizowano zależności",
+                "uk": "Зміни за допомогою змін API #60\nЗалежність було оновлено",
+                "zh-cn": "由 API 变化引起的变化 #60\n依赖关系已更新"
             },
             "0.8.1": {
                 "en": "Existing incorrect minimum and maximum values are now deleted #39\nMinimum and maximum values of the API are not adopted if the current value is outside minimum and maximum #39\nInstructions for German and English have been moved to separate files #47\nDependencies have been updated",
