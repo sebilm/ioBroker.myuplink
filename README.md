@@ -23,6 +23,12 @@ This ioBroker adapter receives data from myUplink.com. Settings that have been e
 -->
 
 ## Changelog
+
+### **WORK IN PROGRESS**
+
+-   Changes due to API changes -> #60
+-   Dependencies have been updated
+
 ### 0.8.1 (2024-08-18)
 
 -   Existing incorrect minimum and maximum values are now deleted #39

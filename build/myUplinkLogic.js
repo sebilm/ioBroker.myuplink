@@ -172,7 +172,7 @@ class MyUplinkLogic {
         const valueAsString = value.toString();
         if (parameterId) {
           const result = await this.myUplinkRepository.setDevicePointAsync(deviceId, accessToken, parameterId, valueAsString);
-          if (result.status == 200 && result.payload && parameterId in result.payload && result.payload[parameterId] == "modified") {
+          if (result && parameterId in result && result[parameterId] == "modified") {
             this.log.debug(`Parameter ${parameterId} modified by API`);
             await this.dataTarget.SetStateAsync(id, value);
           }
@@ -180,22 +180,16 @@ class MyUplinkLogic {
           const keyValueDictionary = JSON.parse(valueAsString);
           if (Object.keys(keyValueDictionary).length > 0) {
             const result = await this.myUplinkRepository.setDevicePointsAsync(deviceId, accessToken, keyValueDictionary);
-            if (result.status == 200) {
-              await this.dataTarget.SetStateAsync(id, value);
-              const objectIdByParameterId = this.objectIdIdByParameterIdByDeviceId.get(deviceId);
-              if (objectIdByParameterId && result.payload) {
-                for (const [parameterId2, value2] of Object.entries(keyValueDictionary)) {
-                  const objectId = objectIdByParameterId.get(parameterId2);
-                  const valNumber = parseFloat(value2);
-                  if (objectId && !Number.isNaN(valNumber) && parameterId2 in result.payload && result.payload[parameterId2] == "modified") {
-                    await this.dataTarget.SetStateAsync(objectId, valNumber);
-                  }
+            await this.dataTarget.SetStateAsync(id, value);
+            const objectIdByParameterId = this.objectIdIdByParameterIdByDeviceId.get(deviceId);
+            if (objectIdByParameterId && result) {
+              for (const [parameterId2, value2] of Object.entries(keyValueDictionary)) {
+                const objectId = objectIdByParameterId.get(parameterId2);
+                const valNumber = parseFloat(value2);
+                if (objectId && !Number.isNaN(valNumber) && parameterId2 in result && result[parameterId2] == "modified") {
+                  await this.dataTarget.SetStateAsync(objectId, valNumber);
                 }
               }
-            } else {
-              this.log.error(`SetData: "${valueAsString}"
-Result: "${JSON.stringify(result, null, " ")}"`);
-              return `Status: ${result.status}`;
             }
           }
         }

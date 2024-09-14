@@ -1,6 +1,5 @@
 import axios, { AxiosError } from 'axios';
 import { AlarmsPaged } from './models/AlarmsPaged';
-import { CloudToDeviceMethodResult } from './models/CloudToDeviceMethodResult';
 import { PagedSystemResult } from './models/PagedSystemResult';
 import { ParameterData } from './models/ParameterData';
 import { Logger } from './types';
@@ -37,14 +36,14 @@ export class MyUplinkRepository {
         return this.getFromMyUplinkAsync<ParameterData[]>(`/v3/devices/${deviceId}/points`, accessToken);
     }
 
-    setDevicePointAsync(deviceId: string, accessToken: string, parameterId: string, value: string): Promise<CloudToDeviceMethodResult> {
+    setDevicePointAsync(deviceId: string, accessToken: string, parameterId: string, value: string): Promise<any> {
         const body = {};
         setProperty(body, parameterId, value);
         return this.setDevicePointsAsync(deviceId, accessToken, body);
     }
 
-    setDevicePointsAsync(deviceId: string, accessToken: string, keyValueDictionary: Record<string, string>): Promise<CloudToDeviceMethodResult> {
-        return this.patchToMyUplinkAsync<CloudToDeviceMethodResult>(`/v2/devices/${deviceId}/points`, keyValueDictionary, accessToken);
+    setDevicePointsAsync(deviceId: string, accessToken: string, keyValueDictionary: Record<string, string>): Promise<any> {
+        return this.patchToMyUplinkAsync<any>(`/v2/devices/${deviceId}/points`, keyValueDictionary, accessToken);
     }
 
     getActiveNotificationsAsync(systemId: string, accessToken: string): Promise<AlarmsPaged> {
