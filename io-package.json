@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "myuplink",
-        "version": "0.8.2",
+        "version": "0.8.3",
         "news": {
+            "0.8.3": {
+                "en": "TabsStyle was added to jsonConfig #71\nDependencies have been updated",
+                "de": "TabsStyle wurde zu jsonConfig hinzugefügt #71\nAbhängigkeiten wurden aktualisiert",
+                "ru": "TabsStyle был добавлен в jsonConfig #71\nЗависимость обновлена",
+                "pt": "TabsStyle foi adicionado ao jsonConfig #71\nAs dependências foram atualizadas",
+                "nl": "TabsStyle is toegevoegd aan jsonConfig #71\nAfhankelijkheden zijn bijgewerkt",
+                "fr": "TabsStyle a été ajouté à jsonConfig #71\nLes dépendances ont été actualisées",
+                "it": "TabsStyle è stato aggiunto a jsonConfig #71\nLe dipendenze sono state aggiornate",
+                "es": "TabsStyle fue añadido a jsonConfig #71\nSe han actualizado las dependencias",
+                "pl": "TabsStyle został dodany do jsonConfig #71\nZaktualizowano zależności",
+                "uk": "TabsStyle додано до jsonConfig #71\nЗалежність було оновлено",
+                "zh-cn": "TabsStyle 被添加到 jsonConfig #71\n依赖关系已更新"
+            },
             "0.8.2": {
                 "en": "Changes due to API changes #60\nDependencies have been updated",
                 "de": "Änderungen aufgrund von API-Änderungen #60\nAbhängigkeiten wurden aktualisiert",
@@ -80,19 +93,6 @@
                 "pl": "Poprawa wydajności\nZaktualizowano zależności",
                 "uk": "Покращено продуктивність\nЗалежність було оновлено",
                 "zh-cn": "业绩有所改善\n依赖关系已更新"
-            },
-            "0.6.0": {
-                "en": "The setData object has been added",
-                "de": "Das setData Objekt wurde hinzugefügt",
-                "ru": "Добавлен объект setData",
-                "pt": "O objeto setData foi adicionado",
-                "nl": "Het setData object is toegevoegd",
-                "fr": "L'objet setData a été ajouté",
-                "it": "L'oggetto setData è stato aggiunto",
-                "es": "El objeto setData ha sido añadido",
-                "pl": "Dodano obiekt setData",
-                "uk": "Додано об'єкт setData",
-                "zh-cn": "添加了设定的数据对象"
             }
         },
         "titleLang": {

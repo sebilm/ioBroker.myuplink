@@ -24,7 +24,7 @@ This ioBroker adapter receives data from myUplink.com. Settings that have been e
 
 ## Changelog
 
-### **WORK IN PROGRESS**
+### 0.8.3 (2024-10-20)
 
 -   TabsStyle was added to jsonConfig #71
 -   Dependencies have been updated
