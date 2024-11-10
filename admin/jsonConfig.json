@@ -22,7 +22,8 @@
                     "xs": 12,
                     "sm": 12,
                     "md": 6,
-                    "lg": 6
+                    "lg": 6,
+                    "xl": 6
                 },
                 "Secret": {
                     "label": "Secret",
@@ -32,7 +33,8 @@
                     "xs": 12,
                     "sm": 12,
                     "md": 6,
-                    "lg": 6
+                    "lg": 6,
+                    "xl": 6
                 },
                 "settingsHeader": {
                     "text": "Settings",
@@ -48,7 +50,8 @@
                     "xs": 12,
                     "sm": 12,
                     "md": 6,
-                    "lg": 4
+                    "lg": 4,
+                    "xl": 4
                 },
                 "Language": {
                     "label": "Language",
@@ -71,7 +74,8 @@
                     "xs": 12,
                     "sm": 12,
                     "md": 6,
-                    "lg": 4
+                    "lg": 4,
+                    "xl": 4
                 },
                 "parameterDataHeader": {
                     "text": "Parameter data",
@@ -85,7 +89,8 @@
                     "xs": 12,
                     "sm": 12,
                     "md": 12,
-                    "lg": 6
+                    "lg": 6,
+                    "xl": 6
                 },
                 "AddRawData": {
                     "label": "Add object with the raw JSON data",
@@ -95,7 +100,8 @@
                     "xs": 12,
                     "sm": 12,
                     "md": 12,
-                    "lg": 6
+                    "lg": 6,
+                    "xl": 6
                 },
                 "GroupData": {
                     "label": "Group parameter data by received category",
@@ -105,7 +111,8 @@
                     "xs": 12,
                     "sm": 12,
                     "md": 12,
-                    "lg": 6
+                    "lg": 6,
+                    "xl": 6
                 },
                 "notificationsHeader": {
                     "text": "Notifications",
@@ -119,7 +126,8 @@
                     "xs": 12,
                     "sm": 12,
                     "md": 12,
-                    "lg": 6
+                    "lg": 6,
+                    "xl": 6
                 },
                 "AddRawActiveNotifications": {
                     "label": "Add object with active notifications as raw JSON",
@@ -129,7 +137,8 @@
                     "xs": 12,
                     "sm": 12,
                     "md": 12,
-                    "lg": 6
+                    "lg": 6,
+                    "xl": 6
                 }
             }
         },
@@ -148,7 +157,8 @@
                     "xs": 12,
                     "sm": 12,
                     "md": 12,
-                    "lg": 12
+                    "lg": 12,
+                    "xl": 12
                 },
                 "systemsHeader": {
                     "text": "Systems",
@@ -164,6 +174,7 @@
                     "sm": 12,
                     "md": 12,
                     "lg": 12,
+                    "xl": 12,
                     "items": [
                         {
                             "title": "Original ID",
@@ -193,6 +204,7 @@
                     "sm": 12,
                     "md": 12,
                     "lg": 12,
+                    "xl": 12,
                     "items": [
                         {
                             "title": "Original ID",
@@ -222,6 +234,7 @@
                     "sm": 12,
                     "md": 12,
                     "lg": 12,
+                    "xl": 12,
                     "items": [
                         {
                             "title": "Original ID",
@@ -248,7 +261,8 @@
                     "xs": 12,
                     "sm": 12,
                     "md": 12,
-                    "lg": 12
+                    "lg": 12,
+                    "xl": 12
                 },
                 "_downloadLink": {
                     "label": "Identifiers and categories for a few heat pumps can be downloaded here and imported into the table.",
@@ -257,7 +271,8 @@
                     "xs": 12,
                     "sm": 12,
                     "md": 12,
-                    "lg": 12
+                    "lg": 12,
+                    "xl": 12
                 },
                 "RenameDataIds": {
                     "type": "table",
@@ -268,6 +283,7 @@
                     "sm": 12,
                     "md": 12,
                     "lg": 12,
+                    "xl": 12,
                     "items": [
                         {
                             "title": "Original ID",
@@ -306,7 +322,8 @@
                     "xs": 12,
                     "sm": 12,
                     "md": 12,
-                    "lg": 12
+                    "lg": 12,
+                    "xl": 12
                 },
                 "UseAuthorizationCodeGrant": {
                     "label": "Use Authorization Code Grant Flow",
@@ -314,7 +331,8 @@
                     "xs": 12,
                     "sm": 12,
                     "md": 12,
-                    "lg": 12
+                    "lg": 12,
+                    "xl": 12
                 },
                 "CallbackURL": {
                     "label": "Callback URL",
@@ -324,7 +342,8 @@
                     "xs": 12,
                     "sm": 12,
                     "md": 12,
-                    "lg": 12
+                    "lg": 12,
+                    "xl": 12
                 },
                 "_link": {
                     "type": "staticLink",
@@ -336,7 +355,8 @@
                     "xs": 12,
                     "sm": 12,
                     "md": 12,
-                    "lg": 12
+                    "lg": 12,
+                    "xl": 12
                 },
                 "AuthCode": {
                     "label": "Auth Code",
@@ -347,7 +367,8 @@
                     "xs": 12,
                     "sm": 12,
                     "md": 12,
-                    "lg": 12
+                    "lg": 12,
+                    "xl": 12
                 }
             }
         }
