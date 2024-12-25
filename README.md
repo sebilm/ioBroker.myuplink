@@ -24,7 +24,7 @@ This ioBroker adapter receives data from myUplink.com. Settings that have been e
 
 ## Changelog
 
-**WORK IN PROGRESS**
+### **WORK IN PROGRESS**
 
 - xl attributes have been added to the jsonConfig #77
 - Dependencies have been updated
