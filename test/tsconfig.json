@@ -1,7 +1,9 @@
 {
     "extends": "../tsconfig.json",
     "compilerOptions": {
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
         "noImplicitAny": false
     },
-    "include": ["./**/*.js"]
+    "include": ["./**/*.js", "mocha.setup.mjs"]
 }
