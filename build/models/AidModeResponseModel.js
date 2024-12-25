@@ -22,9 +22,15 @@ __export(AidModeResponseModel_exports, {
 });
 module.exports = __toCommonJS(AidModeResponseModel_exports);
 const _AidModeResponseModel = class _AidModeResponseModel {
+  /**
+   * Returns the attribute type map for AidModeResponseModel.
+   */
   static getAttributeTypeMap() {
     return _AidModeResponseModel.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the AidModeResponseModel class.
+   */
   constructor() {
   }
 };

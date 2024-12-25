@@ -22,9 +22,15 @@ __export(Curve_exports, {
 });
 module.exports = __toCommonJS(Curve_exports);
 const _Curve = class _Curve {
+  /**
+   * Returns the attribute type map for the Curve class.
+   */
   static getAttributeTypeMap() {
     return _Curve.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the Curve class.
+   */
   constructor() {
   }
 };

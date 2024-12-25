@@ -22,9 +22,15 @@ __export(DeviceInfoSyncResponseModel_exports, {
 });
 module.exports = __toCommonJS(DeviceInfoSyncResponseModel_exports);
 const _DeviceInfoSyncResponseModel = class _DeviceInfoSyncResponseModel {
+  /**
+   * Returns the attribute type map for the DeviceInfoSyncResponseModel.
+   */
   static getAttributeTypeMap() {
     return _DeviceInfoSyncResponseModel.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the DeviceInfoSyncResponseModel class.
+   */
   constructor() {
   }
 };

@@ -60,9 +60,17 @@ export class SsqGroupDevice {
         },
     ];
 
+    /**
+     * Get the attribute type map.
+     *
+     * @returns Array of attribute type map objects.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return SsqGroupDevice.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the SsqGroupDevice class.
+     */
     public constructor() {}
 }

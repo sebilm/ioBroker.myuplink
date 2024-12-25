@@ -22,9 +22,15 @@ __export(ZonePatchRequest_exports, {
 });
 module.exports = __toCommonJS(ZonePatchRequest_exports);
 const _ZonePatchRequest = class _ZonePatchRequest {
+  /**
+   * Returns the attribute type map for ZonePatchRequest.
+   */
   static getAttributeTypeMap() {
     return _ZonePatchRequest.attributeTypeMap;
   }
+  /**
+   * Constructs a new ZonePatchRequest instance.
+   */
   constructor() {
   }
 };

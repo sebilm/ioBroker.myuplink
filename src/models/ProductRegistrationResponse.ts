@@ -180,9 +180,15 @@ export class ProductRegistrationResponse {
         },
     ];
 
+    /**
+     * Returns the attribute type map for the ProductRegistrationResponse class.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return ProductRegistrationResponse.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the ProductRegistrationResponse class.
+     */
     public constructor() {}
 }

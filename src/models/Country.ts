@@ -30,9 +30,15 @@ export class Country {
         },
     ];
 
+    /**
+     * Returns the attribute type map for the Country model.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return Country.attributeTypeMap;
     }
 
+    /**
+     * Constructor for the Country model.
+     */
     public constructor() {}
 }

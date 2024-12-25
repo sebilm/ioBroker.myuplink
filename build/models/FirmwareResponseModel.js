@@ -22,9 +22,15 @@ __export(FirmwareResponseModel_exports, {
 });
 module.exports = __toCommonJS(FirmwareResponseModel_exports);
 const _FirmwareResponseModel = class _FirmwareResponseModel {
+  /**
+   * Returns the attribute type map for the FirmwareResponseModel.
+   */
   static getAttributeTypeMap() {
     return _FirmwareResponseModel.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the FirmwareResponseModel class.
+   */
   constructor() {
   }
 };

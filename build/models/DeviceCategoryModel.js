@@ -22,9 +22,17 @@ __export(DeviceCategoryModel_exports, {
 });
 module.exports = __toCommonJS(DeviceCategoryModel_exports);
 const _DeviceCategoryModel = class _DeviceCategoryModel {
+  /**
+   * Get the attribute type map.
+   *
+   * @returns Array of attribute type map objects.
+   */
   static getAttributeTypeMap() {
     return _DeviceCategoryModel.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the DeviceCategoryModel class.
+   */
   constructor() {
   }
 };

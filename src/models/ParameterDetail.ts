@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { EnumValues } from '../models/EnumValues';
+import type { EnumValues } from '../models/EnumValues';
 
 /**
  * Equip group model.
@@ -122,9 +122,15 @@ export class ParameterDetail {
         },
     ];
 
+    /**
+     * Returns the attribute type map for the ParameterDetail class.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return ParameterDetail.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the ParameterDetail class.
+     */
     public constructor() {}
 }

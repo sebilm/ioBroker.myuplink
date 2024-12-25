@@ -10,6 +10,9 @@
  * Do not edit the class manually.
  */
 
+/**
+ * Class representing the response for Smart Home Categories.
+ */
 export class V2DevicesDeviceIdSmartHomeCategoriesGet200Response {
     'shEnergyMetered'?: boolean;
     'shHwBoost'?: boolean;
@@ -325,9 +328,15 @@ export class V2DevicesDeviceIdSmartHomeCategoriesGet200Response {
         },
     ];
 
+    /**
+     * Returns the attribute type map for the response.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return V2DevicesDeviceIdSmartHomeCategoriesGet200Response.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the V2DevicesDeviceIdSmartHomeCategoriesGet200Response class.
+     */
     public constructor() {}
 }

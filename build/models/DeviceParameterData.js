@@ -22,9 +22,15 @@ __export(DeviceParameterData_exports, {
 });
 module.exports = __toCommonJS(DeviceParameterData_exports);
 const _DeviceParameterData = class _DeviceParameterData {
+  /**
+   * Returns the attribute type map for DeviceParameterData.
+   */
   static getAttributeTypeMap() {
     return _DeviceParameterData.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the DeviceParameterData class.
+   */
   constructor() {
   }
 };

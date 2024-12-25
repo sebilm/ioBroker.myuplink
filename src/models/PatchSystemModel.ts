@@ -50,9 +50,15 @@ export class PatchSystemModel {
         },
     ];
 
+    /**
+     * Returns the attribute type map.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return PatchSystemModel.attributeTypeMap;
     }
 
+    /**
+     * Constructor for PatchSystemModel.
+     */
     public constructor() {}
 }

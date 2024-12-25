@@ -10,8 +10,11 @@
  * Do not edit the class manually.
  */
 
-import { Reported } from '../models/Reported';
+import type { Reported } from '../models/Reported';
 
+/**
+ * Class representing the properties.
+ */
 export class Properties {
     'reported'?: Reported;
 
@@ -26,9 +29,15 @@ export class Properties {
         },
     ];
 
+    /**
+     * Returns the attribute type map.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return Properties.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the Properties class.
+     */
     public constructor() {}
 }

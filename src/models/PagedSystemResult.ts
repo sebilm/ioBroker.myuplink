@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { SystemWithDevices } from '../models/SystemWithDevices';
+import type { SystemWithDevices } from '../models/SystemWithDevices';
 
 /**
  * Group list.
@@ -62,9 +62,15 @@ export class PagedSystemResult {
         },
     ];
 
+    /**
+     * Returns the attribute type map for PagedSystemResult.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return PagedSystemResult.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the PagedSystemResult class.
+     */
     public constructor() {}
 }

@@ -35,6 +35,12 @@ var import_axios = __toESM(require("axios"));
 var fs = __toESM(require("fs"));
 var import_jsonfile = __toESM(require("jsonfile"));
 class AuthRepository {
+  /**
+   * Creates an instance of AuthRepository.
+   *
+   * @param options - The authentication options.
+   * @param log - The logger instance.
+   */
   constructor(options, log) {
     this.log = log;
     this.options = options;
@@ -48,6 +54,12 @@ class AuthRepository {
       }
     }
   }
+  /**
+   * Retrieves the access token, refreshing it if necessary.
+   *
+   * @returns The access token.
+   * @throws {Error} If unable to retrieve the access token.
+   */
   async getAccessTokenAsync() {
     var _a;
     this.log.debug("Get access token");
@@ -77,9 +89,8 @@ class AuthRepository {
     const accessToken = (_a = this.auth) == null ? void 0 : _a.access_token;
     if (accessToken) {
       return accessToken;
-    } else {
-      throw new Error("No access token!");
     }
+    throw new Error("No access token!");
   }
   async getAuthorizationCodeGrantTokenAsync(authCode) {
     this.log.debug("Get token via Authorization Code Grant Flow");
@@ -91,12 +102,14 @@ class AuthRepository {
       redirect_uri: this.options.redirectUri,
       scope: this.options.scope
     };
-    const session2 = await this.postTokenRequestAsync(data);
-    this.log.debug(`Token received. Refresh Token received: ${session2.refresh_token != void 0}. Access Token expires in: ${session2.expires_in}`);
-    if (!session2.refresh_token) {
+    const session = await this.postTokenRequestAsync(data);
+    this.log.debug(
+      `Token received. Refresh Token received: ${session.refresh_token != void 0}. Access Token expires in: ${session.expires_in}`
+    );
+    if (!session.refresh_token) {
       this.log.warn("Receive Access Token without Refresh Token.");
     }
-    return session2;
+    return session;
   }
   async getClientCredentialsGrantTokenAsync() {
     this.log.debug("Get token via Client Credentials Grant Flow");
@@ -106,9 +119,11 @@ class AuthRepository {
       client_secret: this.options.clientSecret,
       scope: this.options.scope
     };
-    const session2 = await this.postTokenRequestAsync(data);
-    this.log.debug(`Token received. Refresh Token received: ${session2.refresh_token != void 0}. Access Token expires in: ${session2.expires_in}`);
-    return session2;
+    const session = await this.postTokenRequestAsync(data);
+    this.log.debug(
+      `Token received. Refresh Token received: ${session.refresh_token != void 0}. Access Token expires in: ${session.expires_in}`
+    );
+    return session;
   }
   async refreshTokenAsync() {
     var _a, _b;
@@ -122,12 +137,14 @@ class AuthRepository {
       client_id: this.options.clientId,
       client_secret: this.options.clientSecret
     };
-    const session2 = await this.postTokenRequestAsync(data);
-    this.log.debug(`Token received. Refresh Token received: ${session2.refresh_token != void 0}. Access Token expires in: ${session2.expires_in}`);
-    if (!session2.refresh_token) {
+    const session = await this.postTokenRequestAsync(data);
+    this.log.debug(
+      `Token received. Refresh Token received: ${session.refresh_token != void 0}. Access Token expires in: ${session.expires_in}`
+    );
+    if (!session.refresh_token) {
       this.log.warn("Receive Access Token without Refresh Token.");
     }
-    return session2;
+    return session;
   }
   async postTokenRequestAsync(body) {
     var _a;
@@ -159,9 +176,8 @@ class AuthRepository {
           const responseText = JSON.stringify(axiosError.response.data, null, " ");
           const errorMessage = `${axiosError.response.statusText}: ${responseText}`;
           return new Error(errorMessage);
-        } else {
-          return new Error(axiosError.response.statusText);
         }
+        return new Error(axiosError.response.statusText);
       }
     }
     return error;
@@ -198,13 +214,13 @@ class AuthRepository {
   isTokenExpired() {
     var _a;
     const expired = (((_a = this.auth) == null ? void 0 : _a.expires_at) || 0) < Date.now() + this.options.renewBeforeExpiry;
-    this.log.debug("Is token expired: " + expired);
+    this.log.debug(`Is token expired: ${expired}`);
     return expired;
   }
   hasAccessToken() {
     var _a;
     const hasAccessToken = !!((_a = this.auth) == null ? void 0 : _a.access_token);
-    this.log.debug("Has access token: " + hasAccessToken);
+    this.log.debug(`Has access token: ${hasAccessToken}`);
     return hasAccessToken;
   }
 }

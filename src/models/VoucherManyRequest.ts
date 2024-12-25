@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { VoucherType } from '../models/VoucherType';
+import type { VoucherType } from '../models/VoucherType';
 
 /**
  * Voucher single request.
@@ -49,9 +49,15 @@ export class VoucherManyRequest {
         },
     ];
 
+    /**
+     * Returns the attribute type map.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return VoucherManyRequest.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the VoucherManyRequest class.
+     */
     public constructor() {}
 }

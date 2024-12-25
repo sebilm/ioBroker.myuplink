@@ -22,9 +22,15 @@ __export(ParameterData_exports, {
 });
 module.exports = __toCommonJS(ParameterData_exports);
 const _ParameterData = class _ParameterData {
+  /**
+   * Returns the attribute type map for the ParameterData class.
+   */
   static getAttributeTypeMap() {
     return _ParameterData.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the ParameterData class.
+   */
   constructor() {
   }
 };

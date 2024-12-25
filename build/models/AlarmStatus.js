@@ -22,9 +22,15 @@ __export(AlarmStatus_exports, {
 });
 module.exports = __toCommonJS(AlarmStatus_exports);
 const _AlarmStatus = class _AlarmStatus {
+  /**
+   * Returns the attribute type map for the AlarmStatus class.
+   */
   static getAttributeTypeMap() {
     return _AlarmStatus.attributeTypeMap;
   }
+  /**
+   * Constructs an instance of the AlarmStatus class.
+   */
   constructor() {
   }
 };

@@ -22,9 +22,15 @@ __export(AlarmsPaged_exports, {
 });
 module.exports = __toCommonJS(AlarmsPaged_exports);
 const _AlarmsPaged = class _AlarmsPaged {
+  /**
+   * Returns the attribute type map.
+   */
   static getAttributeTypeMap() {
     return _AlarmsPaged.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the AlarmsPaged class.
+   */
   constructor() {
   }
 };

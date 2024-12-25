@@ -1,20 +1,56 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import * as fs from 'fs';
 import jsonfile from 'jsonfile';
-import * as session from './models/Session';
-import { Logger } from './types';
+import type * as session from './models/Session';
+import type { Logger } from './types';
 
+/**
+ * Options for authentication.
+ */
 export interface AuthOptions {
+    /**
+     * The client ID for authentication.
+     */
     clientId: string;
+    /**
+     * The client secret for authentication.
+     */
     clientSecret: string;
+    /**
+     * Whether to use the authorization code grant flow.
+     */
     useAuthorizationCodeGrant: boolean;
+    /**
+     * The redirect URI for the authorization code grant flow.
+     */
     redirectUri: string;
+    /**
+     * The authorization code for the authorization code grant flow.
+     */
     authCode: string;
+    /**
+     * The file path to store the session.
+     */
     sessionStoreFilePath: string;
+    /**
+     * The base URL for the API.
+     */
     baseUrl: string;
+    /**
+     * The scope for the authentication.
+     */
     scope: string;
+    /**
+     * The timeout for the API requests.
+     */
     timeout: number;
+    /**
+     * The user agent for the API requests.
+     */
     userAgent: string;
+    /**
+     * The time before expiry to renew the token.
+     */
     renewBeforeExpiry: number;
 }
 
@@ -23,7 +59,16 @@ interface Session extends session.Session {
     authCode?: string;
 }
 
+/**
+ * AuthRepository handles the authentication process, including token retrieval and session management.
+ */
 export class AuthRepository {
+    /**
+     * Creates an instance of AuthRepository.
+     *
+     * @param options - The authentication options.
+     * @param log - The logger instance.
+     */
     constructor(options: AuthOptions, log: Logger) {
         this.log = log;
         this.options = options;
@@ -44,6 +89,12 @@ export class AuthRepository {
     private options: AuthOptions;
     private auth: Session | undefined;
 
+    /**
+     * Retrieves the access token, refreshing it if necessary.
+     *
+     * @returns The access token.
+     * @throws {Error} If unable to retrieve the access token.
+     */
     async getAccessTokenAsync(): Promise<string> {
         this.log.debug('Get access token');
 
@@ -74,9 +125,8 @@ export class AuthRepository {
         const accessToken = this.auth?.access_token;
         if (accessToken) {
             return accessToken;
-        } else {
-            throw new Error('No access token!');
         }
+        throw new Error('No access token!');
     }
 
     private async getAuthorizationCodeGrantTokenAsync(authCode: string): Promise<Session> {
@@ -90,7 +140,9 @@ export class AuthRepository {
             scope: this.options.scope,
         };
         const session = await this.postTokenRequestAsync(data);
-        this.log.debug(`Token received. Refresh Token received: ${session.refresh_token != undefined}. Access Token expires in: ${session.expires_in}`);
+        this.log.debug(
+            `Token received. Refresh Token received: ${session.refresh_token != undefined}. Access Token expires in: ${session.expires_in}`,
+        );
         if (!session.refresh_token) {
             this.log.warn('Receive Access Token without Refresh Token.');
         }
@@ -106,7 +158,9 @@ export class AuthRepository {
             scope: this.options.scope,
         };
         const session = await this.postTokenRequestAsync(data);
-        this.log.debug(`Token received. Refresh Token received: ${session.refresh_token != undefined}. Access Token expires in: ${session.expires_in}`);
+        this.log.debug(
+            `Token received. Refresh Token received: ${session.refresh_token != undefined}. Access Token expires in: ${session.expires_in}`,
+        );
         return session;
     }
 
@@ -123,7 +177,9 @@ export class AuthRepository {
             client_secret: this.options.clientSecret,
         };
         const session = await this.postTokenRequestAsync(data);
-        this.log.debug(`Token received. Refresh Token received: ${session.refresh_token != undefined}. Access Token expires in: ${session.expires_in}`);
+        this.log.debug(
+            `Token received. Refresh Token received: ${session.refresh_token != undefined}. Access Token expires in: ${session.expires_in}`,
+        );
         if (!session.refresh_token) {
             this.log.warn('Receive Access Token without Refresh Token.');
         }
@@ -148,11 +204,11 @@ export class AuthRepository {
         }
     }
 
-    private checkError(suburl: string, error: unknown): Error | unknown {
+    private checkError(suburl: string, error: unknown): unknown {
         this.log.error(`error from ${suburl}`);
         this.log.error(JSON.stringify(error, null, ' '));
         if (axios.isAxiosError(error)) {
-            const axiosError = error as AxiosError;
+            const axiosError = error as axios.AxiosError;
             if (axiosError.response != null) {
                 if (axiosError.response.status == 401) {
                     this.setEmptySession();
@@ -161,9 +217,8 @@ export class AuthRepository {
                     const responseText = JSON.stringify(axiosError.response.data, null, ' ');
                     const errorMessage = `${axiosError.response.statusText}: ${responseText}`;
                     return new Error(errorMessage);
-                } else {
-                    return new Error(axiosError.response.statusText);
                 }
+                return new Error(axiosError.response.statusText);
             }
         }
         return error;
@@ -203,13 +258,13 @@ export class AuthRepository {
 
     private isTokenExpired(): boolean {
         const expired = (this.auth?.expires_at || 0) < Date.now() + this.options.renewBeforeExpiry;
-        this.log.debug('Is token expired: ' + expired);
+        this.log.debug(`Is token expired: ${expired}`);
         return expired;
     }
 
     private hasAccessToken(): boolean {
         const hasAccessToken = !!this.auth?.access_token;
-        this.log.debug('Has access token: ' + hasAccessToken);
+        this.log.debug(`Has access token: ${hasAccessToken}`);
         return hasAccessToken;
     }
 }

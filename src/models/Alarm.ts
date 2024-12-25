@@ -10,8 +10,8 @@
  * Do not edit the class manually.
  */
 
-import { AlarmStatus } from '../models/AlarmStatus';
-import { Status } from '../models/Status';
+import type { AlarmStatus } from '../models/AlarmStatus';
+import type { Status } from '../models/Status';
 
 /**
  * Alarm.
@@ -120,9 +120,15 @@ export class Alarm {
         },
     ];
 
+    /**
+     * Returns the attribute type map for the Alarm class.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return Alarm.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the Alarm class.
+     */
     public constructor() {}
 }

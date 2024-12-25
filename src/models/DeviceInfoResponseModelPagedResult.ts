@@ -10,8 +10,11 @@
  * Do not edit the class manually.
  */
 
-import { DeviceInfoResponseModel } from '../models/DeviceInfoResponseModel';
+import type { DeviceInfoResponseModel } from '../models/DeviceInfoResponseModel';
 
+/**
+ * Represents a paged result of DeviceInfoResponseModel.
+ */
 export class DeviceInfoResponseModelPagedResult {
     'page'?: number;
     'pageSize'?: number;
@@ -47,9 +50,15 @@ export class DeviceInfoResponseModelPagedResult {
         },
     ];
 
+    /**
+     * Returns the attribute type map for DeviceInfoResponseModelPagedResult.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return DeviceInfoResponseModelPagedResult.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the DeviceInfoResponseModelPagedResult class.
+     */
     public constructor() {}
 }

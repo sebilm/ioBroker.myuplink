@@ -10,8 +10,11 @@
  * Do not edit the class manually.
  */
 
-import { Country } from '../models/Country';
+import type { Country } from '../models/Country';
 
+/**
+ * Represents the response model for an address.
+ */
 export class AddressResponseModel {
     'city'?: string | null;
     'region'?: string | null;
@@ -47,9 +50,15 @@ export class AddressResponseModel {
         },
     ];
 
+    /**
+     * Returns the attribute type map for AddressResponseModel.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return AddressResponseModel.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of AddressResponseModel.
+     */
     public constructor() {}
 }

@@ -22,9 +22,15 @@ __export(SystemDevice_exports, {
 });
 module.exports = __toCommonJS(SystemDevice_exports);
 const _SystemDevice = class _SystemDevice {
+  /**
+   * Returns the attribute type map for the SystemDevice class.
+   */
   static getAttributeTypeMap() {
     return _SystemDevice.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the SystemDevice class.
+   */
   constructor() {
   }
 };

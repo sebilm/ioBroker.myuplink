@@ -10,6 +10,9 @@
  * Do not edit the class manually.
  */
 
+/**
+ * Represents a request to patch a zone with optional setpoints and mode.
+ */
 export class ZonePatchRequest {
     'setpointHeat'?: number | null;
     'setpointCool'?: number | null;
@@ -38,9 +41,15 @@ export class ZonePatchRequest {
         },
     ];
 
+    /**
+     * Returns the attribute type map for ZonePatchRequest.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return ZonePatchRequest.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new ZonePatchRequest instance.
+     */
     public constructor() {}
 }

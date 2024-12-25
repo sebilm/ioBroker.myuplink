@@ -10,8 +10,11 @@
  * Do not edit the class manually.
  */
 
-import { ProductRegistrationAddress } from '../models/ProductRegistrationAddress';
+import type { ProductRegistrationAddress } from '../models/ProductRegistrationAddress';
 
+/**
+ * Class representing a product registration response with address.
+ */
 export class ProductRegistrationResponseWithAddress {
     'address'?: ProductRegistrationAddress;
     /**
@@ -186,9 +189,15 @@ export class ProductRegistrationResponseWithAddress {
         },
     ];
 
+    /**
+     * Returns the attribute type map for the ProductRegistrationResponseWithAddress class.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return ProductRegistrationResponseWithAddress.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the ProductRegistrationResponseWithAddress class.
+     */
     public constructor() {}
 }

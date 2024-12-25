@@ -10,8 +10,8 @@
  * Do not edit the class manually.
  */
 
-import { DataPoint } from '../models/DataPoint';
-import { ParameterData } from '../models/ParameterData';
+import type { DataPoint } from '../models/DataPoint';
+import type { ParameterData } from '../models/ParameterData';
 
 /**
  * Curve.
@@ -40,9 +40,15 @@ export class Curve {
         },
     ];
 
+    /**
+     * Returns the attribute type map for the Curve class.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return Curve.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the Curve class.
+     */
     public constructor() {}
 }

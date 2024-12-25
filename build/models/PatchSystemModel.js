@@ -22,9 +22,15 @@ __export(PatchSystemModel_exports, {
 });
 module.exports = __toCommonJS(PatchSystemModel_exports);
 const _PatchSystemModel = class _PatchSystemModel {
+  /**
+   * Returns the attribute type map.
+   */
   static getAttributeTypeMap() {
     return _PatchSystemModel.attributeTypeMap;
   }
+  /**
+   * Constructor for PatchSystemModel.
+   */
   constructor() {
   }
 };

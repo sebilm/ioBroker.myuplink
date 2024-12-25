@@ -22,9 +22,17 @@ __export(SsqGroupDevice_exports, {
 });
 module.exports = __toCommonJS(SsqGroupDevice_exports);
 const _SsqGroupDevice = class _SsqGroupDevice {
+  /**
+   * Get the attribute type map.
+   *
+   * @returns Array of attribute type map objects.
+   */
   static getAttributeTypeMap() {
     return _SsqGroupDevice.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the SsqGroupDevice class.
+   */
   constructor() {
   }
 };

@@ -22,9 +22,15 @@ __export(AvailableMethods_exports, {
 });
 module.exports = __toCommonJS(AvailableMethods_exports);
 const _AvailableMethods = class _AvailableMethods {
+  /**
+   * Returns the attribute type map for AvailableMethods.
+   */
   static getAttributeTypeMap() {
     return _AvailableMethods.attributeTypeMap;
   }
+  /**
+   * Constructs an instance of AvailableMethods.
+   */
   constructor() {
   }
 };

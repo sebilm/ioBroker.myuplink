@@ -22,9 +22,15 @@ __export(GroupedDeviceParameterData_exports, {
 });
 module.exports = __toCommonJS(GroupedDeviceParameterData_exports);
 const _GroupedDeviceParameterData = class _GroupedDeviceParameterData {
+  /**
+   * Returns the attribute type map.
+   */
   static getAttributeTypeMap() {
     return _GroupedDeviceParameterData.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the GroupedDeviceParameterData class.
+   */
   constructor() {
   }
 };

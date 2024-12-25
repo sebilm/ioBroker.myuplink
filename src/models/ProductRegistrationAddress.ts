@@ -10,8 +10,11 @@
  * Do not edit the class manually.
  */
 
-import { Country } from '../models/Country';
+import type { Country } from '../models/Country';
 
+/**
+ * Represents the address for product registration.
+ */
 export class ProductRegistrationAddress {
     'city'?: string | null;
     'region'?: string | null;
@@ -47,9 +50,15 @@ export class ProductRegistrationAddress {
         },
     ];
 
+    /**
+     * Returns the attribute type map for ProductRegistrationAddress.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return ProductRegistrationAddress.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the ProductRegistrationAddress class.
+     */
     public constructor() {}
 }

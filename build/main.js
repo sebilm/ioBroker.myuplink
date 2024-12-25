@@ -26,10 +26,10 @@ var fs = __toESM(require("fs"));
 var path = __toESM(require("path"));
 var import_myUplinkLogic = require("./myUplinkLogic");
 Date.prototype.today = function() {
-  return this.getFullYear() + "-" + (this.getMonth() + 1 < 10 ? "0" : "") + (this.getMonth() + 1) + "-" + (this.getDate() < 10 ? "0" : "") + this.getDate();
+  return `${this.getFullYear()}-${this.getMonth() + 1 < 10 ? "0" : ""}${this.getMonth() + 1}-${this.getDate() < 10 ? "0" : ""}${this.getDate()}`;
 };
 Date.prototype.timeNow = function() {
-  return (this.getHours() < 10 ? "0" : "") + this.getHours() + ":" + (this.getMinutes() < 10 ? "0" : "") + this.getMinutes() + ":" + (this.getSeconds() < 10 ? "0" : "") + this.getSeconds();
+  return `${(this.getHours() < 10 ? "0" : "") + this.getHours()}:${this.getMinutes() < 10 ? "0" : ""}${this.getMinutes()}:${this.getSeconds() < 10 ? "0" : ""}${this.getSeconds()}`;
 };
 class Myuplink extends utils.Adapter {
   constructor(options = {}) {
@@ -273,14 +273,14 @@ class Myuplink extends utils.Adapter {
         fs.mkdirSync(storeDir);
       }
     } catch (err) {
-      this.log.error("Could not create storage directory (" + storeDir + "): " + err);
+      this.log.error(`Could not create storage directory (${storeDir}): ${err}`);
       return;
     }
     try {
       this.myUplink = new import_myUplinkLogic.MyUplinkLogic(this, this.config, storeDir, this.log);
     } catch (error) {
-      this.setState("info.connection", { val: false, ack: true });
-      this.setState("info.currentError", { val: `${error}`, ack: true });
+      await this.setState("info.connection", { val: false, ack: true });
+      await this.setState("info.currentError", { val: `${error}`, ack: true });
       return;
     }
     await this.subscribeStatesAsync("*");
@@ -291,7 +291,7 @@ class Myuplink extends utils.Adapter {
     if (this.myUplink) {
       const error = await this.myUplink.GetDataAsync();
       const newDate = /* @__PURE__ */ new Date();
-      const datetime = newDate.today() + " " + newDate.timeNow();
+      const datetime = `${newDate.today()} ${newDate.timeNow()}`;
       if (error) {
         await this.setState("info.connection", { val: false, ack: true });
         await this.setState("info.lastErrorTime", { val: datetime, ack: true });
@@ -304,12 +304,9 @@ class Myuplink extends utils.Adapter {
       }
     }
     this.log.debug("Set timer");
-    this.timeout = this.setTimeout(
-      async () => {
-        await this.getDataAsync();
-      },
-      this.refreshInterval * 1e3
-    );
+    this.timeout = this.setTimeout(async () => {
+      await this.getDataAsync();
+    }, this.refreshInterval * 1e3);
   }
   async setInfoObjects() {
     await this.setObjectNotExistsAsync("info", {
@@ -382,6 +379,9 @@ class Myuplink extends utils.Adapter {
   }
   /**
    * Is called if a subscribed state changes
+   *
+   * @param id - The id of the state that has changed
+   * @param state - The state that has changed
    */
   async onStateChange(id, state) {
     var _a;
@@ -391,25 +391,38 @@ class Myuplink extends utils.Adapter {
       if (obj != null && obj.native != null && obj.native.writable == true && obj.native.deviceId) {
         const deviceId = obj.native.deviceId;
         const parameterId = (_a = obj.native.parameterId) == null ? void 0 : _a.toString();
-        const error = await this.myUplink.SetDataAsync(id, state.val, deviceId, parameterId, obj.native.rawJson === true);
+        const error = await this.myUplink.SetDataAsync(
+          id,
+          state.val,
+          deviceId,
+          parameterId,
+          obj.native.rawJson === true
+        );
         if (error) {
-          await this.setState(id, { val: state.val, q: this.constants.STATE_QUALITY.DEVICE_ERROR_REPORT, ack: false, c: error });
+          await this.setState(id, {
+            val: state.val,
+            q: this.constants.STATE_QUALITY.DEVICE_ERROR_REPORT,
+            ack: false,
+            c: error
+          });
         }
       }
     }
   }
   /**
    * Is called when adapter shuts down - callback has to be called under any circumstances!
+   *
+   * @param callback - The callback function to be called when the unload process is complete
    */
-  onUnload(callback) {
+  async onUnload(callback) {
     try {
       this.clearTimeout(this.timeout);
       this.timeout = void 0;
       this.myUplink = void 0;
-      this.setState("info.connection", { val: false, ack: true });
+      await this.setState("info.connection", { val: false, ack: true });
       this.log.info("Cleaned everything up...");
       callback();
-    } catch (e) {
+    } catch {
       callback();
     }
   }

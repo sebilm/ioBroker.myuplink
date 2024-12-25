@@ -10,8 +10,8 @@
  * Do not edit the class manually.
  */
 
-import { SecurityLevel } from '../models/SecurityLevel';
-import { SystemDevice } from '../models/SystemDevice';
+import type { SecurityLevel } from '../models/SecurityLevel';
+import type { SystemDevice } from '../models/SystemDevice';
 
 /**
  * Group.
@@ -80,9 +80,15 @@ export class SystemWithDevices {
         },
     ];
 
+    /**
+     * Returns the attribute type map for SystemWithDevices.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return SystemWithDevices.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the SystemWithDevices class.
+     */
     public constructor() {}
 }

@@ -22,9 +22,15 @@ __export(UpdateGroupRequest_exports, {
 });
 module.exports = __toCommonJS(UpdateGroupRequest_exports);
 const _UpdateGroupRequest = class _UpdateGroupRequest {
+  /**
+   * Returns the attribute type map.
+   */
   static getAttributeTypeMap() {
     return _UpdateGroupRequest.attributeTypeMap;
   }
+  /**
+   * Constructs an instance of UpdateGroupRequest.
+   */
   constructor() {
   }
 };

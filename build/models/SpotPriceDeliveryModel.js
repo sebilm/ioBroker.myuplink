@@ -22,9 +22,15 @@ __export(SpotPriceDeliveryModel_exports, {
 });
 module.exports = __toCommonJS(SpotPriceDeliveryModel_exports);
 const _SpotPriceDeliveryModel = class _SpotPriceDeliveryModel {
+  /**
+   * Returns the attribute type map for SpotPriceDeliveryModel.
+   */
   static getAttributeTypeMap() {
     return _SpotPriceDeliveryModel.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the SpotPriceDeliveryModel class.
+   */
   constructor() {
   }
 };

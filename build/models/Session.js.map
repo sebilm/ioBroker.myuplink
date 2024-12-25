@@ -1,7 +1,7 @@
 {
   "version": 3,
   "sources": ["../../src/models/Session.ts"],
-  "sourcesContent": ["export interface Session {\n    token_type?: string;\n    access_token?: string;\n    refresh_token?: string;\n    scope?: string;\n    expires_in?: number;\n}\n"],
+  "sourcesContent": ["/**\n * Represents a session with authentication tokens and related information.\n */\nexport interface Session {\n    /**\n     * The type of the token.\n     */\n    token_type?: string;\n    /**\n     * The access token.\n     */\n    access_token?: string;\n    /**\n     * The refresh token.\n     */\n    refresh_token?: string;\n    /**\n     * The scope of the token.\n     */\n    scope?: string;\n    /**\n     * The number of seconds until the token expires.\n     */\n    expires_in?: number;\n}\n"],
   "mappings": ";;;;;;;;;;;;;;AAAA;AAAA;",
   "names": []
 }

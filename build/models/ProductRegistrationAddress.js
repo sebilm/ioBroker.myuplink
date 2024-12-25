@@ -22,9 +22,15 @@ __export(ProductRegistrationAddress_exports, {
 });
 module.exports = __toCommonJS(ProductRegistrationAddress_exports);
 const _ProductRegistrationAddress = class _ProductRegistrationAddress {
+  /**
+   * Returns the attribute type map for ProductRegistrationAddress.
+   */
   static getAttributeTypeMap() {
     return _ProductRegistrationAddress.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the ProductRegistrationAddress class.
+   */
   constructor() {
   }
 };

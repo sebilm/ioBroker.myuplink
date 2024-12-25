@@ -22,9 +22,15 @@ __export(StoreSet_exports, {
 });
 module.exports = __toCommonJS(StoreSet_exports);
 const _StoreSet = class _StoreSet {
+  /**
+   * Returns the attribute type map for the StoreSet class.
+   */
   static getAttributeTypeMap() {
     return _StoreSet.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the StoreSet class.
+   */
   constructor() {
   }
 };

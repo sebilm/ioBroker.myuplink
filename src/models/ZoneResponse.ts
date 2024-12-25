@@ -10,6 +10,9 @@
  * Do not edit the class manually.
  */
 
+/**
+ * Represents a response for a zone.
+ */
 export class ZoneResponse {
     /**
      * sh-zone\'s parameter id.
@@ -157,9 +160,15 @@ export class ZoneResponse {
         },
     ];
 
+    /**
+     * Returns the attribute type map for the ZoneResponse class.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return this.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the ZoneResponse class.
+     */
     public constructor() {}
 }

@@ -22,9 +22,15 @@ __export(SmartHomeModeModel_exports, {
 });
 module.exports = __toCommonJS(SmartHomeModeModel_exports);
 const _SmartHomeModeModel = class _SmartHomeModeModel {
+  /**
+   * Returns the attribute type map for SmartHomeModeModel.
+   */
   static getAttributeTypeMap() {
     return _SmartHomeModeModel.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of SmartHomeModeModel.
+   */
   constructor() {
   }
 };

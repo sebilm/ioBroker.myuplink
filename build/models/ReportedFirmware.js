@@ -22,9 +22,15 @@ __export(ReportedFirmware_exports, {
 });
 module.exports = __toCommonJS(ReportedFirmware_exports);
 const _ReportedFirmware = class _ReportedFirmware {
+  /**
+   * Returns the attribute type map for the ReportedFirmware class.
+   */
   static getAttributeTypeMap() {
     return _ReportedFirmware.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the ReportedFirmware class.
+   */
   constructor() {
   }
 };

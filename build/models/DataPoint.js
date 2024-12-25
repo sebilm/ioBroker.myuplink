@@ -22,9 +22,15 @@ __export(DataPoint_exports, {
 });
 module.exports = __toCommonJS(DataPoint_exports);
 const _DataPoint = class _DataPoint {
+  /**
+   * Returns the attribute type map.
+   */
   static getAttributeTypeMap() {
     return _DataPoint.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the DataPoint class.
+   */
   constructor() {
   }
 };

@@ -38,8 +38,9 @@ function isObject(it) {
   return Object.prototype.toString.call(it) === "[object Object]";
 }
 function isArray(it) {
-  if (Array.isArray != null)
+  if (Array.isArray != null) {
     return Array.isArray(it);
+  }
   return Object.prototype.toString.call(it) === "[object Array]";
 }
 async function translateText(text, targetLang, yandexApiKey) {
@@ -50,9 +51,8 @@ async function translateText(text, targetLang, yandexApiKey) {
   }
   if (yandexApiKey) {
     return translateYandex(text, targetLang, yandexApiKey);
-  } else {
-    return translateGoogle(text, targetLang);
   }
+  return translateGoogle(text, targetLang);
 }
 async function translateYandex(text, targetLang, apiKey) {
   var _a;

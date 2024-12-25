@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { Alarm } from '../models/Alarm';
+import type { Alarm } from '../models/Alarm';
 
 /**
  * Alarms paged.
@@ -62,9 +62,15 @@ export class AlarmsPaged {
         },
     ];
 
+    /**
+     * Returns the attribute type map.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return AlarmsPaged.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the AlarmsPaged class.
+     */
     public constructor() {}
 }

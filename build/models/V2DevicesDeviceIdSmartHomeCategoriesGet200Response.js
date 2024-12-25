@@ -22,9 +22,15 @@ __export(V2DevicesDeviceIdSmartHomeCategoriesGet200Response_exports, {
 });
 module.exports = __toCommonJS(V2DevicesDeviceIdSmartHomeCategoriesGet200Response_exports);
 const _V2DevicesDeviceIdSmartHomeCategoriesGet200Response = class _V2DevicesDeviceIdSmartHomeCategoriesGet200Response {
+  /**
+   * Returns the attribute type map for the response.
+   */
   static getAttributeTypeMap() {
     return _V2DevicesDeviceIdSmartHomeCategoriesGet200Response.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the V2DevicesDeviceIdSmartHomeCategoriesGet200Response class.
+   */
   constructor() {
   }
 };

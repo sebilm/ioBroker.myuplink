@@ -10,6 +10,9 @@
  * Do not edit the class manually.
  */
 
+/**
+ * Represents the response model for device info synchronization.
+ */
 export class DeviceInfoSyncResponseModel {
     'syncId'?: number;
     'status'?: string | null;
@@ -31,9 +34,15 @@ export class DeviceInfoSyncResponseModel {
         },
     ];
 
+    /**
+     * Returns the attribute type map for the DeviceInfoSyncResponseModel.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return DeviceInfoSyncResponseModel.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the DeviceInfoSyncResponseModel class.
+     */
     public constructor() {}
 }

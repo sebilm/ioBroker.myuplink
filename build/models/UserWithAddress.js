@@ -22,9 +22,15 @@ __export(UserWithAddress_exports, {
 });
 module.exports = __toCommonJS(UserWithAddress_exports);
 const _UserWithAddress = class _UserWithAddress {
+  /**
+   * Returns the attribute type map for UserWithAddress.
+   */
   static getAttributeTypeMap() {
     return _UserWithAddress.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the UserWithAddress class.
+   */
   constructor() {
   }
 };

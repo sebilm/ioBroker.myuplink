@@ -22,9 +22,15 @@ __export(Reported_exports, {
 });
 module.exports = __toCommonJS(Reported_exports);
 const _Reported = class _Reported {
+  /**
+   * Returns the attribute type map for the Reported class.
+   */
   static getAttributeTypeMap() {
     return _Reported.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the Reported class.
+   */
   constructor() {
   }
 };

@@ -22,9 +22,15 @@ __export(ProductResponseModel_exports, {
 });
 module.exports = __toCommonJS(ProductResponseModel_exports);
 const _ProductResponseModel = class _ProductResponseModel {
+  /**
+   * Returns the attribute type map for ProductResponseModel.
+   */
   static getAttributeTypeMap() {
     return _ProductResponseModel.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the ProductResponseModel class.
+   */
   constructor() {
   }
 };

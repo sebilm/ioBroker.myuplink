@@ -10,6 +10,9 @@
  * Do not edit the class manually.
  */
 
+/**
+ * Represents the response containing firmware information for a device.
+ */
 export class DeviceFirmwareInfoResponse {
     'deviceId'?: string | null;
     'firmwareId'?: string | null;
@@ -52,9 +55,15 @@ export class DeviceFirmwareInfoResponse {
         },
     ];
 
+    /**
+     * Returns the attribute type map for DeviceFirmwareInfoResponse.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return DeviceFirmwareInfoResponse.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the DeviceFirmwareInfoResponse class.
+     */
     public constructor() {}
 }

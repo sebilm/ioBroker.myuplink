@@ -10,8 +10,11 @@
  * Do not edit the class manually.
  */
 
-import { PremiumFeatureResponseModel } from '../models/PremiumFeatureResponseModel';
+import type { PremiumFeatureResponseModel } from '../models/PremiumFeatureResponseModel';
 
+/**
+ * Represents the response for device premium features.
+ */
 export class DevicePremiumResponse {
     'subscriptions'?: Array<PremiumFeatureResponseModel> | null;
 
@@ -26,9 +29,15 @@ export class DevicePremiumResponse {
         },
     ];
 
+    /**
+     * Returns the attribute type map for DevicePremiumResponse.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return DevicePremiumResponse.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the DevicePremiumResponse class.
+     */
     public constructor() {}
 }

@@ -10,6 +10,9 @@
  * Do not edit the class manually.
  */
 
+/**
+ * Class representing available methods.
+ */
 export class AvailableMethods {
     'settings'?: boolean;
     'reboot'?: boolean;
@@ -199,9 +202,15 @@ export class AvailableMethods {
         },
     ];
 
+    /**
+     * Returns the attribute type map for AvailableMethods.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return AvailableMethods.attributeTypeMap;
     }
 
+    /**
+     * Constructs an instance of AvailableMethods.
+     */
     public constructor() {}
 }

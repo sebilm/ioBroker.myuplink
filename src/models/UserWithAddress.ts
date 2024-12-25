@@ -10,8 +10,11 @@
  * Do not edit the class manually.
  */
 
-import { Address } from '../models/Address';
+import type { Address } from '../models/Address';
 
+/**
+ * Class representing a user with an address.
+ */
 export class UserWithAddress {
     'userId'?: string;
     'email'?: string | null;
@@ -47,9 +50,15 @@ export class UserWithAddress {
         },
     ];
 
+    /**
+     * Returns the attribute type map for UserWithAddress.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return UserWithAddress.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the UserWithAddress class.
+     */
     public constructor() {}
 }

@@ -22,9 +22,15 @@ __export(PremiumFeatureResponseModel_exports, {
 });
 module.exports = __toCommonJS(PremiumFeatureResponseModel_exports);
 const _PremiumFeatureResponseModel = class _PremiumFeatureResponseModel {
+  /**
+   * Returns the attribute type map for the PremiumFeatureResponseModel.
+   */
   static getAttributeTypeMap() {
     return _PremiumFeatureResponseModel.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the PremiumFeatureResponseModel class.
+   */
   constructor() {
   }
 };

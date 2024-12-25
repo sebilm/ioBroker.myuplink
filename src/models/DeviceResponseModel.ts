@@ -10,10 +10,10 @@
  * Do not edit the class manually.
  */
 
-import { AvailableMethods } from '../models/AvailableMethods';
-import { DeviceConnectionState } from '../models/DeviceConnectionState';
-import { FirmwareResponseModel } from '../models/FirmwareResponseModel';
-import { ProductResponseModel } from '../models/ProductResponseModel';
+import type { AvailableMethods } from '../models/AvailableMethods';
+import type { DeviceConnectionState } from '../models/DeviceConnectionState';
+import type { FirmwareResponseModel } from '../models/FirmwareResponseModel';
+import type { ProductResponseModel } from '../models/ProductResponseModel';
 
 /**
  * DeviceResponseModel.
@@ -63,9 +63,15 @@ export class DeviceResponseModel {
         },
     ];
 
+    /**
+     * Returns the attribute type map.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return DeviceResponseModel.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the DeviceResponseModel class.
+     */
     public constructor() {}
 }

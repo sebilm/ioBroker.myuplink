@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { Country } from '../models/Country';
+import type { Country } from '../models/Country';
 
 /**
  * Address model.
@@ -89,9 +89,15 @@ export class Address {
         },
     ];
 
+    /**
+     * Returns the attribute type map for the Address model.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return Address.attributeTypeMap;
     }
 
+    /**
+     * Constructs an instance of the Address class.
+     */
     public constructor() {}
 }

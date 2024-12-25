@@ -40,9 +40,15 @@ export class Product {
         },
     ];
 
+    /**
+     * Returns the attribute type map for the Product model.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return Product.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the Product class.
+     */
     public constructor() {}
 }

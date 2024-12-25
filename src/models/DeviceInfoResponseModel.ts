@@ -10,8 +10,11 @@
  * Do not edit the class manually.
  */
 
-import { AddressResponseModel } from '../models/AddressResponseModel';
+import type { AddressResponseModel } from '../models/AddressResponseModel';
 
+/**
+ * DeviceInfoResponseModel represents the response model for device information.
+ */
 export class DeviceInfoResponseModel {
     'deviceId'?: string | null;
     'productName'?: string | null;
@@ -40,9 +43,15 @@ export class DeviceInfoResponseModel {
         },
     ];
 
+    /**
+     * Returns the attribute type map for DeviceInfoResponseModel.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return DeviceInfoResponseModel.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of DeviceInfoResponseModel.
+     */
     public constructor() {}
 }

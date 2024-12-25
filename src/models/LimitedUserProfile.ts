@@ -30,9 +30,15 @@ export class LimitedUserProfile {
         },
     ];
 
+    /**
+     * Returns the attribute type map for the LimitedUserProfile class.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return LimitedUserProfile.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the LimitedUserProfile class.
+     */
     public constructor() {}
 }

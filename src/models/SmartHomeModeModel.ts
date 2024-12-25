@@ -10,8 +10,11 @@
  * Do not edit the class manually.
  */
 
-import { SmartMode } from '../models/SmartMode';
+import type { SmartMode } from '../models/SmartMode';
 
+/**
+ * Represents the SmartHomeModeModel.
+ */
 export class SmartHomeModeModel {
     'smartHomeMode'?: SmartMode;
 
@@ -26,9 +29,15 @@ export class SmartHomeModeModel {
         },
     ];
 
+    /**
+     * Returns the attribute type map for SmartHomeModeModel.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return SmartHomeModeModel.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of SmartHomeModeModel.
+     */
     public constructor() {}
 }

@@ -18,7 +18,9 @@ declare global {
     }
 }
 Date.prototype.today = function (): string {
-    return this.getFullYear() + '-' + (this.getMonth() + 1 < 10 ? '0' : '') + (this.getMonth() + 1) + '-' + (this.getDate() < 10 ? '0' : '') + this.getDate();
+    return `${this.getFullYear()}-${this.getMonth() + 1 < 10 ? '0' : ''}${this.getMonth() + 1}-${
+        this.getDate() < 10 ? '0' : ''
+    }${this.getDate()}`;
 };
 
 // For the time now
@@ -28,16 +30,9 @@ declare global {
     }
 }
 Date.prototype.timeNow = function (): string {
-    return (
-        (this.getHours() < 10 ? '0' : '') +
-        this.getHours() +
-        ':' +
-        (this.getMinutes() < 10 ? '0' : '') +
-        this.getMinutes() +
-        ':' +
-        (this.getSeconds() < 10 ? '0' : '') +
-        this.getSeconds()
-    );
+    return `${(this.getHours() < 10 ? '0' : '') + this.getHours()}:${
+        this.getMinutes() < 10 ? '0' : ''
+    }${this.getMinutes()}:${this.getSeconds() < 10 ? '0' : ''}${this.getSeconds()}`;
 };
 
 class Myuplink extends utils.Adapter {
@@ -89,7 +84,13 @@ class Myuplink extends utils.Adapter {
         });
     }
 
-    async CreateStringObjectAsync(path: string, name: string, value: string, createObject: boolean, role: string = 'text'): Promise<void> {
+    async CreateStringObjectAsync(
+        path: string,
+        name: string,
+        value: string,
+        createObject: boolean,
+        role: string = 'text',
+    ): Promise<void> {
         if (createObject) {
             this.log.debug(`Create string object if not exists: ${path}`);
             await this.setObjectNotExistsAsync(path, {
@@ -107,7 +108,13 @@ class Myuplink extends utils.Adapter {
         await this.setState(path, { val: value, ack: true });
     }
 
-    async CreateBooleanObjectAsync(path: string, name: string, role: string, value: boolean, createObject: boolean): Promise<void> {
+    async CreateBooleanObjectAsync(
+        path: string,
+        name: string,
+        role: string,
+        value: boolean,
+        createObject: boolean,
+    ): Promise<void> {
         if (createObject) {
             this.log.debug(`Create boolean object if not exists: ${path}`);
             await this.setObjectNotExistsAsync(path, {
@@ -272,7 +279,10 @@ class Myuplink extends utils.Adapter {
         await this.setState(path, { val: value, ack: true });
     }
 
-    private areRecordsEqual(record1: Record<string, string> | null | undefined, record2: Record<string, string> | null | undefined): boolean {
+    private areRecordsEqual(
+        record1: Record<string, string> | null | undefined,
+        record2: Record<string, string> | null | undefined,
+    ): boolean {
         if (record1 == null && record2 == null) {
             return true;
         }
@@ -319,15 +329,15 @@ class Myuplink extends utils.Adapter {
                 fs.mkdirSync(storeDir);
             }
         } catch (err) {
-            this.log.error('Could not create storage directory (' + storeDir + '): ' + err);
+            this.log.error(`Could not create storage directory (${storeDir}): ${err as any}`);
             return;
         }
 
         try {
             this.myUplink = new MyUplinkLogic(this, this.config, storeDir, this.log);
         } catch (error) {
-            this.setState('info.connection', { val: false, ack: true });
-            this.setState('info.currentError', { val: `${error}`, ack: true });
+            await this.setState('info.connection', { val: false, ack: true });
+            await this.setState('info.currentError', { val: `${error as any}`, ack: true });
             return;
         }
 
@@ -342,7 +352,7 @@ class Myuplink extends utils.Adapter {
         if (this.myUplink) {
             const error = await this.myUplink.GetDataAsync();
             const newDate = new Date();
-            const datetime = newDate.today() + ' ' + newDate.timeNow();
+            const datetime = `${newDate.today()} ${newDate.timeNow()}`;
             if (error) {
                 await this.setState('info.connection', { val: false, ack: true });
                 await this.setState('info.lastErrorTime', { val: datetime, ack: true });
@@ -356,12 +366,9 @@ class Myuplink extends utils.Adapter {
         }
 
         this.log.debug('Set timer');
-        this.timeout = this.setTimeout(
-            async () => {
-                await this.getDataAsync();
-            },
-            <number>this.refreshInterval * 1000,
-        );
+        this.timeout = this.setTimeout(async () => {
+            await this.getDataAsync();
+        }, this.refreshInterval * 1000);
     }
 
     private async setInfoObjects(): Promise<void> {
@@ -436,17 +443,37 @@ class Myuplink extends utils.Adapter {
 
     /**
      * Is called if a subscribed state changes
+     *
+     * @param id - The id of the state that has changed
+     * @param state - The state that has changed
      */
     private async onStateChange(id: string, state: ioBroker.State | null | undefined): Promise<void> {
-        if (state != null && state.ack === false && state.q == this.constants.STATE_QUALITY.GOOD && state.val != null && this.myUplink != null) {
+        if (
+            state != null &&
+            state.ack === false &&
+            state.q == this.constants.STATE_QUALITY.GOOD &&
+            state.val != null &&
+            this.myUplink != null
+        ) {
             this.log.debug(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
             const obj = await this.getObjectAsync(id);
             if (obj != null && obj.native != null && obj.native.writable == true && obj.native.deviceId) {
                 const deviceId: string = obj.native.deviceId;
                 const parameterId: string | null = obj.native.parameterId?.toString();
-                const error = await this.myUplink.SetDataAsync(id, state.val, deviceId, parameterId, obj.native.rawJson === true);
+                const error = await this.myUplink.SetDataAsync(
+                    id,
+                    state.val,
+                    deviceId,
+                    parameterId,
+                    obj.native.rawJson === true,
+                );
                 if (error) {
-                    await this.setState(id, { val: state.val, q: this.constants.STATE_QUALITY.DEVICE_ERROR_REPORT, ack: false, c: error });
+                    await this.setState(id, {
+                        val: state.val,
+                        q: this.constants.STATE_QUALITY.DEVICE_ERROR_REPORT,
+                        ack: false,
+                        c: error,
+                    });
                 }
             }
         }
@@ -454,16 +481,18 @@ class Myuplink extends utils.Adapter {
 
     /**
      * Is called when adapter shuts down - callback has to be called under any circumstances!
+     *
+     * @param callback - The callback function to be called when the unload process is complete
      */
-    private onUnload(callback: () => void): void {
+    private async onUnload(callback: () => void): Promise<void> {
         try {
             this.clearTimeout(this.timeout);
             this.timeout = undefined;
             this.myUplink = undefined;
-            this.setState('info.connection', { val: false, ack: true });
+            await this.setState('info.connection', { val: false, ack: true });
             this.log.info('Cleaned everything up...');
             callback();
-        } catch (e) {
+        } catch {
             callback();
         }
     }

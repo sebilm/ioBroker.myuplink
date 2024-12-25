@@ -22,9 +22,15 @@ __export(DeviceInfoResponseModelPagedResult_exports, {
 });
 module.exports = __toCommonJS(DeviceInfoResponseModelPagedResult_exports);
 const _DeviceInfoResponseModelPagedResult = class _DeviceInfoResponseModelPagedResult {
+  /**
+   * Returns the attribute type map for DeviceInfoResponseModelPagedResult.
+   */
   static getAttributeTypeMap() {
     return _DeviceInfoResponseModelPagedResult.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the DeviceInfoResponseModelPagedResult class.
+   */
   constructor() {
   }
 };

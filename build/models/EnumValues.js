@@ -22,9 +22,15 @@ __export(EnumValues_exports, {
 });
 module.exports = __toCommonJS(EnumValues_exports);
 const _EnumValues = class _EnumValues {
+  /**
+   * Returns the attribute type map for EnumValues.
+   */
   static getAttributeTypeMap() {
     return _EnumValues.attributeTypeMap;
   }
+  /**
+   * Constructs an instance of EnumValues.
+   */
   constructor() {
   }
 };

@@ -22,9 +22,15 @@ __export(ZoneResponse_exports, {
 });
 module.exports = __toCommonJS(ZoneResponse_exports);
 class ZoneResponse {
+  /**
+   * Returns the attribute type map for the ZoneResponse class.
+   */
   static getAttributeTypeMap() {
     return this.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the ZoneResponse class.
+   */
   constructor() {
   }
 }

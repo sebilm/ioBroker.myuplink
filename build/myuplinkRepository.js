@@ -36,6 +36,12 @@ function setProperty(obj, propertyName, value) {
   obj[propertyName] = value;
 }
 class MyUplinkRepository {
+  /**
+   * Constructs a new instance of MyUplinkRepository.
+   *
+   * @param options - The options for configuring the repository.
+   * @param log - The logger instance for logging.
+   */
   constructor(options, log) {
     this.log = log;
     this.options = options;
@@ -43,22 +49,62 @@ class MyUplinkRepository {
     import_axios.default.defaults.headers.common["user-agent"] = options.userAgent;
     import_axios.default.defaults.timeout = options.timeout;
   }
+  /**
+   * Retrieves systems and devices associated.
+   *
+   * @param accessToken - The access token for authentication.
+   * @returns A promise that resolves to a paged result of systems.
+   */
   getSystemsAndDevicesAsync(accessToken) {
     return this.getFromMyUplinkAsync("/v2/systems/me", accessToken);
   }
+  /**
+   * Retrieves device points for a specific device.
+   *
+   * @param deviceId - The ID of the device.
+   * @param accessToken - The access token for authentication.
+   * @returns A promise that resolves to an array of parameter data.
+   */
   getDevicePointsAsync(deviceId, accessToken) {
     return this.getFromMyUplinkAsync(`/v3/devices/${deviceId}/points`, accessToken);
   }
+  /**
+   * Sets a device point for a specific device.
+   *
+   * @param deviceId - The ID of the device.
+   * @param accessToken - The access token for authentication.
+   * @param parameterId - The ID of the parameter to set.
+   * @param value - The value to set for the parameter.
+   * @returns A promise that resolves when the device point is set.
+   */
   setDevicePointAsync(deviceId, accessToken, parameterId, value) {
     const body = {};
     setProperty(body, parameterId, value);
     return this.setDevicePointsAsync(deviceId, accessToken, body);
   }
+  /**
+   * Sets multiple device points for a specific device.
+   *
+   * @param deviceId - The ID of the device.
+   * @param accessToken - The access token for authentication.
+   * @param keyValueDictionary - A dictionary of parameter IDs and values to set.
+   * @returns A promise that resolves when the device points are set.
+   */
   setDevicePointsAsync(deviceId, accessToken, keyValueDictionary) {
     return this.patchToMyUplinkAsync(`/v2/devices/${deviceId}/points`, keyValueDictionary, accessToken);
   }
+  /**
+   * Retrieves active notifications for a specific system.
+   *
+   * @param systemId - The ID of the system.
+   * @param accessToken - The access token for authentication.
+   * @returns A promise that resolves to a paged result of active alarms.
+   */
   getActiveNotificationsAsync(systemId, accessToken) {
-    return this.getFromMyUplinkAsync(`/v2/systems/${systemId}/notifications/active?itemsPerPage=100`, accessToken);
+    return this.getFromMyUplinkAsync(
+      `/v2/systems/${systemId}/notifications/active?itemsPerPage=100`,
+      accessToken
+    );
   }
   async getFromMyUplinkAsync(url, accessToken) {
     const lang = this.options.language;
@@ -103,9 +149,8 @@ class MyUplinkRepository {
           const responseText = JSON.stringify(axiosError.response.data, null, " ");
           const errorMessage = `${axiosError.response.statusText}: ${responseText}`;
           return new Error(errorMessage);
-        } else {
-          return new Error(axiosError.response.statusText);
         }
+        return new Error(axiosError.response.statusText);
       }
     }
     return error;

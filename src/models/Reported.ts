@@ -10,8 +10,11 @@
  * Do not edit the class manually.
  */
 
-import { ReportedFirmware } from '../models/ReportedFirmware';
+import type { ReportedFirmware } from '../models/ReportedFirmware';
 
+/**
+ * Represents a reported device with various attributes.
+ */
 export class Reported {
     'deviceName'?: string | null;
     'productName'?: string | null;
@@ -88,9 +91,15 @@ export class Reported {
         },
     ];
 
+    /**
+     * Returns the attribute type map for the Reported class.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return Reported.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the Reported class.
+     */
     public constructor() {}
 }

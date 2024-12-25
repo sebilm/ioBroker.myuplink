@@ -10,6 +10,9 @@
  * Do not edit the class manually.
  */
 
+/**
+ * Class representing the reported firmware details.
+ */
 export class ReportedFirmware {
     'firmwareId'?: string | null;
     'pendingFwVersion'?: string | null;
@@ -52,9 +55,15 @@ export class ReportedFirmware {
         },
     ];
 
+    /**
+     * Returns the attribute type map for the ReportedFirmware class.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return ReportedFirmware.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the ReportedFirmware class.
+     */
     public constructor() {}
 }

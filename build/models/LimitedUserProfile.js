@@ -22,9 +22,15 @@ __export(LimitedUserProfile_exports, {
 });
 module.exports = __toCommonJS(LimitedUserProfile_exports);
 const _LimitedUserProfile = class _LimitedUserProfile {
+  /**
+   * Returns the attribute type map for the LimitedUserProfile class.
+   */
   static getAttributeTypeMap() {
     return _LimitedUserProfile.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the LimitedUserProfile class.
+   */
   constructor() {
   }
 };

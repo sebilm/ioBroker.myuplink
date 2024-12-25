@@ -18,7 +18,7 @@ export class CloudToDeviceMethodResult {
      * Gets or sets the status of device method invocation.
      */
     'status'?: number;
-    'payload'?: any | null;
+    'payload'?: any;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -37,9 +37,15 @@ export class CloudToDeviceMethodResult {
         },
     ];
 
+    /**
+     * Returns the attribute type map for CloudToDeviceMethodResult.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return CloudToDeviceMethodResult.attributeTypeMap;
     }
 
+    /**
+     * Initializes a new instance of the CloudToDeviceMethodResult class.
+     */
     public constructor() {}
 }

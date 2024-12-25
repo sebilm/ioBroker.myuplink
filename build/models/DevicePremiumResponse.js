@@ -22,9 +22,15 @@ __export(DevicePremiumResponse_exports, {
 });
 module.exports = __toCommonJS(DevicePremiumResponse_exports);
 const _DevicePremiumResponse = class _DevicePremiumResponse {
+  /**
+   * Returns the attribute type map for DevicePremiumResponse.
+   */
   static getAttributeTypeMap() {
     return _DevicePremiumResponse.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the DevicePremiumResponse class.
+   */
   constructor() {
   }
 };

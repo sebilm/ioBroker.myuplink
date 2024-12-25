@@ -50,9 +50,15 @@ export class DataPoint {
         },
     ];
 
+    /**
+     * Returns the attribute type map.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return DataPoint.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the DataPoint class.
+     */
     public constructor() {}
 }

@@ -40,9 +40,15 @@ export class FirmwareResponseModel {
         },
     ];
 
+    /**
+     * Returns the attribute type map for the FirmwareResponseModel.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return FirmwareResponseModel.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the FirmwareResponseModel class.
+     */
     public constructor() {}
 }

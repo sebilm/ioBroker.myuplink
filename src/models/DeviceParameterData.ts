@@ -90,9 +90,15 @@ export class DeviceParameterData {
         },
     ];
 
+    /**
+     * Returns the attribute type map for DeviceParameterData.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return DeviceParameterData.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the DeviceParameterData class.
+     */
     public constructor() {}
 }

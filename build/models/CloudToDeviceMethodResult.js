@@ -22,9 +22,15 @@ __export(CloudToDeviceMethodResult_exports, {
 });
 module.exports = __toCommonJS(CloudToDeviceMethodResult_exports);
 const _CloudToDeviceMethodResult = class _CloudToDeviceMethodResult {
+  /**
+   * Returns the attribute type map for CloudToDeviceMethodResult.
+   */
   static getAttributeTypeMap() {
     return _CloudToDeviceMethodResult.attributeTypeMap;
   }
+  /**
+   * Initializes a new instance of the CloudToDeviceMethodResult class.
+   */
   constructor() {
   }
 };

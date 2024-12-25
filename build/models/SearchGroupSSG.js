@@ -22,9 +22,15 @@ __export(SearchGroupSSG_exports, {
 });
 module.exports = __toCommonJS(SearchGroupSSG_exports);
 const _SearchGroupSSG = class _SearchGroupSSG {
+  /**
+   * Returns the attribute type map for SearchGroupSSG.
+   */
   static getAttributeTypeMap() {
     return _SearchGroupSSG.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the SearchGroupSSG class.
+   */
   constructor() {
   }
 };

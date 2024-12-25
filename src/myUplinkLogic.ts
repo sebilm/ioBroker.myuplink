@@ -1,13 +1,24 @@
 import * as path from 'path';
 import { AuthRepository } from './authRepository';
-import { Alarm } from './models/Alarm';
-import { ParameterData } from './models/ParameterData';
-import { SystemDevice } from './models/SystemDevice';
-import { SystemWithDevices } from './models/SystemWithDevices';
+import type { Alarm } from './models/Alarm';
+import type { ParameterData } from './models/ParameterData';
+import type { SystemDevice } from './models/SystemDevice';
+import type { SystemWithDevices } from './models/SystemWithDevices';
 import { MyUplinkRepository } from './myUplinkRepository';
-import { AdapterConfig, DataTarget, Logger, RenameData, StateValue } from './types';
+import type { AdapterConfig, DataTarget, Logger, RenameData, StateValue } from './types';
 
+/**
+ * Class representing the logic for MyUplink.
+ */
 export class MyUplinkLogic {
+    /**
+     * Creates an instance of MyUplinkLogic.
+     *
+     * @param dataTarget - The data target.
+     * @param config - The adapter configuration.
+     * @param storeDir - The directory to store session data.
+     * @param log - The logger instance.
+     */
     constructor(dataTarget: DataTarget, config: AdapterConfig, storeDir: string, log: Logger) {
         this.dataTarget = dataTarget;
         this.config = config;
@@ -114,14 +125,17 @@ export class MyUplinkLogic {
     private categories: Map<string, string> = new Map<string, string>();
     private parameterIds: Map<string, string> = new Map<string, string>();
     private parameterIdToCategory: Map<string, string> = new Map<string, string>();
-    private objectIdIdByParameterIdByDeviceId: Map<string, Map<string, string>> = new Map<string, Map<string, string>>();
+    private objectIdIdByParameterIdByDeviceId: Map<string, Map<string, string>> = new Map<
+        string,
+        Map<string, string>
+    >();
     private existingSystemIds: string[] = [];
     private existingCategoryPaths: string[] = [];
 
     /**
      * Async function to get data asynchronously.
      *
-     * @return {Promise<string | undefined>} a promise with the error string (if there was an error) or undefined (if its all good)
+     * @returns a promise with the error string (if there was an error) or undefined (if its all good)
      */
     async GetDataAsync(): Promise<string | undefined> {
         try {
@@ -134,7 +148,7 @@ export class MyUplinkLogic {
                 }
             }
         } catch (error) {
-            const errorString = `${error}`;
+            const errorString = `${error as any}`;
             this.log.error(errorString);
             return errorString;
         }
@@ -143,20 +157,31 @@ export class MyUplinkLogic {
     /**
      * A function to asynchronously set data.
      *
-     * @param {string} id - the object id
-     * @param {StateValue} value - the value to be set
-     * @param {string} deviceId - the id of the device
-     * @param {string | null} parameterId - the id of the parameter, or null
-     * @param {boolean} isRawJson - flag indicating if the value is raw JSON
-     * @return {Promise<string | undefined>} a promise with the error string (if there was an error) or undefined (if its all good)
+     * @param id - the object id
+     * @param value - the value to be set
+     * @param deviceId - the id of the device
+     * @param parameterId - the id of the parameter, or null
+     * @param isRawJson - flag indicating if the value is raw JSON
+     * @returns a promise with the error string (if there was an error) or undefined (if its all good)
      */
-    async SetDataAsync(id: string, value: StateValue, deviceId: string, parameterId: string | null, isRawJson: boolean): Promise<string | undefined> {
+    async SetDataAsync(
+        id: string,
+        value: StateValue,
+        deviceId: string,
+        parameterId: string | null,
+        isRawJson: boolean,
+    ): Promise<string | undefined> {
         try {
             const accessToken = await this.authRepository.getAccessTokenAsync();
             if (accessToken) {
                 const valueAsString = value.toString();
                 if (parameterId) {
-                    const result = await this.myUplinkRepository.setDevicePointAsync(deviceId, accessToken, parameterId, valueAsString);
+                    const result = await this.myUplinkRepository.setDevicePointAsync(
+                        deviceId,
+                        accessToken,
+                        parameterId,
+                        valueAsString,
+                    );
                     if (result && parameterId in result && result[parameterId] == 'modified') {
                         this.log.debug(`Parameter ${parameterId} modified by API`);
                         await this.dataTarget.SetStateAsync(id, value);
@@ -164,14 +189,23 @@ export class MyUplinkLogic {
                 } else if (isRawJson === true && valueAsString) {
                     const keyValueDictionary: Record<string, string> = JSON.parse(valueAsString);
                     if (Object.keys(keyValueDictionary).length > 0) {
-                        const result = await this.myUplinkRepository.setDevicePointsAsync(deviceId, accessToken, keyValueDictionary);
+                        const result = await this.myUplinkRepository.setDevicePointsAsync(
+                            deviceId,
+                            accessToken,
+                            keyValueDictionary,
+                        );
                         await this.dataTarget.SetStateAsync(id, value);
                         const objectIdByParameterId = this.objectIdIdByParameterIdByDeviceId.get(deviceId);
                         if (objectIdByParameterId && result) {
                             for (const [parameterId, value] of Object.entries(keyValueDictionary)) {
                                 const objectId = objectIdByParameterId.get(parameterId);
                                 const valNumber = parseFloat(value);
-                                if (objectId && !Number.isNaN(valNumber) && parameterId in result && result[parameterId] == 'modified') {
+                                if (
+                                    objectId &&
+                                    !Number.isNaN(valNumber) &&
+                                    parameterId in result &&
+                                    result[parameterId] == 'modified'
+                                ) {
                                     await this.dataTarget.SetStateAsync(objectId, valNumber);
                                 }
                             }
@@ -180,7 +214,7 @@ export class MyUplinkLogic {
                 }
             }
         } catch (error) {
-            const errorString = `${error}`;
+            const errorString = `${error as any}`;
             this.log.error(errorString);
             return errorString;
         }
@@ -200,16 +234,43 @@ export class MyUplinkLogic {
             if (firstRun) {
                 await this.dataTarget.CreateSystemAsync(systemPath, systemName);
             }
-            await this.dataTarget.CreateStringObjectAsync(`${systemPath}.systemId`, 'System ID', system.systemId, firstRun);
-            await this.dataTarget.CreateStringObjectAsync(`${systemPath}.name`, 'Name', systemName, firstRun, 'info.name');
+            await this.dataTarget.CreateStringObjectAsync(
+                `${systemPath}.systemId`,
+                'System ID',
+                system.systemId,
+                firstRun,
+            );
+            await this.dataTarget.CreateStringObjectAsync(
+                `${systemPath}.name`,
+                'Name',
+                systemName,
+                firstRun,
+                'info.name',
+            );
             if (system.country != undefined) {
-                await this.dataTarget.CreateStringObjectAsync(`${systemPath}.country`, 'Country', system.country, firstRun);
+                await this.dataTarget.CreateStringObjectAsync(
+                    `${systemPath}.country`,
+                    'Country',
+                    system.country,
+                    firstRun,
+                );
             }
             if (system.securityLevel != undefined) {
-                await this.dataTarget.CreateStringObjectAsync(`${systemPath}.securityLevel`, 'Security Level', system.securityLevel, firstRun);
+                await this.dataTarget.CreateStringObjectAsync(
+                    `${systemPath}.securityLevel`,
+                    'Security Level',
+                    system.securityLevel,
+                    firstRun,
+                );
             }
             if (system.hasAlarm != undefined) {
-                await this.dataTarget.CreateBooleanObjectAsync(`${systemPath}.hasAlarm`, 'Has Alarm', 'indicator.alarm', system.hasAlarm, firstRun);
+                await this.dataTarget.CreateBooleanObjectAsync(
+                    `${systemPath}.hasAlarm`,
+                    'Has Alarm',
+                    'indicator.alarm',
+                    system.hasAlarm,
+                    firstRun,
+                );
             }
             if (system.devices) {
                 for (const device of system.devices) {
@@ -218,7 +279,10 @@ export class MyUplinkLogic {
             }
 
             if (this.config.AddActiveNotifications) {
-                const notifications = await this.myUplinkRepository?.getActiveNotificationsAsync(system.systemId, accessToken);
+                const notifications = await this.myUplinkRepository?.getActiveNotificationsAsync(
+                    system.systemId,
+                    accessToken,
+                );
                 if (this.config.AddRawActiveNotifications) {
                     await this.dataTarget.CreateStringObjectAsync(
                         `${systemPath}.rawActiveNotifications`,
@@ -227,11 +291,16 @@ export class MyUplinkLogic {
                         firstRun,
                     );
                 }
-                let notificationsDescriptions: string = '';
+                let notificationsDescriptions = '';
                 notifications?.notifications?.forEach((notification: Alarm) => {
                     notificationsDescriptions += `${notification.header}: ${notification.description}\n`;
                 });
-                await this.dataTarget.CreateStringObjectAsync(`${systemPath}.activeNotifications`, 'Active notification descriptions', notificationsDescriptions, firstRun);
+                await this.dataTarget.CreateStringObjectAsync(
+                    `${systemPath}.activeNotifications`,
+                    'Active notification descriptions',
+                    notificationsDescriptions,
+                    firstRun,
+                );
             }
         }
     }
@@ -253,21 +322,50 @@ export class MyUplinkLogic {
                 await this.dataTarget.CreateDeviceAsync(devicePath, deviceName);
             }
             await this.dataTarget.CreateStringObjectAsync(`${devicePath}.deviceId`, 'Device ID', device.id, firstRun);
-            await this.dataTarget.CreateStringObjectAsync(`${devicePath}.name`, 'Name', deviceName, firstRun, 'info.name');
+            await this.dataTarget.CreateStringObjectAsync(
+                `${devicePath}.name`,
+                'Name',
+                deviceName,
+                firstRun,
+                'info.name',
+            );
             if (device.connectionState != undefined) {
-                await this.dataTarget.CreateStringObjectAsync(`${devicePath}.connectionState`, 'Connection State', device.connectionState, firstRun, 'info.status');
+                await this.dataTarget.CreateStringObjectAsync(
+                    `${devicePath}.connectionState`,
+                    'Connection State',
+                    device.connectionState,
+                    firstRun,
+                    'info.status',
+                );
             }
             if (device.currentFwVersion != undefined) {
-                await this.dataTarget.CreateStringObjectAsync(`${devicePath}.currentFwVersion`, 'Current Firmware Version', device.currentFwVersion, firstRun, 'info.firmware');
+                await this.dataTarget.CreateStringObjectAsync(
+                    `${devicePath}.currentFwVersion`,
+                    'Current Firmware Version',
+                    device.currentFwVersion,
+                    firstRun,
+                    'info.firmware',
+                );
             }
             if (device.product?.serialNumber != undefined) {
-                await this.dataTarget.CreateStringObjectAsync(`${devicePath}.serialNumber`, 'Serial Number', device.product.serialNumber, firstRun, 'info.serial');
+                await this.dataTarget.CreateStringObjectAsync(
+                    `${devicePath}.serialNumber`,
+                    'Serial Number',
+                    device.product.serialNumber,
+                    firstRun,
+                    'info.serial',
+                );
             }
 
             if (this.config.AddData) {
                 const devicePoints = await this.myUplinkRepository?.getDevicePointsAsync(device.id, accessToken);
                 if (this.config.AddRawData) {
-                    await this.dataTarget.CreateStringObjectAsync(`${devicePath}.rawData`, 'Received raw JSON of parameter data', JSON.stringify(devicePoints, null, ''), firstRun);
+                    await this.dataTarget.CreateStringObjectAsync(
+                        `${devicePath}.rawData`,
+                        'Received raw JSON of parameter data',
+                        JSON.stringify(devicePoints, null, ''),
+                        firstRun,
+                    );
                 }
                 if (devicePoints) {
                     for (const data of devicePoints) {
@@ -275,16 +373,28 @@ export class MyUplinkLogic {
                     }
                 }
                 if (firstRun) {
-                    await this.dataTarget.CreateWritableStringObjectAsync(`${devicePath}.setData`, 'Send raw JSON of parameter data', 'json', device.id);
+                    await this.dataTarget.CreateWritableStringObjectAsync(
+                        `${devicePath}.setData`,
+                        'Send raw JSON of parameter data',
+                        'json',
+                        device.id,
+                    );
                 }
             }
         }
     }
 
-    private async setParameterDataAsync(data: ParameterData, devicePath: string, deviceId: string | null | undefined, stateIdByParameterId: Map<string, string>): Promise<void> {
+    private async setParameterDataAsync(
+        data: ParameterData,
+        devicePath: string,
+        deviceId: string | null | undefined,
+        stateIdByParameterId: Map<string, string>,
+    ): Promise<void> {
         if (data.parameterId) {
             const existingObjectId = stateIdByParameterId.get(data.parameterId);
-            const stateId = existingObjectId ?? (await this.getObjectIdAndCreateCategoryAsync(data.parameterId, data.category, devicePath));
+            const stateId =
+                existingObjectId ??
+                (await this.getObjectIdAndCreateCategoryAsync(data.parameterId, data.category, devicePath));
             if (!existingObjectId) {
                 stateIdByParameterId.set(data.parameterId, stateId);
                 await this.createParameterObjectAsync(data, deviceId, stateId);
@@ -295,7 +405,11 @@ export class MyUplinkLogic {
         }
     }
 
-    private async getObjectIdAndCreateCategoryAsync(parameterId: string, category: string | null | undefined, devicePath: string): Promise<string> {
+    private async getObjectIdAndCreateCategoryAsync(
+        parameterId: string,
+        category: string | null | undefined,
+        devicePath: string,
+    ): Promise<string> {
         const parameterSubPath = this.parameterIds.get(parameterId) ?? this.replaceForbiddenCharacters(parameterId);
         const newCategory = this.parameterIdToCategory.get(parameterId);
         let categorySubPath: string | null = null;
@@ -312,12 +426,15 @@ export class MyUplinkLogic {
                 await this.dataTarget.CreateCategoryAsync(categoryPath, newCategory ?? category ?? categorySubPath);
             }
             return `${devicePath}.${categorySubPath}.${parameterSubPath}`;
-        } else {
-            return `${devicePath}.${parameterSubPath}`;
         }
+        return `${devicePath}.${parameterSubPath}`;
     }
 
-    private async createParameterObjectAsync(data: ParameterData, deviceId: string | null | undefined, stateId: string): Promise<void> {
+    private async createParameterObjectAsync(
+        data: ParameterData,
+        deviceId: string | null | undefined,
+        stateId: string,
+    ): Promise<void> {
         let role = 'value';
         let unit: string | undefined = undefined;
         if (data.parameterUnit) {
@@ -376,11 +493,25 @@ export class MyUplinkLogic {
                     max = data.maxValue;
                 }
             } else {
-                this.log.warn(`Parameter '${data.parameterId}': min is bigger than max. Min: ${data.minValue}, Max: ${data.maxValue}. Ignoring min/max.`);
+                this.log.warn(
+                    `Parameter '${data.parameterId}': min is bigger than max. Min: ${data.minValue}, Max: ${data.maxValue}. Ignoring min/max.`,
+                );
             }
         }
         const step = data.stepValue ?? undefined;
-        await this.dataTarget.CreateOrUpdateParameterObjectAsync(stateId, name, deviceId, data.parameterId, role, writable, unit, min, max, step, states);
+        await this.dataTarget.CreateOrUpdateParameterObjectAsync(
+            stateId,
+            name,
+            deviceId,
+            data.parameterId,
+            role,
+            writable,
+            unit,
+            min,
+            max,
+            step,
+            states,
+        );
     }
 
     private removeSoftHyphen(text: string): string {

@@ -22,9 +22,15 @@ __export(Country_exports, {
 });
 module.exports = __toCommonJS(Country_exports);
 const _Country = class _Country {
+  /**
+   * Returns the attribute type map for the Country model.
+   */
   static getAttributeTypeMap() {
     return _Country.attributeTypeMap;
   }
+  /**
+   * Constructor for the Country model.
+   */
   constructor() {
   }
 };

@@ -22,9 +22,15 @@ __export(VoucherManyRequest_exports, {
 });
 module.exports = __toCommonJS(VoucherManyRequest_exports);
 const _VoucherManyRequest = class _VoucherManyRequest {
+  /**
+   * Returns the attribute type map.
+   */
   static getAttributeTypeMap() {
     return _VoucherManyRequest.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the VoucherManyRequest class.
+   */
   constructor() {
   }
 };

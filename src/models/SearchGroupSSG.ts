@@ -10,8 +10,11 @@
  * Do not edit the class manually.
  */
 
-import { Properties } from '../models/Properties';
+import type { Properties } from '../models/Properties';
 
+/**
+ * Represents a search group for SSG.
+ */
 export class SearchGroupSSG {
     'deviceId'?: string | null;
     'systemId'?: string | null;
@@ -75,9 +78,15 @@ export class SearchGroupSSG {
         },
     ];
 
+    /**
+     * Returns the attribute type map for SearchGroupSSG.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return SearchGroupSSG.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the SearchGroupSSG class.
+     */
     public constructor() {}
 }

@@ -10,8 +10,11 @@
  * Do not edit the class manually.
  */
 
-import { AidMode } from '../models/AidMode';
+import type { AidMode } from '../models/AidMode';
 
+/**
+ * Represents the response model for AidMode.
+ */
 export class AidModeResponseModel {
     'aidMode'?: AidMode;
 
@@ -26,9 +29,15 @@ export class AidModeResponseModel {
         },
     ];
 
+    /**
+     * Returns the attribute type map for AidModeResponseModel.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return AidModeResponseModel.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the AidModeResponseModel class.
+     */
     public constructor() {}
 }

@@ -22,9 +22,15 @@ __export(AddressResponseModel_exports, {
 });
 module.exports = __toCommonJS(AddressResponseModel_exports);
 const _AddressResponseModel = class _AddressResponseModel {
+  /**
+   * Returns the attribute type map for AddressResponseModel.
+   */
   static getAttributeTypeMap() {
     return _AddressResponseModel.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of AddressResponseModel.
+   */
   constructor() {
   }
 };

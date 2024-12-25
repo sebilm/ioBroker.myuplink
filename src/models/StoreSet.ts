@@ -10,8 +10,11 @@
  * Do not edit the class manually.
  */
 
-import { StoreSetEntry } from '../models/StoreSetEntry';
+import type { StoreSetEntry } from '../models/StoreSetEntry';
 
+/**
+ * Represents a set of stores with a title and rows of entries.
+ */
 export class StoreSet {
     'title'?: string | null;
     'rows'?: Array<StoreSetEntry> | null;
@@ -33,9 +36,15 @@ export class StoreSet {
         },
     ];
 
+    /**
+     * Returns the attribute type map for the StoreSet class.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return StoreSet.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the StoreSet class.
+     */
     public constructor() {}
 }

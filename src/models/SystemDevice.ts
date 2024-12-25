@@ -10,8 +10,8 @@
  * Do not edit the class manually.
  */
 
-import { DeviceConnectionState } from '../models/DeviceConnectionState';
-import { Product } from '../models/Product';
+import type { DeviceConnectionState } from '../models/DeviceConnectionState';
+import type { Product } from '../models/Product';
 
 /**
  * Device model.
@@ -57,9 +57,15 @@ export class SystemDevice {
         },
     ];
 
+    /**
+     * Returns the attribute type map for the SystemDevice class.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return SystemDevice.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the SystemDevice class.
+     */
     public constructor() {}
 }

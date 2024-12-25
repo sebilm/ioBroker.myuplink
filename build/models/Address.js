@@ -22,9 +22,15 @@ __export(Address_exports, {
 });
 module.exports = __toCommonJS(Address_exports);
 const _Address = class _Address {
+  /**
+   * Returns the attribute type map for the Address model.
+   */
   static getAttributeTypeMap() {
     return _Address.attributeTypeMap;
   }
+  /**
+   * Constructs an instance of the Address class.
+   */
   constructor() {
   }
 };

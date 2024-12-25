@@ -10,6 +10,9 @@
  * Do not edit the class manually.
  */
 
+/**
+ * Represents an entry in the store set.
+ */
 export class StoreSetEntry {
     'variableId'?: string | null;
     'description'?: string | null;
@@ -45,9 +48,15 @@ export class StoreSetEntry {
         },
     ];
 
+    /**
+     * Returns the attribute type map for StoreSetEntry.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return StoreSetEntry.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of StoreSetEntry.
+     */
     public constructor() {}
 }

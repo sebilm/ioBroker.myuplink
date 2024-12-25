@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { EnumValues } from '../models/EnumValues';
+import type { EnumValues } from '../models/EnumValues';
 
 /**
  * Grouped parameter value.
@@ -172,9 +172,15 @@ export class ParameterData {
         },
     ];
 
+    /**
+     * Returns the attribute type map for the ParameterData class.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return ParameterData.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the ParameterData class.
+     */
     public constructor() {}
 }

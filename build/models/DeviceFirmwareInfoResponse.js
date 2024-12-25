@@ -22,9 +22,15 @@ __export(DeviceFirmwareInfoResponse_exports, {
 });
 module.exports = __toCommonJS(DeviceFirmwareInfoResponse_exports);
 const _DeviceFirmwareInfoResponse = class _DeviceFirmwareInfoResponse {
+  /**
+   * Returns the attribute type map for DeviceFirmwareInfoResponse.
+   */
   static getAttributeTypeMap() {
     return _DeviceFirmwareInfoResponse.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the DeviceFirmwareInfoResponse class.
+   */
   constructor() {
   }
 };

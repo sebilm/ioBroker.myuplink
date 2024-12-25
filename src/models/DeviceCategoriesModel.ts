@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { DeviceCategory } from '../models/DeviceCategory';
+import type { DeviceCategory } from '../models/DeviceCategory';
 
 /**
  * Device equip model.
@@ -42,9 +42,15 @@ export class DeviceCategoriesModel {
         },
     ];
 
+    /**
+     * Returns the attribute type map for the DeviceCategoriesModel.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return DeviceCategoriesModel.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the DeviceCategoriesModel class.
+     */
     public constructor() {}
 }

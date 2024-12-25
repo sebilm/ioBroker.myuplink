@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { DeviceParameterData } from '../models/DeviceParameterData';
+import type { DeviceParameterData } from '../models/DeviceParameterData';
 
 /**
  * Grouped parameter value.
@@ -42,9 +42,15 @@ export class GroupedDeviceParameterData {
         },
     ];
 
+    /**
+     * Returns the attribute type map.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return GroupedDeviceParameterData.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the GroupedDeviceParameterData class.
+     */
     public constructor() {}
 }

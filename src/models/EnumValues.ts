@@ -10,6 +10,9 @@
  * Do not edit the class manually.
  */
 
+/**
+ * Class representing EnumValues.
+ */
 export class EnumValues {
     /**
      * The EnumValue of the Enum.
@@ -47,9 +50,15 @@ export class EnumValues {
         },
     ];
 
+    /**
+     * Returns the attribute type map for EnumValues.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return EnumValues.attributeTypeMap;
     }
 
+    /**
+     * Constructs an instance of EnumValues.
+     */
     public constructor() {}
 }

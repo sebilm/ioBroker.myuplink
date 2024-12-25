@@ -10,8 +10,11 @@
  * Do not edit the class manually.
  */
 
-import { PremiumFeatures } from '../models/PremiumFeatures';
+import type { PremiumFeatures } from '../models/PremiumFeatures';
 
+/**
+ * Represents the response model for premium features.
+ */
 export class PremiumFeatureResponseModel {
     'validUntil'?: Date | null;
     'type'?: PremiumFeatures;
@@ -33,9 +36,15 @@ export class PremiumFeatureResponseModel {
         },
     ];
 
+    /**
+     * Returns the attribute type map for the PremiumFeatureResponseModel.
+     */
     static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return PremiumFeatureResponseModel.attributeTypeMap;
     }
 
+    /**
+     * Constructs a new instance of the PremiumFeatureResponseModel class.
+     */
     public constructor() {}
 }

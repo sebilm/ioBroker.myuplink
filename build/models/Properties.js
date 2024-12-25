@@ -22,9 +22,15 @@ __export(Properties_exports, {
 });
 module.exports = __toCommonJS(Properties_exports);
 const _Properties = class _Properties {
+  /**
+   * Returns the attribute type map.
+   */
   static getAttributeTypeMap() {
     return _Properties.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the Properties class.
+   */
   constructor() {
   }
 };

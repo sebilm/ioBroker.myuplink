@@ -22,9 +22,15 @@ __export(PagedSystemResult_exports, {
 });
 module.exports = __toCommonJS(PagedSystemResult_exports);
 const _PagedSystemResult = class _PagedSystemResult {
+  /**
+   * Returns the attribute type map for PagedSystemResult.
+   */
   static getAttributeTypeMap() {
     return _PagedSystemResult.attributeTypeMap;
   }
+  /**
+   * Constructs a new instance of the PagedSystemResult class.
+   */
   constructor() {
   }
 };
