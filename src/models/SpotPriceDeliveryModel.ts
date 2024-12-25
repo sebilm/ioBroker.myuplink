@@ -27,7 +27,7 @@ export class SpotPriceDeliveryModel {
         },
     ];
 
-    static getAttributeTypeMap() {
+    static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return SpotPriceDeliveryModel.attributeTypeMap;
     }
 

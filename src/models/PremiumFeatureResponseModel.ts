@@ -33,7 +33,7 @@ export class PremiumFeatureResponseModel {
         },
     ];
 
-    static getAttributeTypeMap() {
+    static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return PremiumFeatureResponseModel.attributeTypeMap;
     }
 

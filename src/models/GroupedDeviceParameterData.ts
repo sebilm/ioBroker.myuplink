@@ -42,7 +42,7 @@ export class GroupedDeviceParameterData {
         },
     ];
 
-    static getAttributeTypeMap() {
+    static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return GroupedDeviceParameterData.attributeTypeMap;
     }
 

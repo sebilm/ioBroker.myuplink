@@ -157,8 +157,8 @@ export class ZoneResponse {
         },
     ];
 
-    static getAttributeTypeMap() {
-        return ZoneResponse.attributeTypeMap;
+    static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
+        return this.attributeTypeMap;
     }
 
     public constructor() {}

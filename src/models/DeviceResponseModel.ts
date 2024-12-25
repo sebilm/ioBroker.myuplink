@@ -63,7 +63,7 @@ export class DeviceResponseModel {
         },
     ];
 
-    static getAttributeTypeMap() {
+    static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return DeviceResponseModel.attributeTypeMap;
     }
 

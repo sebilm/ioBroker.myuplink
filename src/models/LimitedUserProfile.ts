@@ -30,7 +30,7 @@ export class LimitedUserProfile {
         },
     ];
 
-    static getAttributeTypeMap() {
+    static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return LimitedUserProfile.attributeTypeMap;
     }
 

@@ -325,7 +325,7 @@ export class V2DevicesDeviceIdSmartHomeCategoriesGet200Response {
         },
     ];
 
-    static getAttributeTypeMap() {
+    static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return V2DevicesDeviceIdSmartHomeCategoriesGet200Response.attributeTypeMap;
     }
 

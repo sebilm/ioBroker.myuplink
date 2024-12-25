@@ -180,7 +180,7 @@ export class ProductRegistrationResponse {
         },
     ];
 
-    static getAttributeTypeMap() {
+    static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return ProductRegistrationResponse.attributeTypeMap;
     }
 

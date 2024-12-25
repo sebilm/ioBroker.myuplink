@@ -52,7 +52,7 @@ export class ReportedFirmware {
         },
     ];
 
-    static getAttributeTypeMap() {
+    static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return ReportedFirmware.attributeTypeMap;
     }
 

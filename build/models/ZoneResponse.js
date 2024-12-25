@@ -21,15 +21,15 @@ __export(ZoneResponse_exports, {
   ZoneResponse: () => ZoneResponse
 });
 module.exports = __toCommonJS(ZoneResponse_exports);
-const _ZoneResponse = class _ZoneResponse {
+class ZoneResponse {
   static getAttributeTypeMap() {
-    return _ZoneResponse.attributeTypeMap;
+    return this.attributeTypeMap;
   }
   constructor() {
   }
-};
-_ZoneResponse.discriminator = void 0;
-_ZoneResponse.attributeTypeMap = [
+}
+ZoneResponse.discriminator = void 0;
+ZoneResponse.attributeTypeMap = [
   {
     name: "zoneId",
     baseName: "zoneId",
@@ -115,7 +115,6 @@ _ZoneResponse.attributeTypeMap = [
     format: "double"
   }
 ];
-let ZoneResponse = _ZoneResponse;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   ZoneResponse

@@ -40,7 +40,7 @@ export class Curve {
         },
     ];
 
-    static getAttributeTypeMap() {
+    static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return Curve.attributeTypeMap;
     }
 

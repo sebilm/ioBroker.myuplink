@@ -26,7 +26,7 @@ export class Properties {
         },
     ];
 
-    static getAttributeTypeMap() {
+    static getAttributeTypeMap(): Array<{ name: string; baseName: string; type: string; format: string }> {
         return Properties.attributeTypeMap;
     }
 
