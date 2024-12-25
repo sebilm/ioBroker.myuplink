@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "myuplink",
-        "version": "0.8.3",
+        "version": "0.8.4",
         "news": {
+            "0.8.4": {
+                "en": "xl attributes have been added to the jsonConfig #77\nDependencies have been updated",
+                "de": "xl Attribute wurden zur jsonConfig hinzugefügt #77\nAbhängigkeiten wurden aktualisiert",
+                "ru": "атрибуты xl были добавлены в jsonConfig #77\nЗависимость обновлена",
+                "pt": "atributos xl foram adicionados ao jsonConfig #77\nAs dependências foram atualizadas",
+                "nl": "xl attributen zijn toegevoegd aan de jsonConfig #77\nAfhankelijkheden zijn bijgewerkt",
+                "fr": "les attributs xl ont été ajoutés au jsonConfig #77\nLes dépendances ont été actualisées",
+                "it": "gli attributi xl sono stati aggiunti al jsonConfig #77\nLe dipendenze sono state aggiornate",
+                "es": "atributos xl se han añadido al jsonConfig #77\nSe han actualizado las dependencias",
+                "pl": "atrybuty xl zostały dodane do jsonConfig #77\nZaktualizowano zależności",
+                "uk": "атрибути xl додано до jsonConfig #77\nЗалежність було оновлено",
+                "zh-cn": "xl 属性已被添加到 jsonConfig #77\n依赖关系已更新"
+            },
             "0.8.3": {
                 "en": "TabsStyle was added to jsonConfig #71\nDependencies have been updated",
                 "de": "TabsStyle wurde zu jsonConfig hinzugefügt #71\nAbhängigkeiten wurden aktualisiert",
@@ -80,19 +93,6 @@
                 "pl": "Zakazane znaki są usuwane z kategorii\nBłąd podczas ustawiania danych został ustalony\nPoprawa wydajności",
                 "uk": "Заборонені символи знімаються з категорії\nВиправлено помилку при встановленні даних\nПокращено продуктивність",
                 "zh-cn": "禁止字符从分类中删除\n设置数据时的错误\n业绩有所改善"
-            },
-            "0.6.1": {
-                "en": "Performance has been improved\nDependencies have been updated",
-                "de": "Die Leistung wurde verbessert\nAbhängigkeiten wurden aktualisiert",
-                "ru": "Повышение эффективности\nЗависимость обновлена",
-                "pt": "O desempenho foi melhorado\nAs dependências foram atualizadas",
-                "nl": "De prestaties zijn verbeterd\nAfhankelijkheden zijn bijgewerkt",
-                "fr": "Amélioration des résultats\nLes dépendances ont été actualisées",
-                "it": "Le prestazioni sono migliorate\nLe dipendenze sono state aggiornate",
-                "es": "Se ha mejorado el rendimiento\nSe han actualizado las dependencias",
-                "pl": "Poprawa wydajności\nZaktualizowano zależności",
-                "uk": "Покращено продуктивність\nЗалежність було оновлено",
-                "zh-cn": "业绩有所改善\n依赖关系已更新"
             }
         },
         "titleLang": {
@@ -122,7 +122,18 @@
             "zh-cn": "myUplink.com 适用于 Nibe 热泵"
         },
         "authors": ["Sebastian Haesselbarth <seb@sebmail.de>"],
-        "keywords": ["myuplink", "heat pump", "NIBE", "AIT", "Cetetherm", "ClimateMaster", "Contura", "CTA", "CTC", "Enertech Global"],
+        "keywords": [
+            "myuplink",
+            "heat pump",
+            "NIBE",
+            "AIT",
+            "Cetetherm",
+            "ClimateMaster",
+            "Contura",
+            "CTA",
+            "CTC",
+            "Enertech Global"
+        ],
         "licenseInformation": {
             "license": "MIT",
             "type": "free"
