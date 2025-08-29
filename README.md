@@ -26,7 +26,7 @@ This ioBroker adapter receives data from myUplink.com. Settings that have been e
 
 ### **WORK IN PROGRESS**
 
-- Dependencies have been updated
+- Dependencies have been updated #124
 
 ### 0.8.4 (2024-12-25)
 
