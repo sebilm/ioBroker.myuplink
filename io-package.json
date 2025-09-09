@@ -1,277 +1,278 @@
 {
-    "common": {
-        "name": "myuplink",
-        "version": "0.8.4",
-        "news": {
-            "0.8.5": {
-                "en": "Dependencies have been updated #124",
-                "de": "Abhängigkeiten wurden aktualisiert #124",
-                "ru": "Зависимость обновлена #124",
-                "pt": "As dependências foram atualizadas #124",
-                "nl": "Afhankelijkheden zijn bijgewerkt #124",
-                "fr": "Les dépendances ont été actualisées #124",
-                "it": "Le dipendenze sono state aggiornate #124",
-                "es": "Se han actualizado las dependencias #124",
-                "pl": "Zaktualizowano zależności #124",
-                "uk": "Залежність було оновлено #124",
-                "zh-cn": "依赖关系已更新 #124"
-            },
-            "0.8.4": {
-                "en": "xl attributes have been added to the jsonConfig #77\nDependencies have been updated",
-                "de": "xl Attribute wurden zur jsonConfig hinzugefügt #77\nAbhängigkeiten wurden aktualisiert",
-                "ru": "атрибуты xl были добавлены в jsonConfig #77\nЗависимость обновлена",
-                "pt": "atributos xl foram adicionados ao jsonConfig #77\nAs dependências foram atualizadas",
-                "nl": "xl attributen zijn toegevoegd aan de jsonConfig #77\nAfhankelijkheden zijn bijgewerkt",
-                "fr": "les attributs xl ont été ajoutés au jsonConfig #77\nLes dépendances ont été actualisées",
-                "it": "gli attributi xl sono stati aggiunti al jsonConfig #77\nLe dipendenze sono state aggiornate",
-                "es": "atributos xl se han añadido al jsonConfig #77\nSe han actualizado las dependencias",
-                "pl": "atrybuty xl zostały dodane do jsonConfig #77\nZaktualizowano zależności",
-                "uk": "атрибути xl додано до jsonConfig #77\nЗалежність було оновлено",
-                "zh-cn": "xl 属性已被添加到 jsonConfig #77\n依赖关系已更新"
-            },
-            "0.8.3": {
-                "en": "TabsStyle was added to jsonConfig #71\nDependencies have been updated",
-                "de": "TabsStyle wurde zu jsonConfig hinzugefügt #71\nAbhängigkeiten wurden aktualisiert",
-                "ru": "TabsStyle был добавлен в jsonConfig #71\nЗависимость обновлена",
-                "pt": "TabsStyle foi adicionado ao jsonConfig #71\nAs dependências foram atualizadas",
-                "nl": "TabsStyle is toegevoegd aan jsonConfig #71\nAfhankelijkheden zijn bijgewerkt",
-                "fr": "TabsStyle a été ajouté à jsonConfig #71\nLes dépendances ont été actualisées",
-                "it": "TabsStyle è stato aggiunto a jsonConfig #71\nLe dipendenze sono state aggiornate",
-                "es": "TabsStyle fue añadido a jsonConfig #71\nSe han actualizado las dependencias",
-                "pl": "TabsStyle został dodany do jsonConfig #71\nZaktualizowano zależności",
-                "uk": "TabsStyle додано до jsonConfig #71\nЗалежність було оновлено",
-                "zh-cn": "TabsStyle 被添加到 jsonConfig #71\n依赖关系已更新"
-            },
-            "0.8.2": {
-                "en": "Changes due to API changes #60\nDependencies have been updated",
-                "de": "Änderungen aufgrund von API-Änderungen #60\nAbhängigkeiten wurden aktualisiert",
-                "ru": "Изменения из-за изменений API #60\nЗависимость обновлена",
-                "pt": "Mudanças devido a alterações de API #60\nAs dependências foram atualizadas",
-                "nl": "Wijzigingen als gevolg van API-wijzigingen #60\nAfhankelijkheden zijn bijgewerkt",
-                "fr": "Modifications dues aux modifications de l'API #60\nLes dépendances ont été actualisées",
-                "it": "Modifiche dovute a modifiche API #60\nLe dipendenze sono state aggiornate",
-                "es": "Cambios debido a cambios de API #60\nSe han actualizado las dependencias",
-                "pl": "Zmiany wynikające ze zmian API #60\nZaktualizowano zależności",
-                "uk": "Зміни за допомогою змін API #60\nЗалежність було оновлено",
-                "zh-cn": "由 API 变化引起的变化 #60\n依赖关系已更新"
-            },
-            "0.8.1": {
-                "en": "Existing incorrect minimum and maximum values are now deleted #39\nMinimum and maximum values of the API are not adopted if the current value is outside minimum and maximum #39\nInstructions for German and English have been moved to separate files #47\nDependencies have been updated",
-                "de": "Vorhandene falsche Mindest- und Maximalwerte werden nun gelöscht #39\nMindest- und Maximalwerte der API werden nicht übernommen, wenn der aktuelle Wert nicht zwischen Minimum und Maximum liegt #39\nAnleitungen für Deutsch und Englisch wurden in separate Dateien verschoben #47\nAbhängigkeiten wurden aktualisiert",
-                "ru": "Существующие неправильные минимальные и максимальные значения теперь исключены #39\nМинимальные и максимальные значения API не принимаются, если текущее значение находится за пределами минимума и максимума #39\nИнструкции для немецкого и английского языка были перенесены в отдельные файлы \nЗависимость обновлена #47",
-                "pt": "Os valores mínimos e máximos existentes estão agora excluídos #39\nValores mínimos e máximos da API não são adotados se o valor atual estiver fora do mínimo e máximo #39\nInstruções para alemão e inglês foram movidos para arquivos separados #47\nAs dependências foram atualizadas",
-                "nl": "Bestaande onjuiste minimum- en maximumwaarden worden nu verwijderd #39\nMinimum- en maximumwaarden van de API worden niet vastgesteld als de huidige waarde buiten het minimum en maximum ligt #39\nInstructies voor Duits en Engels zijn verplaatst naar aparte bestanden #47\nAfhankelijkheden zijn bijgewerkt",
-                "fr": "Les valeurs minimales et maximales incorrectes existantes sont maintenant supprimées #39\nLes valeurs minimales et maximales de l'API ne sont pas adoptées si la valeur actuelle est en dehors du minimum et du maximum #39\nLes instructions pour l'allemand et l'anglais ont été déplacées dans des fichiers distincts #47\nLes dépendances ont été actualisées",
-                "it": "I valori minimi e massimi errati sono ora eliminati #39\nValori minimi e massimi dell'API non sono adottati se il valore attuale è al di fuori del minimo e massimo #39\nLe istruzioni per il tedesco e l'inglese sono state spostate in file separati #47\nLe dipendenze sono state aggiornate",
-                "es": "Los valores mínimos y máximos existentes se eliminan ahora #39\nLos valores mínimos y máximos de la API no se adoptan si el valor actual es mínimo y máximo #39\nLas instrucciones para alemán e inglés se han trasladado a archivos separados #47\nSe han actualizado las dependencias",
-                "pl": "Istniejące nieprawidłowe wartości minimalne i maksymalne zostały usunięte # 39\nMinimalne i maksymalne wartości API nie są przyjmowane, jeżeli bieżąca wartość jest poza minimalnym i maksymalnym # 39\nInstrukcje dla niemieckiego i angielskiego zostały przeniesione do oddzielnych plików # 47\nZaktualizowano zależności",
-                "uk": "Використовуються мінімальні та максимальні значення тепер видаляються #39\nМінімальні та максимальні значення API не приймаються, якщо поточне значення не перевищує мінімуму та максимуму #39\nІнструкції для німецьких та англійських було перенесено на окремі файли #47\nЗалежність було оновлено",
-                "zh-cn": "现有错误的最小值和最大值现已删除# 39\n如果当前值在最小值和最大值39之外,则不采用API的最低值和最大值\n对德语和英语的指示已移至单独的文件47\n依赖关系已更新"
-            },
-            "0.8.0": {
-                "en": "No empty objects are sent (setData)\nIncorrect minimum and maximum values of the API are not adopted #39\nThe initial refresh interval was set to 5 minutes\nThe code has been restructured internally\nAt least Node.js 18 is required!\nUnit tests have been added\nDependencies have been updated",
-                "de": "Es werden keine leeren Objekte gesendet (setData)\nFalsche Mindest- und Maximalwerte der API werden nicht übernommen #39\nDas initiale Aktualisierungsintervall wurde auf 5 Minuten eingestellt\nDer Code wurde intern umstrukturiert\nMindestens Node.js 18 ist erforderlich!\nUnit-Tests wurden hinzugefügt\nAbhängigkeiten wurden aktualisiert",
-                "ru": "Не отправляется пустых объектов (setData)\nНеправильные минимальные и максимальные значения API не принимаются #39\nПервоначальный интервал обновления был установлен до 5 минут\nКод был реструктурирован внутри страны\nПо крайней мере Node.js 18 требуется!\nДобавлены испытания\nЗависимость обновлена",
-                "pt": "Nenhum objeto vazio é enviado (setData)\nOs valores mínimos e máximos incorretos da API não são adotados #39\nO intervalo inicial de atualização foi ajustado para 5 minutos\nO código foi reestruturado internamente\nPelo menos Node.js 18 é necessário!\nTestes de unidade foram adicionados\nAs dependências foram atualizadas",
-                "nl": "Er worden geen lege objecten verzonden (setData)\nOnjuiste minimum- en maximumwaarden van de API worden niet aangenomen #39\nHet initiële herhalingsinterval werd ingesteld op 5 minuten\nDe code is intern geherstructureerd\nTenminste Node.js 18 is vereist!\nEr zijn eenheidstests toegevoegd\nAfhankelijkheden zijn bijgewerkt",
-                "fr": "Aucun objet vide n'est envoyé (setData)\nLes valeurs minimales et maximales incorrectes de l'API ne sont pas adoptées #39\nL'intervalle initial de rafraîchissement a été fixé à 5 minutes\nLe code a été restructuré en interne\nAu moins Node.js 18 est nécessaire!\nDes tests unitaires ont été ajoutés\nLes dépendances ont été actualisées",
-                "it": "Non vengono inviati oggetti vuoti (setData)\nI valori minimi e massimi non corretti dell'API non sono adottati #39\nL'intervallo iniziale di aggiornamento è stato impostato a 5 minuti\nIl codice è stato ristrutturato internamente\nAlmeno Node.js 18 è richiesto!\nSono stati aggiunti test unitari\nLe dipendenze sono state aggiornate",
-                "es": "No se envían objetos vacíos (setData)\nLos valores mínimos y máximos incorrectos de la API no son adoptados #39\nEl intervalo inicial de actualización se fijó a 5 minutos\nEl código se ha reestructurado internamente\n¡Al menos Node.js 18 es necesario!\nSe han añadido pruebas de unidad\nSe han actualizado las dependencias",
-                "pl": "Nie są wysyłane puste obiekty (setData)\nNieprawidłowe wartości minimalne i maksymalne API nie zostały przyjęte # 39\nPoczątkowy odświeżający odstęp został ustawiony na 5 minut\nKod został zrestrukturyzowany wewnętrznie\nCo najmniej Node.js 18 jest wymagane!\nDodano testy jednostkowe\nZaktualizowano zależności",
-                "uk": "Немає порожніх об'єктів (setData)\nНекоректні мінімальні та максимальні значення API не приймаються #39\nПочатковий інтервал освіження був встановлений до 5 хвилин\nКод перебудовано внутрішньо\nПринаймні Node.js 18 потрібно!\nДодані агрегатні тести\nЗалежність було оновлено",
-                "zh-cn": "没有发送空对象( setData)\n未采用 API 的不正确最小值和最大值\n初始刷新间隔设定为 5 分钟\n代码已经内部调整\n至少需要18号节点!\n增加了单元测试\n依赖关系已更新"
-            },
-            "0.7.1": {
-                "en": "Crash after 'unhandled promise rejection' fixed #15",
-                "de": "Crash nach \"unhandled promise rejection\" behoben #15",
-                "ru": "Исправлен крах после \"unhandled promise rejection\" #15",
-                "pt": "Crash após \"unhandled promise rejection\" fixo #15",
-                "nl": "Crash na \"unhandled promise rejection\" gerepareerd #15",
-                "fr": "Crash après le \"unhandled promise rejection\" fixé #15",
-                "it": "Crash dopo \"unhandled promise rejection\" fisso #15",
-                "es": "Crash después de \"unhandled promise rejection\" fijo #15",
-                "pl": "Naprawiono awarię po \"unhandled promise rejection\" #15",
-                "uk": "Крейш після того, як \"unhandled promise rejection\" фіксована #15",
-                "zh-cn": "修复了 \"unhandled promise rejection\" 后的崩溃 #15"
-            },
-            "0.7.0": {
-                "en": "Forbidden characters are removed from the category\nAn error when setting data has been fixed\nPerformance has been improved",
-                "de": "Verbotene Zeichen werden aus der Kategorie entfernt\nEin Fehler beim Setzen von Daten wurde behoben\nDie Leistung wurde verbessert",
-                "ru": "Запрещенные символы выводятся из категории\nОшибка при установке данных\nПовышение эффективности",
-                "pt": "Os caracteres proibidos são removidos da categoria\nUm erro ao definir dados foi corrigido\nO desempenho foi melhorado",
-                "nl": "Verboden tekens worden uit de categorie verwijderd\nEr is een fout opgetreden bij het instellen van gegevens\nDe prestaties zijn verbeterd",
-                "fr": "Les caractères interdits sont supprimés de la catégorie\nUne erreur lors du réglage des données a été corrigée\nAmélioration des résultats",
-                "it": "I caratteri proibiti vengono rimossi dalla categoria\nUn errore durante l'impostazione dei dati è stato risolto\nLe prestazioni sono migliorate",
-                "es": "Los caracteres prohibidos se eliminan de la categoría\nUn error al establecer datos se ha corregido\nSe ha mejorado el rendimiento",
-                "pl": "Zakazane znaki są usuwane z kategorii\nBłąd podczas ustawiania danych został ustalony\nPoprawa wydajności",
-                "uk": "Заборонені символи знімаються з категорії\nВиправлено помилку при встановленні даних\nПокращено продуктивність",
-                "zh-cn": "禁止字符从分类中删除\n设置数据时的错误\n业绩有所改善"
-            }
-        },
-        "titleLang": {
-            "en": "myUplink",
-            "de": "myUplink",
-            "ru": "myUplink",
-            "pt": "myUplink",
-            "nl": "myUplink",
-            "fr": "myUplink",
-            "it": "myUplink",
-            "es": "myUplink",
-            "pl": "myUplink",
-            "uk": "myUplink",
-            "zh-cn": "myUplink"
-        },
-        "desc": {
-            "en": "myUplink.com for Nibe Heat Pumps",
-            "de": "myUplink.com für Nibe-Wärmepumpen",
-            "ru": "myUplink.com для тепловых насосов Nibe",
-            "pt": "myUplink.com para bombas de calor Nibe",
-            "nl": "myUplink.com voor Nibe-warmtepompen",
-            "fr": "myUplink.com pour les pompes à chaleur Nibe",
-            "it": "myUplink.com per le pompe di calore Nibe",
-            "es": "myUplink.com para bombas de calor Nibe",
-            "pl": "myUplink.com dla pomp ciepła Nibe",
-            "uk": "myUplink.com для теплових насосів Nibe",
-            "zh-cn": "myUplink.com 适用于 Nibe 热泵"
-        },
-        "authors": ["Sebastian Haesselbarth <seb@sebmail.de>"],
-        "keywords": [
-            "myuplink",
-            "heat pump",
-            "NIBE",
-            "AIT",
-            "Cetetherm",
-            "ClimateMaster",
-            "Contura",
-            "CTA",
-            "CTC",
-            "Enertech Global"
-        ],
-        "licenseInformation": {
-            "license": "MIT",
-            "type": "free"
-        },
-        "platform": "Javascript/Node.js",
-        "icon": "myuplink.png",
-        "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/sebilm/ioBroker.myuplink/main/admin/myuplink.png",
-        "readme": "https://github.com/sebilm/ioBroker.myuplink/blob/main/README.md",
-        "loglevel": "info",
-        "mode": "daemon",
-        "type": "climate-control",
-        "compact": true,
-        "docs": {
-            "en": ["docs/en/README.md"],
-            "de": ["docs/de/README.md"]
-        },
-        "tier": 2,
-        "connectionType": "cloud",
-        "dataSource": "poll",
-        "adminUI": {
-            "config": "json"
-        },
-        "dependencies": [
-            {
-                "js-controller": ">=7.0.6"
-            }
-        ],
-        "globalDependencies": [
-            {
-                "admin": ">=7.6.17"
-            }
-        ]
+  "common": {
+    "name": "myuplink",
+    "version": "0.8.5",
+    "news": {
+      "0.8.5": {
+        "en": "Dependencies have been updated #124",
+        "de": "Abhängigkeiten wurden aktualisiert #124",
+        "ru": "Зависимость обновлена #124",
+        "pt": "As dependências foram atualizadas #124",
+        "nl": "Afhankelijkheden zijn bijgewerkt #124",
+        "fr": "Les dépendances ont été actualisées #124",
+        "it": "Le dipendenze sono state aggiornate #124",
+        "es": "Se han actualizado las dependencias #124",
+        "pl": "Zaktualizowano zależności #124",
+        "uk": "Залежність було оновлено #124",
+        "zh-cn": "依赖关系已更新 #124"
+      },
+      "0.8.4": {
+        "en": "xl attributes have been added to the jsonConfig #77\nDependencies have been updated",
+        "de": "xl Attribute wurden zur jsonConfig hinzugefügt #77\nAbhängigkeiten wurden aktualisiert",
+        "ru": "атрибуты xl были добавлены в jsonConfig #77\nЗависимость обновлена",
+        "pt": "atributos xl foram adicionados ao jsonConfig #77\nAs dependências foram atualizadas",
+        "nl": "xl attributen zijn toegevoegd aan de jsonConfig #77\nAfhankelijkheden zijn bijgewerkt",
+        "fr": "les attributs xl ont été ajoutés au jsonConfig #77\nLes dépendances ont été actualisées",
+        "it": "gli attributi xl sono stati aggiunti al jsonConfig #77\nLe dipendenze sono state aggiornate",
+        "es": "atributos xl se han añadido al jsonConfig #77\nSe han actualizado las dependencias",
+        "pl": "atrybuty xl zostały dodane do jsonConfig #77\nZaktualizowano zależności",
+        "uk": "атрибути xl додано до jsonConfig #77\nЗалежність було оновлено",
+        "zh-cn": "xl 属性已被添加到 jsonConfig #77\n依赖关系已更新"
+      },
+      "0.8.3": {
+        "en": "TabsStyle was added to jsonConfig #71\nDependencies have been updated",
+        "de": "TabsStyle wurde zu jsonConfig hinzugefügt #71\nAbhängigkeiten wurden aktualisiert",
+        "ru": "TabsStyle был добавлен в jsonConfig #71\nЗависимость обновлена",
+        "pt": "TabsStyle foi adicionado ao jsonConfig #71\nAs dependências foram atualizadas",
+        "nl": "TabsStyle is toegevoegd aan jsonConfig #71\nAfhankelijkheden zijn bijgewerkt",
+        "fr": "TabsStyle a été ajouté à jsonConfig #71\nLes dépendances ont été actualisées",
+        "it": "TabsStyle è stato aggiunto a jsonConfig #71\nLe dipendenze sono state aggiornate",
+        "es": "TabsStyle fue añadido a jsonConfig #71\nSe han actualizado las dependencias",
+        "pl": "TabsStyle został dodany do jsonConfig #71\nZaktualizowano zależności",
+        "uk": "TabsStyle додано до jsonConfig #71\nЗалежність було оновлено",
+        "zh-cn": "TabsStyle 被添加到 jsonConfig #71\n依赖关系已更新"
+      },
+      "0.8.2": {
+        "en": "Changes due to API changes #60\nDependencies have been updated",
+        "de": "Änderungen aufgrund von API-Änderungen #60\nAbhängigkeiten wurden aktualisiert",
+        "ru": "Изменения из-за изменений API #60\nЗависимость обновлена",
+        "pt": "Mudanças devido a alterações de API #60\nAs dependências foram atualizadas",
+        "nl": "Wijzigingen als gevolg van API-wijzigingen #60\nAfhankelijkheden zijn bijgewerkt",
+        "fr": "Modifications dues aux modifications de l'API #60\nLes dépendances ont été actualisées",
+        "it": "Modifiche dovute a modifiche API #60\nLe dipendenze sono state aggiornate",
+        "es": "Cambios debido a cambios de API #60\nSe han actualizado las dependencias",
+        "pl": "Zmiany wynikające ze zmian API #60\nZaktualizowano zależności",
+        "uk": "Зміни за допомогою змін API #60\nЗалежність було оновлено",
+        "zh-cn": "由 API 变化引起的变化 #60\n依赖关系已更新"
+      },
+      "0.8.1": {
+        "en": "Existing incorrect minimum and maximum values are now deleted #39\nMinimum and maximum values of the API are not adopted if the current value is outside minimum and maximum #39\nInstructions for German and English have been moved to separate files #47\nDependencies have been updated",
+        "de": "Vorhandene falsche Mindest- und Maximalwerte werden nun gelöscht #39\nMindest- und Maximalwerte der API werden nicht übernommen, wenn der aktuelle Wert nicht zwischen Minimum und Maximum liegt #39\nAnleitungen für Deutsch und Englisch wurden in separate Dateien verschoben #47\nAbhängigkeiten wurden aktualisiert",
+        "ru": "Существующие неправильные минимальные и максимальные значения теперь исключены #39\nМинимальные и максимальные значения API не принимаются, если текущее значение находится за пределами минимума и максимума #39\nИнструкции для немецкого и английского языка были перенесены в отдельные файлы \nЗависимость обновлена #47",
+        "pt": "Os valores mínimos e máximos existentes estão agora excluídos #39\nValores mínimos e máximos da API não são adotados se o valor atual estiver fora do mínimo e máximo #39\nInstruções para alemão e inglês foram movidos para arquivos separados #47\nAs dependências foram atualizadas",
+        "nl": "Bestaande onjuiste minimum- en maximumwaarden worden nu verwijderd #39\nMinimum- en maximumwaarden van de API worden niet vastgesteld als de huidige waarde buiten het minimum en maximum ligt #39\nInstructies voor Duits en Engels zijn verplaatst naar aparte bestanden #47\nAfhankelijkheden zijn bijgewerkt",
+        "fr": "Les valeurs minimales et maximales incorrectes existantes sont maintenant supprimées #39\nLes valeurs minimales et maximales de l'API ne sont pas adoptées si la valeur actuelle est en dehors du minimum et du maximum #39\nLes instructions pour l'allemand et l'anglais ont été déplacées dans des fichiers distincts #47\nLes dépendances ont été actualisées",
+        "it": "I valori minimi e massimi errati sono ora eliminati #39\nValori minimi e massimi dell'API non sono adottati se il valore attuale è al di fuori del minimo e massimo #39\nLe istruzioni per il tedesco e l'inglese sono state spostate in file separati #47\nLe dipendenze sono state aggiornate",
+        "es": "Los valores mínimos y máximos existentes se eliminan ahora #39\nLos valores mínimos y máximos de la API no se adoptan si el valor actual es mínimo y máximo #39\nLas instrucciones para alemán e inglés se han trasladado a archivos separados #47\nSe han actualizado las dependencias",
+        "pl": "Istniejące nieprawidłowe wartości minimalne i maksymalne zostały usunięte # 39\nMinimalne i maksymalne wartości API nie są przyjmowane, jeżeli bieżąca wartość jest poza minimalnym i maksymalnym # 39\nInstrukcje dla niemieckiego i angielskiego zostały przeniesione do oddzielnych plików # 47\nZaktualizowano zależności",
+        "uk": "Використовуються мінімальні та максимальні значення тепер видаляються #39\nМінімальні та максимальні значення API не приймаються, якщо поточне значення не перевищує мінімуму та максимуму #39\nІнструкції для німецьких та англійських було перенесено на окремі файли #47\nЗалежність було оновлено",
+        "zh-cn": "现有错误的最小值和最大值现已删除# 39\n如果当前值在最小值和最大值39之外,则不采用API的最低值和最大值\n对德语和英语的指示已移至单独的文件47\n依赖关系已更新"
+      },
+      "0.8.0": {
+        "en": "No empty objects are sent (setData)\nIncorrect minimum and maximum values of the API are not adopted #39\nThe initial refresh interval was set to 5 minutes\nThe code has been restructured internally\nAt least Node.js 18 is required!\nUnit tests have been added\nDependencies have been updated",
+        "de": "Es werden keine leeren Objekte gesendet (setData)\nFalsche Mindest- und Maximalwerte der API werden nicht übernommen #39\nDas initiale Aktualisierungsintervall wurde auf 5 Minuten eingestellt\nDer Code wurde intern umstrukturiert\nMindestens Node.js 18 ist erforderlich!\nUnit-Tests wurden hinzugefügt\nAbhängigkeiten wurden aktualisiert",
+        "ru": "Не отправляется пустых объектов (setData)\nНеправильные минимальные и максимальные значения API не принимаются #39\nПервоначальный интервал обновления был установлен до 5 минут\nКод был реструктурирован внутри страны\nПо крайней мере Node.js 18 требуется!\nДобавлены испытания\nЗависимость обновлена",
+        "pt": "Nenhum objeto vazio é enviado (setData)\nOs valores mínimos e máximos incorretos da API não são adotados #39\nO intervalo inicial de atualização foi ajustado para 5 minutos\nO código foi reestruturado internamente\nPelo menos Node.js 18 é necessário!\nTestes de unidade foram adicionados\nAs dependências foram atualizadas",
+        "nl": "Er worden geen lege objecten verzonden (setData)\nOnjuiste minimum- en maximumwaarden van de API worden niet aangenomen #39\nHet initiële herhalingsinterval werd ingesteld op 5 minuten\nDe code is intern geherstructureerd\nTenminste Node.js 18 is vereist!\nEr zijn eenheidstests toegevoegd\nAfhankelijkheden zijn bijgewerkt",
+        "fr": "Aucun objet vide n'est envoyé (setData)\nLes valeurs minimales et maximales incorrectes de l'API ne sont pas adoptées #39\nL'intervalle initial de rafraîchissement a été fixé à 5 minutes\nLe code a été restructuré en interne\nAu moins Node.js 18 est nécessaire!\nDes tests unitaires ont été ajoutés\nLes dépendances ont été actualisées",
+        "it": "Non vengono inviati oggetti vuoti (setData)\nI valori minimi e massimi non corretti dell'API non sono adottati #39\nL'intervallo iniziale di aggiornamento è stato impostato a 5 minuti\nIl codice è stato ristrutturato internamente\nAlmeno Node.js 18 è richiesto!\nSono stati aggiunti test unitari\nLe dipendenze sono state aggiornate",
+        "es": "No se envían objetos vacíos (setData)\nLos valores mínimos y máximos incorrectos de la API no son adoptados #39\nEl intervalo inicial de actualización se fijó a 5 minutos\nEl código se ha reestructurado internamente\n¡Al menos Node.js 18 es necesario!\nSe han añadido pruebas de unidad\nSe han actualizado las dependencias",
+        "pl": "Nie są wysyłane puste obiekty (setData)\nNieprawidłowe wartości minimalne i maksymalne API nie zostały przyjęte # 39\nPoczątkowy odświeżający odstęp został ustawiony na 5 minut\nKod został zrestrukturyzowany wewnętrznie\nCo najmniej Node.js 18 jest wymagane!\nDodano testy jednostkowe\nZaktualizowano zależności",
+        "uk": "Немає порожніх об'єктів (setData)\nНекоректні мінімальні та максимальні значення API не приймаються #39\nПочатковий інтервал освіження був встановлений до 5 хвилин\nКод перебудовано внутрішньо\nПринаймні Node.js 18 потрібно!\nДодані агрегатні тести\nЗалежність було оновлено",
+        "zh-cn": "没有发送空对象( setData)\n未采用 API 的不正确最小值和最大值\n初始刷新间隔设定为 5 分钟\n代码已经内部调整\n至少需要18号节点!\n增加了单元测试\n依赖关系已更新"
+      },
+      "0.7.1": {
+        "en": "Crash after 'unhandled promise rejection' fixed #15",
+        "de": "Crash nach \"unhandled promise rejection\" behoben #15",
+        "ru": "Исправлен крах после \"unhandled promise rejection\" #15",
+        "pt": "Crash após \"unhandled promise rejection\" fixo #15",
+        "nl": "Crash na \"unhandled promise rejection\" gerepareerd #15",
+        "fr": "Crash après le \"unhandled promise rejection\" fixé #15",
+        "it": "Crash dopo \"unhandled promise rejection\" fisso #15",
+        "es": "Crash después de \"unhandled promise rejection\" fijo #15",
+        "pl": "Naprawiono awarię po \"unhandled promise rejection\" #15",
+        "uk": "Крейш після того, як \"unhandled promise rejection\" фіксована #15",
+        "zh-cn": "修复了 \"unhandled promise rejection\" 后的崩溃 #15"
+      }
     },
-    "encryptedNative": ["Identifier", "Secret", "AuthCode"],
-    "protectedNative": ["Identifier", "Secret", "AuthCode"],
-    "native": {
-        "Identifier": "",
-        "Secret": "",
-        "UseAuthorizationCodeGrant": false,
-        "CallbackURL": "https://sebilm.github.io/ioBroker.myuplink/myuplink.html",
-        "AuthCode": "",
-        "Interval": 5,
-        "Language": "en",
-        "Configured": false,
-        "AddData": true,
-        "AddRawData": false,
-        "GroupData": false,
-        "AddActiveNotifications": true,
-        "AddRawActiveNotifications": false
+    "titleLang": {
+      "en": "myUplink",
+      "de": "myUplink",
+      "ru": "myUplink",
+      "pt": "myUplink",
+      "nl": "myUplink",
+      "fr": "myUplink",
+      "it": "myUplink",
+      "es": "myUplink",
+      "pl": "myUplink",
+      "uk": "myUplink",
+      "zh-cn": "myUplink"
     },
-    "objects": [],
-    "instanceObjects": [
-        {
-            "_id": "info",
-            "type": "channel",
-            "common": {
-                "name": "Information"
-            },
-            "native": {}
-        },
-        {
-            "_id": "info.connection",
-            "type": "state",
-            "common": {
-                "name": "Connected to myUplink",
-                "role": "indicator.connected",
-                "type": "boolean",
-                "read": true,
-                "write": false,
-                "def": false
-            },
-            "native": {}
-        },
-        {
-            "_id": "info.currentError",
-            "type": "state",
-            "common": {
-                "name": "Current Error",
-                "role": "text",
-                "type": "string",
-                "read": true,
-                "write": false,
-                "def": ""
-            },
-            "native": {}
-        },
-        {
-            "_id": "info.updateTime",
-            "type": "state",
-            "common": {
-                "name": "Time of the last update",
-                "role": "text",
-                "type": "string",
-                "read": true,
-                "write": false,
-                "def": ""
-            },
-            "native": {}
-        },
-        {
-            "_id": "info.lastError",
-            "type": "state",
-            "common": {
-                "name": "Last Error",
-                "role": "text",
-                "type": "string",
-                "read": true,
-                "write": false,
-                "def": ""
-            },
-            "native": {}
-        },
-        {
-            "_id": "info.lastErrorTime",
-            "type": "state",
-            "common": {
-                "name": "Time of the last error",
-                "role": "text",
-                "type": "string",
-                "read": true,
-                "write": false,
-                "def": ""
-            },
-            "native": {}
-        }
+    "desc": {
+      "en": "myUplink.com for Nibe Heat Pumps",
+      "de": "myUplink.com für Nibe-Wärmepumpen",
+      "ru": "myUplink.com для тепловых насосов Nibe",
+      "pt": "myUplink.com para bombas de calor Nibe",
+      "nl": "myUplink.com voor Nibe-warmtepompen",
+      "fr": "myUplink.com pour les pompes à chaleur Nibe",
+      "it": "myUplink.com per le pompe di calore Nibe",
+      "es": "myUplink.com para bombas de calor Nibe",
+      "pl": "myUplink.com dla pomp ciepła Nibe",
+      "uk": "myUplink.com для теплових насосів Nibe",
+      "zh-cn": "myUplink.com 适用于 Nibe 热泵"
+    },
+    "authors": [
+      "Sebastian Haesselbarth <seb@sebmail.de>"
+    ],
+    "keywords": [
+      "myuplink",
+      "heat pump",
+      "NIBE",
+      "AIT",
+      "Cetetherm",
+      "ClimateMaster",
+      "Contura",
+      "CTA",
+      "CTC",
+      "Enertech Global"
+    ],
+    "licenseInformation": {
+      "license": "MIT",
+      "type": "free"
+    },
+    "platform": "Javascript/Node.js",
+    "icon": "myuplink.png",
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/sebilm/ioBroker.myuplink/main/admin/myuplink.png",
+    "readme": "https://github.com/sebilm/ioBroker.myuplink/blob/main/README.md",
+    "loglevel": "info",
+    "mode": "daemon",
+    "type": "climate-control",
+    "compact": true,
+    "docs": {
+      "en": [
+        "docs/en/README.md"
+      ],
+      "de": [
+        "docs/de/README.md"
+      ]
+    },
+    "tier": 2,
+    "connectionType": "cloud",
+    "dataSource": "poll",
+    "adminUI": {
+      "config": "json"
+    },
+    "dependencies": [
+      {
+        "js-controller": ">=7.0.6"
+      }
+    ],
+    "globalDependencies": [
+      {
+        "admin": ">=7.6.17"
+      }
     ]
+  },
+  "encryptedNative": [
+    "Identifier",
+    "Secret",
+    "AuthCode"
+  ],
+  "protectedNative": [
+    "Identifier",
+    "Secret",
+    "AuthCode"
+  ],
+  "native": {
+    "Identifier": "",
+    "Secret": "",
+    "UseAuthorizationCodeGrant": false,
+    "CallbackURL": "https://sebilm.github.io/ioBroker.myuplink/myuplink.html",
+    "AuthCode": "",
+    "Interval": 5,
+    "Language": "en",
+    "Configured": false,
+    "AddData": true,
+    "AddRawData": false,
+    "GroupData": false,
+    "AddActiveNotifications": true,
+    "AddRawActiveNotifications": false
+  },
+  "objects": [],
+  "instanceObjects": [
+    {
+      "_id": "info",
+      "type": "channel",
+      "common": {
+        "name": "Information"
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.connection",
+      "type": "state",
+      "common": {
+        "name": "Connected to myUplink",
+        "role": "indicator.connected",
+        "type": "boolean",
+        "read": true,
+        "write": false,
+        "def": false
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.currentError",
+      "type": "state",
+      "common": {
+        "name": "Current Error",
+        "role": "text",
+        "type": "string",
+        "read": true,
+        "write": false,
+        "def": ""
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.updateTime",
+      "type": "state",
+      "common": {
+        "name": "Time of the last update",
+        "role": "text",
+        "type": "string",
+        "read": true,
+        "write": false,
+        "def": ""
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.lastError",
+      "type": "state",
+      "common": {
+        "name": "Last Error",
+        "role": "text",
+        "type": "string",
+        "read": true,
+        "write": false,
+        "def": ""
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.lastErrorTime",
+      "type": "state",
+      "common": {
+        "name": "Time of the last error",
+        "role": "text",
+        "type": "string",
+        "read": true,
+        "write": false,
+        "def": ""
+      },
+      "native": {}
+    }
+  ]
 }
