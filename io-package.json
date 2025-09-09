@@ -3,6 +3,19 @@
         "name": "myuplink",
         "version": "0.8.4",
         "news": {
+            "0.8.5": {
+                "en": "Dependencies have been updated #124",
+                "de": "Abhängigkeiten wurden aktualisiert #124",
+                "ru": "Зависимость обновлена #124",
+                "pt": "As dependências foram atualizadas #124",
+                "nl": "Afhankelijkheden zijn bijgewerkt #124",
+                "fr": "Les dépendances ont été actualisées #124",
+                "it": "Le dipendenze sono state aggiornate #124",
+                "es": "Se han actualizado las dependencias #124",
+                "pl": "Zaktualizowano zależności #124",
+                "uk": "Залежність було оновлено #124",
+                "zh-cn": "依赖关系已更新 #124"
+            },
             "0.8.4": {
                 "en": "xl attributes have been added to the jsonConfig #77\nDependencies have been updated",
                 "de": "xl Attribute wurden zur jsonConfig hinzugefügt #77\nAbhängigkeiten wurden aktualisiert",
