@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "myuplink",
-    "version": "0.8.5",
+    "version": "0.8.6",
     "news": {
+      "0.8.6": {
+        "en": "Dependencies have been updated #134",
+        "de": "Abhängigkeiten wurden aktualisiert #134",
+        "ru": "Зависимости были обновлены #134",
+        "pt": "Dependências foram atualizadas #134",
+        "nl": "Afhankelijkheden zijn bijgewerkt #134",
+        "fr": "Les dépendances ont été mises à jour #134",
+        "it": "Le dipendenze sono state aggiornate #134",
+        "es": "Las dependencias se han actualizado #134",
+        "pl": "Zaktualizowano zależność # 134",
+        "uk": "Залежність було оновлено #134",
+        "zh-cn": "已更新的依赖性 # 134"
+      },
       "0.8.5": {
         "en": "Dependencies have been updated #124",
         "de": "Abhängigkeiten wurden aktualisiert #124",
@@ -80,19 +93,6 @@
         "pl": "Nie są wysyłane puste obiekty (setData)\nNieprawidłowe wartości minimalne i maksymalne API nie zostały przyjęte # 39\nPoczątkowy odświeżający odstęp został ustawiony na 5 minut\nKod został zrestrukturyzowany wewnętrznie\nCo najmniej Node.js 18 jest wymagane!\nDodano testy jednostkowe\nZaktualizowano zależności",
         "uk": "Немає порожніх об'єктів (setData)\nНекоректні мінімальні та максимальні значення API не приймаються #39\nПочатковий інтервал освіження був встановлений до 5 хвилин\nКод перебудовано внутрішньо\nПринаймні Node.js 18 потрібно!\nДодані агрегатні тести\nЗалежність було оновлено",
         "zh-cn": "没有发送空对象( setData)\n未采用 API 的不正确最小值和最大值\n初始刷新间隔设定为 5 分钟\n代码已经内部调整\n至少需要18号节点!\n增加了单元测试\n依赖关系已更新"
-      },
-      "0.7.1": {
-        "en": "Crash after 'unhandled promise rejection' fixed #15",
-        "de": "Crash nach \"unhandled promise rejection\" behoben #15",
-        "ru": "Исправлен крах после \"unhandled promise rejection\" #15",
-        "pt": "Crash após \"unhandled promise rejection\" fixo #15",
-        "nl": "Crash na \"unhandled promise rejection\" gerepareerd #15",
-        "fr": "Crash après le \"unhandled promise rejection\" fixé #15",
-        "it": "Crash dopo \"unhandled promise rejection\" fisso #15",
-        "es": "Crash después de \"unhandled promise rejection\" fijo #15",
-        "pl": "Naprawiono awarię po \"unhandled promise rejection\" #15",
-        "uk": "Крейш після того, як \"unhandled promise rejection\" фіксована #15",
-        "zh-cn": "修复了 \"unhandled promise rejection\" 后的崩溃 #15"
       }
     },
     "titleLang": {
