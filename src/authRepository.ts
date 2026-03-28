@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as fs from 'fs';
+import * as fs from 'node:fs';
 import jsonfile from 'jsonfile';
 import type * as session from './models/Session';
 import type { Logger } from './types';
