@@ -118,6 +118,8 @@ This ioBroker adapter receives data from myUplink.com. Settings that have been e
 
 - Initial release
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## License
 
 MIT License
